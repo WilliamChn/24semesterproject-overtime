@@ -1,59 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./vars.css" />
-    <link rel="stylesheet" href="./style.css" />
-
-    <style>
-      a,
-      button,
-      input,
-      select,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      * {
-        box-sizing: border-box;
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Overtime Fitness</title>
+<style>
+    body, h1, a {
         margin: 0;
         padding: 0;
-        border: none;
+        font-family: 'Arial', sans-serif;
+    }
+    
+    .navbar {
+        background-color: #ffffff; /* White background */
+        overflow: hidden;
+        padding: 10px 20px;
+    }
+    
+    .navbar a {
+        float: left;
+        display: block;
+        color: black; /* Black text color */
+        text-align: center;
+        padding: 12px;
         text-decoration: none;
-        appearance: none;
-        background: none;
-
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-    <title>Document</title>
-  </head>
-  <body>
-    <div
-      class="landing-page"
-      style="
-        background: url(landing-page.png) center;
+        font-size: 18px; /* Larger font size */
+    }
+    
+    .navbar a:hover {
+        color: #777; /* Dark grey color on hover */
+    }
+    
+    .navbar a:not(:first-child) {
+        margin-left: 10px;
+    }
+    
+    .navbar-right {
+        float: right;
+    }
+    
+    .welcome-section {
+        background-image: url('landing-page.png'); /* Add your background image path here */
+        height: 500px; /* Adjust as per your image's aspect ratio */
         background-size: cover;
-        background-repeat: no-repeat;
-      "
-    >
-      <div class="rectangle-8"></div>
-      <div class="rectangle-10"></div>
-      <div class="rectangle-11"></div>
-      <div class="rectangle-9"></div>
-      <div class="overtime">OVERTIME</div>
-      <div class="welcome-to-overtime">WELCOME TO OVERTIME</div>
-      <div class="rectangle-82"></div>
-      <div class="join-now">Join Now</div>
-      <div class="log-meals">Log Meals</div>
-      <div class="line-1"></div>
-      <div class="log-workouts">Log Workouts</div>
-      <div class="profile">Profile</div>
-      <div class="line-2"></div>
-      <img class="image-6" src="image-60.png" />
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+        color: white; /* White text color */
+    }
+    
+    .join-button {
+        background-color: #000000; /* Black background */
+        color: white; /* White text color */
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 20px; /* Larger font size */
+        margin: 4px 2px;
+        cursor: pointer;
+        border-radius: 5px; /* Rounded corners */
+    }
+    
+    .join-button:hover {
+        background-color: #555; /* Dark grey background on hover */
+    }
+    
+</style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="#home">OVERTIME</a>
+    <div class="navbar-right">
+        <a href="Meal_Page/index.html">Log Meals</a>
+        <a href="Workout_Page/index.html">Log Workouts</a>
+        <a href="Profile_Page/index.html">Profile</a>
     </div>
-  </body>
+</div>
+
+<div class="welcome-section">
+    <h1>WELCOME TO OVERTIME</h1>
+    <form action="join.php" method="post">
+      <button type="submit" class="join-button">Join Now</button>
+  </form>
+  
+</div>
+
+</body>
 </html>
