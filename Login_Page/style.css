@@ -1,0 +1,118 @@
+.login-page,
+.login-page * {
+  box-sizing: border-box;
+}
+.login-page {
+  height: 982px;
+  position: relative;
+  overflow: hidden;
+}
+.rectangle-4 {
+  background: rgba(217, 217, 217, 0.36);
+  border-radius: 47px;
+  width: 775px;
+  height: 859px;
+  position: absolute;
+  left: 64px;
+  top: 62px;
+  backdrop-filter: blur(3.2px);
+}
+.over-time {
+  color: #ffffff;
+  text-align: left;
+  font-family: "JosefinSans-Regular", sans-serif;
+  font-size: 114px;
+  font-weight: 400;
+  position: absolute;
+  left: 192px;
+  top: 151px;
+  width: 518px;
+  height: 110px;
+}
+.login {
+  color: #ffffff;
+  text-align: left;
+  font-family: "JosefinSans-Regular", sans-serif;
+  font-size: 51px;
+  font-weight: 400;
+  position: absolute;
+  left: 381px;
+  top: 361px;
+  width: 140px;
+  height: 38px;
+}
+.rectangle-5 {
+  background: #d9d9d9;
+  border-radius: 36px;
+  width: 701px;
+  height: 92px;
+  position: absolute;
+  left: 101px;
+  top: 443px;
+}
+.username {
+  color: #463e3e;
+  text-align: left;
+  font-family: "JosefinSans-Regular", sans-serif;
+  font-size: 35px;
+  font-weight: 400;
+  position: absolute;
+  left: 134px;
+  top: 473px;
+  width: 247px;
+  height: 36px;
+}
+.rectangle-6 {
+  background: #d9d9d9;
+  border-radius: 36px;
+  width: 701px;
+  height: 92px;
+  position: absolute;
+  left: 101px;
+  top: 579px;
+}
+.password {
+  color: #463e3e;
+  text-align: left;
+  font-family: "JosefinSans-Regular", sans-serif;
+  font-size: 35px;
+  font-weight: 400;
+  position: absolute;
+  left: 134px;
+  top: 609px;
+  width: 247px;
+  height: 36px;
+}
+.forgot-your-password {
+  color: #ffffff;
+  text-align: left;
+  font-family: "JosefinSans-Regular", sans-serif;
+  font-size: 23px;
+  font-weight: 400;
+  position: absolute;
+  left: 333px;
+  top: 705px;
+  width: 237px;
+  height: 24px;
+}
+.rectangle-7 {
+  background: #d9d9d9;
+  border-radius: 37px;
+  width: 181px;
+  height: 82px;
+  position: absolute;
+  left: 361px;
+  top: 760px;
+}
+.login2 {
+  color: #463e3e;
+  text-align: left;
+  font-family: "JosefinSans-Regular", sans-serif;
+  font-size: 35px;
+  font-weight: 400;
+  position: absolute;
+  left: 404px;
+  top: 783px;
+  width: 108px;
+  height: 36px;
+}
