@@ -1,0 +1,90 @@
+/* Reset some default styles */
+body, h1, a, button {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Styles for the navigation bar */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;  /* Add this line to ensure the navbar starts from the left */
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 10px 0;
+  display: flex;
+  justify-content: flex-start; /* Aligns items to the start (left) */
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.navbar a {
+  color: white;
+  padding: 0 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Container for the main content */
+.container {
+  width: 100%; /* Set width to 100% to use the full viewport width */
+  margin: 0; /* Remove margin to align with the top */
+  background: #fff;
+  box-shadow: none; /* Remove shadow for a flat design */
+}
+
+/* Header styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: transparent; /* Remove the black background */
+  color: #000; /* Change the text color to black for visibility */
+}
+
+/* Styles for each meal entry */
+.meal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Space out items evenly */
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0; /* Adjust padding as needed */
+}
+
+.meal button:last-child {
+  margin-right: 50px; /* Adjust this value as needed */
+}
+
+.meal h2 {
+  flex-grow: 1; /* Allows the title to take up available space */
+}
+
+/* Button styles */
+.add-food,
+.delete-entry,
+.Edit {
+  background-color: transparent;
+  border: 1px solid black;
+  color: black;
+  padding: 10px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+/* Footer styles, if you have a footer */
+.nutrition-info {
+  background: transparent; /* Make footer background transparent */
+  color: #000; /* Change text color to black for visibility */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.nutrition-info > div {
+  padding: 10px 0;
+}
