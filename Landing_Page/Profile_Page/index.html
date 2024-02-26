@@ -1,256 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./vars.css" />
-    <link rel="stylesheet" href="./style.css" />
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile Page</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-    <style>
-      a,
-      button,
-      input,
-      select,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        border: none;
-        text-decoration: none;
-        appearance: none;
-        background: none;
-
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="profile-page">
-      <div class="rectangle-8"></div>
-      <div class="rectangle-10"></div>
-      <div class="rectangle-11"></div>
-      <div class="rectangle-9"></div>
-      <div class="overtime">OVERTIME</div>
-      <div class="log-meals">Log meals</div>
-      <div class="line-1"></div>
-      <div class="log-workouts">Log workouts</div>
-      <div class="line-2"></div>
-      <div class="rectangle-17"></div>
-      <div class="frame-1">
-        <div class="pajamas-food"></div>
-        <div class="rectangle-19"></div>
-        <div class="weight">Weight</div>
-        <div class="_150-lbs">
-          <span>
-            <span class="_150-lbs-span">150</span>
-            <span class="_150-lbs-span2">lbs</span>
-          </span>
+    <header>
+      <div class="navbar">
+        <a href="../index.html">OVERTIME</a>
+        <div class="navbar-right">
+          <a href="../Meal_Page/index.html">Log Meals</a>
+          <a href="../Workout_Page/index.html">Log Workouts</a>
+          <a href="../Profile_Page/index.html">Profile</a>
         </div>
-        <div class="icon-park-outline-weight"></div>
-        <svg
-          class="group"
-          width="24"
-          height="26"
-          viewBox="0 0 24 26"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M22.1834 0H1.86405C1.38855 0 0.932522 0.205446 0.596291 0.571142C0.26006 0.936838 0.071167 1.43283 0.071167 1.95V24.05C0.071167 24.5672 0.26006 25.0632 0.596291 25.4289C0.932522 25.7946 1.38855 26 1.86405 26H22.1834C22.6589 26 23.1149 25.7946 23.4512 25.4289C23.7874 25.0632 23.9763 24.5672 23.9763 24.05V1.95C23.9763 1.43283 23.7874 0.936838 23.4512 0.571142C23.1149 0.205446 22.6589 0 22.1834 0Z"
-            stroke="#666666"
-            stroke-width="4"
-            stroke-linejoin="round"
-          />
-          <path
-            d="M4.85217 9.78513C6.83929 7.18513 9.2298 5.88513 12.0237 5.88513C14.8176 5.88513 17.2081 7.18513 19.1953 9.78513"
-            stroke="#666666"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
-          <path
-            d="M12.0237 17.55C12.4992 17.55 12.9553 17.3446 13.2915 16.9789C13.6277 16.6132 13.8166 16.1172 13.8166 15.6C13.8166 15.0829 13.6277 14.5869 13.2915 14.2212C12.9553 13.8555 12.4992 13.65 12.0237 13.65C11.5482 13.65 11.0922 13.8555 10.756 14.2212C10.4197 14.5869 10.2308 15.0829 10.2308 15.6C10.2308 16.1172 10.4197 16.6132 10.756 16.9789C11.0922 17.3446 11.5482 17.55 12.0237 17.55Z"
-            fill="#666666"
-          />
-          <path
-            d="M9.03558 11.05L12.0285 15.6"
-            stroke="#666666"
-            stroke-width="4"
-            stroke-linecap="round"
-          />
-        </svg>
-        <img class="image-3" src="image-30.png" />
-        <div class="my-profile">MY PROFILE</div>
-        <div class="rectangle-16"></div>
-        <div class="personal">Personal</div>
-        <div class="exercise">Exercise</div>
-        <div class="rectangle-21"></div>
-        <svg
-          class="mdi-water"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M12 20C10.4087 20 8.88258 19.3679 7.75736 18.2426C6.63214 17.1174 6 15.5913 6 14C6 10 12 3.25 12 3.25C12 3.25 18 10 18 14C18 15.5913 17.3679 17.1174 16.2426 18.2426C15.1174 19.3679 13.5913 20 12 20Z"
-            fill="black"
-          />
-        </svg>
-        <div class="rectangle-27"></div>
-        <div class="rectangle-23"></div>
-        <div class="rectangle-26"></div>
-        <div class="max-weight-lifted">Max Weight Lifted</div>
-        <div class="longest-workout">Longest Workout</div>
-        <div class="_250-lbs">
-          <span>
-            <span class="_250-lbs-span">250</span>
-            <span class="_250-lbs-span2">lbs</span>
-          </span>
-        </div>
-        <div class="_2-hrs">
-          <span>
-            <span class="_2-hrs-span">2</span>
-            <span class="_2-hrs-span2">hrs</span>
-          </span>
-        </div>
-        <div class="rectangle-24"></div>
-        <div class="text"></div>
-        <div class="_800-cal">
-          <span>
-            <span class="_800-cal-span">800</span>
-            <span class="_800-cal-span2">cal</span>
-          </span>
-        </div>
-        <div class="calorie-intake">Calorie Intake</div>
-        <div class="lets-icons-calories">
-          <svg
-            class="group2"
-            width="19"
-            height="23"
-            viewBox="0 0 19 23"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M13.7708 7.66664C13.7708 6.3483 15.5697 5.9983 16.0463 7.2333C17.2011 10.2166 18.0416 12.89 18.0416 14.3333C18.0416 16.5434 17.1417 18.6631 15.5398 20.2259C13.938 21.7887 11.7654 22.6666 9.49998 22.6666C7.23459 22.6666 5.06198 21.7887 3.46011 20.2259C1.85824 18.6631 0.958313 16.5434 0.958313 14.3333C0.958313 12.7833 1.92865 9.81497 3.21673 6.56164C4.88235 2.3483 5.71602 0.241637 6.74615 0.128304C7.07415 0.0916375 7.4346 0.156637 7.72844 0.306637C8.64581 0.773304 8.64581 3.07164 8.64581 7.66664C8.64581 8.32968 8.91579 8.96556 9.39635 9.4344C9.87691 9.90325 10.5287 10.1666 11.2083 10.1666C11.8879 10.1666 12.5397 9.90325 13.0203 9.4344C13.5008 8.96556 13.7708 8.32968 13.7708 7.66664Z"
-              stroke="#666666"
-              stroke-width="2"
-            />
-            <path
-              d="M7.79162 22.6667L7.34232 21.5717C6.96 20.6392 6.83809 19.6244 6.98905 18.631C7.14001 17.6375 7.55843 16.7009 8.20162 15.9167C8.35733 15.7266 8.55489 15.5732 8.77964 15.4678C9.00438 15.3624 9.25057 15.3076 9.49995 15.3076C9.74933 15.3076 9.99551 15.3624 10.2203 15.4678C10.445 15.5732 10.6426 15.7266 10.7983 15.9167C12.1069 17.5134 12.4349 19.6734 11.6576 21.5717L11.2083 22.6667"
-              stroke="#666666"
-              stroke-width="2"
-            />
-          </svg>
-        </div>
-        <svg
-          class="vector8"
-          width="158"
-          height="158"
-          viewBox="0 0 158 158"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M79 0C122.632 0 158 35.3683 158 79C158 122.632 122.632 158 79 158C35.3683 158 0 122.632 0 79C0 35.3683 35.3683 0 79 0ZM79 15.8V79H142.2C142.2 62.2383 135.541 46.1632 123.689 34.3109C111.837 22.4586 95.7617 15.8 79 15.8Z"
-            fill="#474747"
-          />
-        </svg>
-        <div class="water-intake">Water Intake</div>
-        <div class="protein-intake">Protein Intake</div>
-        <svg
-          class="vector9"
-          width="21"
-          height="30"
-          viewBox="0 0 21 30"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M10.5 0.597412L9.1875 2.06741C9.1875 2.06741 6.9475 4.60491 4.69 7.89491C2.4325 11.1849 0 15.1224 0 18.9024C0 21.6872 1.10625 24.3579 3.07538 26.327C5.04451 28.2962 7.71523 29.4024 10.5 29.4024C13.2848 29.4024 15.9555 28.2962 17.9246 26.327C19.8938 24.3579 21 21.6872 21 18.9024C21 15.1224 18.5675 11.1849 16.31 7.89491C14.9176 5.87231 13.4162 3.92694 11.8125 2.06741L10.5 0.597412ZM10.5 6.07491C11.27 6.98491 11.97 7.73741 13.44 9.87241C15.5575 12.9524 17.5 16.8724 17.5 18.9024C17.5 22.7874 14.385 25.9024 10.5 25.9024C6.615 25.9024 3.5 22.7874 3.5 18.9024C3.5 16.8724 5.4425 12.9524 7.56 9.87241C9.03 7.73741 9.73 6.98491 10.5 6.07491Z"
-            fill="#666666"
-          />
-        </svg>
-        <svg
-          class="material-symbols-water-drop-outline-rounded"
-          width="200"
-          height="200"
-          viewBox="0 0 200 200"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M160.5 122C160.5 140.225 127.614 168 100 168C72.3858 168 40.5 140.225 40.5 122C40.5 103.775 72.3858 102 100 102C127.614 102 160.5 103.775 160.5 122Z"
-            fill="#0A82D9"
-          />
-          <path
-            d="M100 183.333C80.9723 183.333 65.1056 176.806 52.4 163.75C39.6945 150.694 33.3389 134.444 33.3334 115C33.3334 106.389 35.2778 97.7778 39.1667 89.1666C43.0556 80.5555 47.9167 72.2916 53.75 64.375C59.5834 56.4583 65.9028 49.0278 72.7084 42.0833C79.5139 35.1389 85.8334 29.0972 91.6667 23.9583C92.7778 22.8472 94.0639 22.05 95.525 21.5666C96.9862 21.0833 98.4778 20.8389 100 20.8333C101.528 20.8333 103.022 21.0778 104.483 21.5666C105.944 22.0555 107.228 22.8528 108.333 23.9583C114.167 29.0972 120.486 35.1389 127.292 42.0833C134.097 49.0278 140.417 56.4583 146.25 64.375C152.083 72.2916 156.944 80.5555 160.833 89.1666C164.722 97.7778 166.667 106.389 166.667 115C166.667 134.444 160.314 150.694 147.608 163.75C134.903 176.806 119.033 183.333 100 183.333ZM100 166.667C114.444 166.667 126.389 161.769 135.833 151.975C145.278 142.181 150 129.856 150 115C150 104.861 145.797 93.4028 137.392 80.625C128.986 67.8472 116.522 53.8889 100 38.75C83.4723 53.8889 71.0084 67.8472 62.6084 80.625C54.2084 93.4028 50.0056 104.861 50 115C50 129.861 54.7223 142.189 64.1667 151.983C73.6111 161.778 85.5556 166.672 100 166.667ZM102.292 158.333C103.958 158.194 105.383 157.533 106.567 156.35C107.75 155.167 108.339 153.744 108.333 152.083C108.333 150.139 107.708 148.578 106.458 147.4C105.208 146.222 103.611 145.7 101.667 145.833C95.9723 146.25 89.9306 144.689 83.5417 141.15C77.1528 137.611 73.125 131.186 71.4584 121.875C71.1806 120.347 70.4528 119.097 69.275 118.125C68.0973 117.153 66.7417 116.667 65.2084 116.667C63.2639 116.667 61.6667 117.397 60.4167 118.858C59.1667 120.319 58.75 122.019 59.1667 123.958C61.5278 136.597 67.0834 145.625 75.8334 151.042C84.5834 156.458 93.4028 158.889 102.292 158.333Z"
-            fill="black"
-          />
-        </svg>
-        <div class="tabler-meat">
-          <svg
-            class="group3"
-            width="19"
-            height="19"
-            viewBox="0 0 19 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11.62 5.38198L13.586 3.41498C13.3534 3.18245 13.1818 2.89615 13.0862 2.58144C12.9907 2.26673 12.9743 1.93331 13.0384 1.61073C13.1025 1.28815 13.2451 0.986353 13.4537 0.732075C13.6623 0.477797 13.9304 0.278886 14.2342 0.152958C14.5381 0.0270308 14.8683 -0.0220255 15.1956 0.0101342C15.5229 0.042294 15.8372 0.154677 16.1107 0.33733C16.3842 0.519983 16.6085 0.767267 16.7636 1.05728C16.9187 1.34729 16.9999 1.67109 17 1.99998C17.329 1.99974 17.6529 2.08066 17.9432 2.23556C18.2334 2.39047 18.4809 2.61457 18.6638 2.88801C18.8467 3.16145 18.9594 3.47579 18.9917 3.80317C19.0241 4.13055 18.9752 4.46085 18.8494 4.76482C18.7236 5.06879 18.5248 5.33703 18.2705 5.54578C18.0162 5.75452 17.7144 5.89732 17.3917 5.96152C17.0691 6.02572 16.7356 6.00934 16.4208 5.91383C16.106 5.81832 15.8196 5.64663 15.587 5.41398L13.767 7.23498M5.50001 13L6.50001 14M3.90401 15.596C6.63701 18.33 9.80401 19.596 10.974 18.425C12.146 17.253 10.88 14.087 8.14601 11.354C5.41301 8.61998 2.24601 7.35398 1.07601 8.52498C-0.0959893 9.69698 1.17001 12.863 3.90401 15.596Z"
-              stroke="#666666"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-            <path
-              d="M10.975 18.425C14.88 14.519 15.83 9.13697 13.096 6.40397C10.363 3.66997 4.98099 4.61997 1.07599 8.52497"
-              stroke="#666666"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-        </div>
-        <svg
-          class="ion-barbell-sharp"
-          width="32"
-          height="32"
-          viewBox="0 0 32 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M31 11H27.375V7H22.625V14.625H9.375V7H4.625V11H1V21H4.625V25H9.375V17.375H22.625V25H27.375V21H31V11Z"
-            fill="#666666"
-          />
-        </svg>
-        <svg
-          class="mdi-clock-outline"
-          width="30"
-          height="30"
-          viewBox="0 0 30 30"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M15 26C17.6522 26 20.1957 24.9464 22.0711 23.0711C23.9464 21.1957 25 18.6522 25 16C25 13.3478 23.9464 10.8043 22.0711 8.92893C20.1957 7.05357 17.6522 6 15 6C12.3478 6 9.8043 7.05357 7.92893 8.92893C6.05357 10.8043 5 13.3478 5 16C5 18.6522 6.05357 21.1957 7.92893 23.0711C9.8043 24.9464 12.3478 26 15 26ZM15 3.5C16.6415 3.5 18.267 3.82332 19.7835 4.45151C21.3001 5.07969 22.6781 6.00043 23.8388 7.16117C24.9996 8.3219 25.9203 9.69989 26.5485 11.2165C27.1767 12.733 27.5 14.3585 27.5 16C27.5 19.3152 26.183 22.4946 23.8388 24.8388C21.4946 27.183 18.3152 28.5 15 28.5C8.0875 28.5 2.5 22.875 2.5 16C2.5 12.6848 3.81696 9.50537 6.16117 7.16117C8.50537 4.81696 11.6848 3.5 15 3.5ZM15.625 9.75V16.3125L21.25 19.65L20.3125 21.1875L13.75 17.25V9.75H15.625Z"
-            fill="#666666"
-          />
-        </svg>
       </div>
-      <img class="image-1" src="image-10.png" />
+    </header>
+    
+    <!-- Profile Header -->
+    <div class="profile-header">
+        <div class="header-content">
+            <h1>MY PROFILE</h1>
+        </div>
     </div>
-  </body>
+
+    <!-- Profile Sections Container -->
+    <div class="sections-container">
+
+        <!-- Personal Section -->
+        <div class="section personal">
+            <h2 class="section-title">Personal</h2>
+            <div class="data-field">
+              <span class="data-label">Water Intake</span>
+              <div class="data-input"><input type="text" placeholder="0"></div>
+          </div>
+          <div class="data-field">
+              <span class="data-label">Protein Intake</span>
+              <div class="data-input"><input type="text" placeholder="0"></div>
+          </div>
+          <div class="data-field">
+              <span class="data-label">Calorie Intake</span>
+              <span class="data-value">800 cal</span>
+          </div>
+          <div class="data-field">
+              <span class="data-label">Weight</span>
+              <span class="data-value">150 lbs</span>
+          </div>
+        </div>
+
+        <!-- Exercise Section -->
+        <div class="section exercise">
+            <h2 class="section-title">Exercise</h2>
+            <div class="data-field">
+              <span class="data-label">Max Weight Lifted</span>
+              <span class="data-value">250 lbs</span>
+          </div>
+          <div class="data-field">
+              <span class="data-label">Longest Workout</span>
+              <span class="data-value">2 hrs</span>
+          </div>
+
+        </div>
+
+    </div>
+
+</body>
 </html>
+
