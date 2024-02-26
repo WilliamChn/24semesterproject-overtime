@@ -6,13 +6,12 @@
 }
 .section {
   width: 45%;
-
   padding: 20px;
   margin: 10px;
 }
-.section-header {
-  font-size: 24px;
-  text-align: center;
+.section-title {
+  font-size: 30px;
+  text-align: left;
   margin-bottom: 20px;
 }
 .data-field {
@@ -103,6 +102,26 @@ input[type="text"] {
   min-height: 650px;
 }
 
+/* Larger font size for data labels and values */
+.data-label, .data-value {
+  font-weight: bold;
+  font-size: 18px; /* Updated font size */
+}
+
+/* Styling for input fields and data values */
+input[type="text"], .data-value {
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box; /* Ensures padding does not add to the width */
+}
+
+/* New style for the data field container */
+.data-field-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 
 /* Adjust for mobile responsiveness */
 @media (max-width: 768px) {
@@ -115,3 +134,4 @@ input[type="text"] {
     margin: 10px 0;
   }
 }
+
