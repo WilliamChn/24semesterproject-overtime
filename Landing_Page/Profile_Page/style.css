@@ -104,7 +104,7 @@ input[type="text"] {
 
 /* Larger font size for data labels and values */
 .data-label, .data-value {
-  font-weight: bold;
+  color:gray;
   font-size: 18px; /* Updated font size */
 }
 
@@ -115,13 +115,29 @@ input[type="text"], .data-value {
   box-sizing: border-box; /* Ensures padding does not add to the width */
 }
 
-/* New style for the data field container */
 .data-field-container {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
+  justify-content: space-evenly;
+  flex-wrap: wrap; /* Allows wrapping for smaller screens */
 }
 
+/* Styles for the Exercise Section specifically */
+.exercise .data-field-container {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  justify-content: space-evenly;
+  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+}
+
+.data-section {
+  background: white; /* Light grey background for the container */
+  border-radius: 8px; /* Slight rounding of corners */
+  padding: 15px; /* Padding inside the container */
+  margin-bottom: 10px; /* Space between containers */
+  border: 2px solid whitesmoke;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+}
 
 /* Adjust for mobile responsiveness */
 @media (max-width: 768px) {
