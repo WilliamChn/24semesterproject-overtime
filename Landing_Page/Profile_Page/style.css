@@ -63,17 +63,15 @@ input[type="text"] {
   color: #777; /* Dark grey color on hover */
 }
 
-/* Profile Header */
 .profile-header {
   background-image: url('./image-30.png'); /* Replace with your image path */
   background-size: cover;
   background-position: center;
+  text-align: left; /* Aligns text to the left */
   padding: 20px 0;
-  border-radius: 20px; /* Rounded corners */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px; /* Adjust spacing from navbar */
+  border-radius: 20px; /* Rounds the edges */
+  margin-top: 60px; /* Creates a gap between the navbar and this section */
+  margin-bottom: 20px; /* Distance between profile header and sections */
 }
 
 .header-content {
@@ -85,28 +83,26 @@ input[type="text"] {
 .profile-header h1 {
   color: black;
   font-size: 48px;
-  margin: 0;
+  margin-left: 20px; /* Aligns the header text to the left */
 }
 
 /* Sections Container */
 .sections-container {
   display: flex;
-  justify-content: space-between;
-  margin-top: 20px; /* Spacing from header */
-  max-width: 1200px; /* Adjust as needed */
-  padding: 20px;
-  margin: 0 auto;
+  justify-content: center;
+  gap: 50%px; /* Adds space between the sections */
 }
 
 /* Section styles */
 .section {
-  flex: 1; /* Flexible width for side by side layout */
-  margin: 10px;
+  flex-basis: 45%; /* Adjusts the base size of each section */
   background: white;
-  border-radius: 10px; /* Rounded corners */
+  border-radius: 10px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-height: 650px;
 }
+
 
 /* Adjust for mobile responsiveness */
 @media (max-width: 768px) {
