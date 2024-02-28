@@ -80,15 +80,26 @@
 </head>
 <body>
 
-<div class="navbar">
-    <a href="#home">OVERTIME</a>
-    <div class="navbar-right">
-        <a href="Meal_Page/index.html">Log Meals</a>
-        <a href="Workout_Page">Log Workouts</a>
-        <a href="Profile_Page">Profile</a>
-    </div>
+    <?php
+include 'check_session.php'; // Include the session check script
 
-</div>
+if (isLoggedIn()) {
+    // If the user is logged in, display the navbar
+    echo '<div class="navbar">
+            <a href="#home">OVERTIME</a>
+            <div class="navbar-right">
+                <a href="Meal_Page/index.html">Log Meals</a>
+                <a href="Workout_Page">Log Workouts</a>
+                <a href="Profile_Page">Profile</a>
+            </div>
+        </div>';
+}
+else{
+    echo '<div class="navbar">
+    <a href="#home">OVERTIME</a>
+</div>';   
+}
+?>
 
 <div class="welcome-section">
     <h1>WELCOME TO OVERTIME</h1>
