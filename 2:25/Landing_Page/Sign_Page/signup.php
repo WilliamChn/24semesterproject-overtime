@@ -2,8 +2,8 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database configuration
     $servername = "oceanus.cse.buffalo.edu";
-    $username = "lanakim"; // Variable name should be consistent
-    $password = "50408039"; // Variable name should be consistent
+    $username = "lanakim";
+    $password = "50408039";
     $dbname = "cse442_2024_spring_team_b_db";
     $port = 3306;
 
@@ -12,44 +12,44 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Check connection
     if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
+        echo json_encode(array('success' => false, 'error' => $conn->connect_error));
+        exit();
     }
 
     // Capture and sanitize user input
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']); // Capture the email
-    $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']); // Capture the confirm password
+    $userInput = mysqli_real_escape_string($conn, $_POST['username']);
+    $passInput = mysqli_real_escape_string($conn, $_POST['password']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
 
     // Check if passwords match
-    if ($password !== $confirm_password) {
-        echo "Passwords do not match.";
-        exit(); // Stop the script if passwords don't match
+    if ($passInput !== $confirm_password) {
+        echo json_encode(array('success' => false, 'error' => 'Passwords do not match.'));
+        exit();
     }
 
     // Hash the password
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $hashedPassword = password_hash($passInput, PASSWORD_DEFAULT);
 
     // Check if the username or email already exists
     $checkUser = $conn->prepare("SELECT * FROM Login_Info WHERE Username = ? OR Email = ?");
-    $checkUser->bind_param("ss", $username, $email);
+    $checkUser->bind_param("ss", $userInput, $email);
     $checkUser->execute();
     $result = $checkUser->get_result();
     $checkUser->close();
 
     if ($result->num_rows > 0) {
-        echo "Username or Email already exists. Please choose a different one.";
+        echo json_encode(array('success' => false, 'error' => 'Username or Email already exists.'));
     } else {
         // Prepare SQL statement to prevent SQL injection
         $stmt = $conn->prepare("INSERT INTO Login_Info (Username, Email, Password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $username, $email, $hashedPassword);
+        $stmt->bind_param("sss", $userInput, $email, $hashedPassword);
 
         // Execute the statement
         if ($stmt->execute()) {
-            echo "New record created successfully";
-            // You could redirect to the login page or start a session here
+            echo json_encode(array('success' => true));
         } else {
-            echo "Error: " . $stmt->error;
+            echo json_encode(array('success' => false, 'error' => $stmt->error));
         }
 
         // Close statement

@@ -20,22 +20,34 @@ body {
 .navbar {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 0; /* Ensure the navbar starts from the left */
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px 0;
+  background: rgba(0, 0, 0, 1);
+  padding: 15px 0;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between; /* Aligns items to the start and end */
   align-items: center;
   box-sizing: border-box;
 }
 
+/* New .navbar-right styles */
+.navbar-right {
+  display: flex; /* Align the links in a row */
+  justify-content: flex-end; /* Align the links to the right */
+}
+
+/* Update existing .navbar a styles if needed */
 .navbar a {
   color: white;
-  padding: 0 20px;
+  padding: 0 20px; /* Adjust padding as needed */
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
+}
+
+/* Add hover effect for the links */
+.navbar a:hover {
+  color: #777; /* Dark grey color on hover */
 }
 
 /* Container for the main content */
@@ -101,3 +113,34 @@ header {
 .nutrition-info > div {
   padding: 10px 0;
 }
+.meal-dropdown {
+  background-color: #FFFFFF; /* White background */
+  border: 1px solid #000000; /* Black border */
+  padding: 5px; /* Padding inside the dropdown */
+  font-family: Arial, sans-serif; /* Font style */
+  margin-right: 10px; /* Margin to the right */
+}
+
+/* Style for the options in the dropdown */
+.meal-dropdown option {
+  padding: 5px; /* Padding for each option */
+}
+
+/* Additional styles for the meal section */
+.meal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.meal-name {
+  margin-right: 10px; /* Spacing before the dropdown */
+}
+
+.add-food-delete-entry {
+  /* Your styles for these buttons */
+}
+
+
