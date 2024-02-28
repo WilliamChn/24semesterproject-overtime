@@ -113,3 +113,34 @@ header {
 .nutrition-info > div {
   padding: 10px 0;
 }
+.meal-dropdown {
+  background-color: #FFFFFF; /* White background */
+  border: 1px solid #000000; /* Black border */
+  padding: 5px; /* Padding inside the dropdown */
+  font-family: Arial, sans-serif; /* Font style */
+  margin-right: 10px; /* Margin to the right */
+}
+
+/* Style for the options in the dropdown */
+.meal-dropdown option {
+  padding: 5px; /* Padding for each option */
+}
+
+/* Additional styles for the meal section */
+.meal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.meal-name {
+  margin-right: 10px; /* Spacing before the dropdown */
+}
+
+.add-food-delete-entry {
+  /* Your styles for these buttons */
+}
+
+
