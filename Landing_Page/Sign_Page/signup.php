@@ -38,7 +38,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $checkUser->get_result();
     $checkUser->close();
 
-  	else {
+    if ($result->num_rows > 0) {
+        echo json_encode(array('success' => false, 'error' => 'Username or Email already exists.'));
+    } else {
+        // Prepare SQL statement to prevent SQL injection
+        $stmt = $conn->prepare("INSERT INTO Login_Info (Username, Email, Password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $userInput, $email, $hashedPassword);
+
+        // Execute the statement
+        if ($stmt->execute()) {
+            echo json_encode(array('success' => true));
+        } else {
             echo json_encode(array('success' => false, 'error' => $stmt->error));
         }
 
