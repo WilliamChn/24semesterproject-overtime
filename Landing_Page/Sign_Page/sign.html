@@ -4,22 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OverTime - Sign Up</title>
-    <link rel="stylesheet" href="signStyle.css"> <!-- Make sure the CSS file path is correct -->
+    <link rel="stylesheet" href="signStyle.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <form id="signupForm" action="signup.php" method="post" onsubmit="handleSignUp(event)">
-
 </head>
 <body>
 <div class="navbar">
     <a href="../">OVERTIME</a>
-
 </div>
 <div class="signup-container">
     <div class="signup-header">
         <h1>Join your fitness journey!</h1>
     </div>
     <div class="signup-form">
-        <form action="signup.php" method="post"> <!-- You need to create a signup_script.php to handle the signup -->
+        <!-- Note the form now only has the action attribute pointing to the PHP script -->
+        <form id="signupForm" action="signup.php" method="post">
             <input type="text" placeholder="Username" name="username" required>
             <input type="email" placeholder="Email" name="email" required>
             <input type="password" placeholder="Password" name="password" required>
@@ -31,28 +29,25 @@
 </div>
 
 <script>
+    document.getElementById('signupForm').addEventListener('submit', handleSignUp);
+
     function handleSignUp(event) {
-        // Prevent the default form submission
         event.preventDefault();
-    
-        // Get the form data
         var formData = new FormData(event.target);
-    
-        // Use Axios to send a POST request
+
         axios.post('signup.php', formData)
             .then(function (response) {
-                console.log(response.data);
-                // Handle success, perhaps redirect or show a success message
-                // window.location.href = 'login.html'; // Redirect to login on success
+                if (response.data.success) {
+                    window.location.href = '../Profile_Page/index.html'; // Redirect on success
+                } else {
+                    alert('Signup failed: ' + response.data.error); // Alert or handle error message
+                }
             })
             .catch(function (error) {
                 console.error(error);
-                // Handle error, show error message to user
             });
     }
-    </script>
-    
-
+</script>
 
 </body>
 </html>

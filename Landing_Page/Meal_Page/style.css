@@ -5,34 +5,58 @@ body, h1, a, button {
   font-family: 'Arial', sans-serif;
 }
 
+body {
+  margin: 0;
+  padding: 0;
+  background: url("Meals.jpg"); /* Path to your image */
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the image within the body */
+  background-repeat: no-repeat; /* Prevent the image from tiling */
+  background-attachment: scroll; /* Allow the background to scroll with the content */
+  font-family: 'Arial', sans-serif;
+}
+
 /* Styles for the navigation bar */
 .navbar {
   position: absolute;
   top: 0;
-  left: 0;  /* Add this line to ensure the navbar starts from the left */
+  left: 0; /* Ensure the navbar starts from the left */
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px 0;
+  background: rgba(0, 0, 0, 1);
+  padding: 15px 0;
   display: flex;
-  justify-content: flex-start; /* Aligns items to the start (left) */
+  justify-content: space-between; /* Aligns items to the start and end */
   align-items: center;
   box-sizing: border-box;
 }
 
+/* New .navbar-right styles */
+.navbar-right {
+  display: flex; /* Align the links in a row */
+  justify-content: flex-end; /* Align the links to the right */
+}
+
+/* Update existing .navbar a styles if needed */
 .navbar a {
   color: white;
-  padding: 0 20px;
+  padding: 0 20px; /* Adjust padding as needed */
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
 }
 
+/* Add hover effect for the links */
+.navbar a:hover {
+  color: #777; /* Dark grey color on hover */
+}
+
 /* Container for the main content */
 .container {
-  width: 100%; /* Set width to 100% to use the full viewport width */
-  margin: 0; /* Remove margin to align with the top */
-  background: #fff;
-  box-shadow: none; /* Remove shadow for a flat design */
+  width: 100%;
+  margin: 0 auto; /* Center the container */
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 /* Header styles */
@@ -41,25 +65,26 @@ header {
   justify-content: space-between;
   align-items: center;
   padding: 20px;
-  background: transparent; /* Remove the black background */
-  color: #000; /* Change the text color to black for visibility */
+  background: transparent;
+  color: #000;
 }
 
 /* Styles for each meal entry */
 .meal {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Space out items evenly */
+  justify-content: space-between;
   border-bottom: 1px solid #e0e0e0;
-  padding: 10px 0; /* Adjust padding as needed */
+  padding: 10px 0;
+  box-sizing: border-box;
 }
 
 .meal button:last-child {
-  margin-right: 50px; /* Adjust this value as needed */
+  margin-right: 50px;
 }
 
 .meal h2 {
-  flex-grow: 1; /* Allows the title to take up available space */
+  flex-grow: 1;
 }
 
 /* Button styles */
@@ -78,8 +103,8 @@ header {
 
 /* Footer styles, if you have a footer */
 .nutrition-info {
-  background: transparent; /* Make footer background transparent */
-  color: #000; /* Change text color to black for visibility */
+  background: transparent;
+  color: #000;
   padding: 10px 20px;
   display: flex;
   justify-content: space-around;

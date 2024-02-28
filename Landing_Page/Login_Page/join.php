@@ -1,4 +1,6 @@
 <?php
+session_start(); // Start a new session or resume the existing one
+
 // Database credentials
 $servername = "oceanus.cse.buffalo.edu";
 $username = "lanakim";
@@ -14,24 +16,40 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if the form was submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Capture and sanitize user input
-    $username = mysqli_real_escape_string($conn, $_POST['username']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
+    $userInput = mysqli_real_escape_string($conn, $_POST['username']);
+    $passInput = mysqli_real_escape_string($conn, $_POST['password']);
 
-    // (Your login logic will go here)
-    // You would check the credentials against the database and start a session if they are correct
+    // Prepare SQL statement to prevent SQL injection
+    $stmt = $conn->prepare("SELECT Password FROM Login_Info WHERE Username = ?");
+    $stmt->bind_param("s", $userInput);
 
-    // For now, we'll just close the connection
-    $conn->close();
-    
-    // Redirect to a new page upon successful login (you should replace 'some_page.php' with the actual page you want to redirect to)
-    header("Location: join.php");
-    exit();
-} else {
-    // If the form wasn't submitted, redirect back to the login form
-    header("Location: login.html");
-    exit();
+    // Execute the statement
+    $stmt->execute();
+    // Bind result variables
+    $stmt->bind_result($hashedPasswordFromDB);
+
+    // Fetch value
+    if ($stmt->fetch() && password_verify($passInput, $hashedPasswordFromDB)) {
+        // If the fetch succeeds and the password verifies, start the session
+        $_SESSION['loggedin'] = true;
+        $_SESSION['username'] = $userInput;
+        
+        // Redirect to user profile page or dashboard
+        header("Location: ../Profile_Page/index.html"); // Make sure this path is correct
+        exit();
+    } else {
+        // If the user does not exist or password does not match
+        // Redirect back to the login with an error message
+        header("Location: login.html?error=invalid_credentials"); // Adjust as necessary
+        exit();
+    }
+
+    // Close statement
+    $stmt->close();
 }
+
+// Close connection
+$conn->close();
 ?>

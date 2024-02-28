@@ -1,11 +1,13 @@
+
 .navbar {
   position: absolute;
   top: 0;
+  left: 0;  /* Add this line to ensure the navbar starts from the left */
   width: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 10px 0;
+  background: rgba(0, 0, 0, 1);
+  padding: 15px 0;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start; /* Aligns items to the start (left) */
   align-items: center;
   box-sizing: border-box;
 }
@@ -18,10 +20,10 @@
   font-weight: bold;
 }
 
-.navbar .navbar-brand {
-  padding-left: 20px;
-  font-size: 1.5em;
+.navbar a:hover {
+  color: #777; /* Dark grey color on hover */
 }
+
 
 body {
   font-family: 'Arial', sans-serif;
@@ -57,9 +59,9 @@ body {
   border-radius: 4px;
 }
 
-/* Make sure the submit button aligns with the input fields */
+
 .login-form input[type="submit"] {
-  width: calc(100% - 22px); /* Adjust width to leave space for padding and borders */
+  width: calc(100% - 22px); 
   padding: 10px;
   margin-bottom: 10px; /* Provide some space between the button and the link below */
   border: none;
@@ -77,7 +79,6 @@ body {
   color: #000;
 }
 
-/* Style the forgot password link */
 .forgot-password {
   text-align: right; /* Aligns the text to the right */
 }

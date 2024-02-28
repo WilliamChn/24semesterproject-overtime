@@ -3,8 +3,8 @@
     top: 0;
     left: 0;  /* Add this line to ensure the navbar starts from the left */
     width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 10px 0;
+    background: rgba(0, 0, 0, 1);
+    padding: 15px 0;
     display: flex;
     justify-content: flex-start; /* Aligns items to the start (left) */
     align-items: center;
@@ -17,6 +17,10 @@
     text-decoration: none;
     text-transform: uppercase;
     font-weight: bold;
+}
+
+.navbar a:hover {
+    color: #777; /* Dark grey color on hover */
 }
 
 body {

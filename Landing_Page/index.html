@@ -12,32 +12,37 @@
     }
     
     .navbar {
-        background-color: black; /* White background */
-        overflow: hidden;
-        padding: 10px 20px;
-    }
-    
-    .navbar a {
-        float: left;
-        display: block;
-        color: white; /* Black text color */
-        text-align: center;
-        padding: 12px;
-        text-decoration: none;
-        font-size: 18px; /* Larger font size */
-    }
-    
-    .navbar a:hover {
-        color: #777; /* Dark grey color on hover */
-    }
-    
-    .navbar a:not(:first-child) {
-        margin-left: 10px;
-    }
-    
-    .navbar-right {
-        float: right;
-    }
+  position: absolute;
+  top: 0;
+  left: 0; /* Ensure the navbar starts from the left */
+  width: 100%;
+  background: rgba(0, 0, 0, 1);
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between; /* Aligns items to the start and end */
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* New .navbar-right styles */
+.navbar-right {
+  display: flex; /* Align the links in a row */
+  justify-content: flex-end; /* Align the links to the right */
+}
+
+/* Update existing .navbar a styles if needed */
+.navbar a {
+  color: white;
+  padding: 0 20px; /* Adjust padding as needed */
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+/* Add hover effect for the links */
+.navbar a:hover {
+  color: #777; /* Dark grey color on hover */
+}
     
     .welcome-section {
     background-image: url('landing-page.png');
@@ -76,20 +81,18 @@
 <body>
 
 <div class="navbar">
-    <a href="../">OVERTIME</a>
+    <a href="#home">OVERTIME</a>
     <div class="navbar-right">
         <a href="Meal_Page/index.html">Log Meals</a>
         <a href="Workout_Page">Log Workouts</a>
         <a href="Profile_Page">Profile</a>
     </div>
+
 </div>
 
 <div class="welcome-section">
     <h1>WELCOME TO OVERTIME</h1>
-    <form action="Login_Page/join.php" method="post">
-      <button type="submit" class="join-button">Join Now</button>
-  </form>
-  
+    <a href="Login_Page/login.html" class="join-button">Join Now</a>
 </div>
 
 </body>
