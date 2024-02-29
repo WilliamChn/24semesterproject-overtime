@@ -29,6 +29,21 @@ body {
   align-items: center;
   box-sizing: border-box;
 }
+/* ... existing CSS above ... */
+
+/* Button styles for delete buttons, matching your add-food button style */
+.delete-entry {
+  background-color: #ff4d4d; /* Red background for delete buttons */
+  border: 1px solid black;
+  color: white;
+  padding: 10px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+/* ... existing CSS below ... */
 
 /* New .navbar-right styles */
 .navbar-right {
