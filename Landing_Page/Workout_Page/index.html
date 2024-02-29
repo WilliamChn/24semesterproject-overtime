@@ -1,98 +1,207 @@
-<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./vars.css" />
-    <link rel="stylesheet" href="./style.css" />
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workout Log</title>
 
-    <style>
-      a,
-      button,
-      input,
-      select,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        border: none;
-        text-decoration: none;
-        appearance: none;
-        background: none;
+<style>
+  body {
+    font-family: Arial, sans-serif;
+  }
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+  }
+  .workout-list, .add-entry {
+    flex: 1;
+    margin: 10px;
+  }
+  .workout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f2f2f2;
+  }
+  .workout-item > span {
+    flex: 1;
 
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="workout-page">
-      <div class="group-1">
-        <div class="rectangle-12"></div>
-        <div class="rectangle-13"></div>
-        <div class="rectangle-14"></div>
-        <div class="rectangle-15"></div>
-        <div class="overtime">OVERTIME</div>
-        <div class="line-3"></div>
-        <div class="rectangle-18"></div>
-        <div class="log-workouts">Log Workouts</div>
-        <div class="rectangle-17"></div>
-        <div class="log-meals">Log Meals</div>
-      </div>
-      <svg
-        class="rectangle-122"
-        width="1549"
-        height="908"
-        viewBox="0 0 1549 908"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M0 0L1549 2.23645V908H0V0Z" fill="#D9D9D9" />
-      </svg>
-      <div class="image-4"></div>
-      <img
-        class="pexels-photo-by-victor-freitas"
-        src="pexels-photo-by-victor-freitas0.png"
-      />
-      <div class="workouts">WORKOUTS</div>
-      <img class="image-1" src="image-10.png" />
-      <div class="rectangle-16"></div>
-      <div class="rectangle-172"></div>
-      <div class="line-1"></div>
-      <div class="line-2"></div>
-      <svg class="rectangle-25" width="31" height="5"></svg>
-      <div class="rectangle-32"></div>
-      <div class="rectangle-34"></div>
-      <div class="rectangle-35"></div>
-      <div class="rectangle-36"></div>
-      <div class="rectangle-37"></div>
-      <div class="rectangle-41"></div>
-      <div class="rectangle-42"></div>
-      <div class="squats-15-minutes">Squats 15 Minutes</div>
-      <div class="rectangle-38"></div>
-      <div class="pull-ups-15-minutes">Pull-ups 15 Minutes</div>
-      <div class="rectangle-39"></div>
-      <div class="rectangle-40"></div>
-      <div class="sit-ups-15-minutes">Sit-ups 15 Minutes</div>
-      <div class="rectangle-43"></div>
-      <div class="rectangle-44"></div>
-      <div class="rectangle-45"></div>
-      <div class="sit-ups-15-minutes2">Sit-ups 15 Minutes</div>
-      <div class="add-entry">Add Entry</div>
-      <div class="line-32"></div>
-      <div class="line-4"></div>
-      <div class="line-5"></div>
-      <div class="rectangle-46"></div>
-      <div class="rectangle-47"></div>
-      <div class="rectangle-48"></div>
-      <div class="sit-ups-15-minutes3">Sit-ups 15 Minutes</div>
-      <div class="line-6"></div>
+  }
+  .workout-item > button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    
+  }
+  .add-entry-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+  
+  }
+  .navbar {
+    background-color: #ffffff; /* White background */
+    overflow: hidden;
+    padding: 10px 20px;
+}
+
+.navbar a {
+    float: left;
+    display: block;
+    color: black; /* Black text color */
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px; /* Larger font size */
+}
+
+.navbar a:hover {
+    color: #777; /* Dark grey color on hover */
+}
+
+.navbar a:not(:first-child) {
+    margin-left: 10px;
+}
+
+.navbar-right {
+    float: right;
+}
+.header-image {
+    background-image: url('workout.png'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    height: 150px; /* Adjust the height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000; /* black text color */
+  }
+  .workout-select, .workout-duration {
+    flex: 1;
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+  }
+
+  .workout-duration {
+    flex: 0 0 100px; /* Adjust the width as necessary */
+  }
+
+  .workout-duration-label {
+    margin-right: 10px;
+  }
+  
+</style>
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="../index.html">OVERTIME</a>
+    <div class="navbar-right">
+        <a href="../Meal_Page/index.html">Log Meals</a>
+        <a href="../Workout_Page/index.html">Log Workouts</a>
+        <a href="../Profile_Page/index.html">Profile</a>
     </div>
-  </body>
+</div>
+
+<div class="header-image">
+  <h1>WORKOUTS</h1>
+</div>
+
+<div class="container">
+  <div class="workout-list">
+    <div class="workout-item">
+      
+    </div>
+
+    <!-- Place this inside the .container div, after .workout-list -->
+<div class="add-entry">
+  <button id="add-entry-button" class="add-entry-button">Add Entry</button>
+</div>
+
+</div>
+  
+</div>
+<script>
+  // Function to create a new workout entry
+  // Function to create a new workout entry
+function createWorkoutItem() {
+  const workoutList = document.querySelector('.workout-list');
+  const addEntryButton = document.querySelector('#add-entry-button'); // Get the add-entry button by ID
+  const addEntryDiv = document.querySelector('.add-entry');
+  
+  
+
+  // Create the workout item div
+  const workoutItem = document.createElement('div');
+  workoutItem.classList.add('workout-item');
+
+  // Create the select dropdown
+  const select = document.createElement('select');
+  select.name = 'workouts';
+  select.classList.add('workout-select');
+  select.innerHTML = `
+    <option value="squats">Squats</option>
+    <option value="pull-ups">Pull-ups</option>
+    <option value="sit-ups">Sit-ups</option>
+    <!-- Add more workout options here -->
+  `;
+
+  // Create the duration label
+  const durationLabel = document.createElement('span');
+  durationLabel.classList.add('workout-duration-label');
+  durationLabel.textContent = 'Duration:';
+
+  // Create the duration input
+  const durationInput = document.createElement('input');
+  durationInput.type = 'number';
+  durationInput.classList.add('workout-duration');
+  durationInput.placeholder = 'Minutes';
+  durationInput.min = '1';
+
+  // Create the delete button
+  // Create the delete button
+const deleteButton = document.createElement('button');
+deleteButton.textContent = 'x';
+// Attach an event listener to the delete button
+deleteButton.onclick = function() {
+  // This will remove the workoutItem (the parent element of the delete button)
+  workoutItem.remove();
+};
+
+
+  // Append everything to the workoutItem div
+  workoutItem.appendChild(select);
+  workoutItem.appendChild(durationLabel);
+  workoutItem.appendChild(durationInput);
+  workoutItem.appendChild(deleteButton);
+
+  // Insert the new workoutItem just before the addEntryButton
+  workoutList.insertBefore(workoutItem, addEntryDiv);
+}
+
+// Event listener for the Add Entry button
+document.getElementById('add-entry-button').addEventListener('click', createWorkoutItem);
+
+</script>
+
+</body>
 </html>
