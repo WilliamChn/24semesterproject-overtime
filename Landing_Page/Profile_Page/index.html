@@ -7,20 +7,47 @@
 <link rel="stylesheet" href="style.css">
 <script>
 // This function will fetch the protein intake from the profile-data.php
-function fetchProteinIntake() {
+function fetchIntakes() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
-            document.getElementById('proteinIntake').value = response.totalProtein;
+            document.getElementById('proteinIntake').innerText = response.totalProtein + ' g';
+            document.getElementById('waterIntakeDisplay').innerText = response.totalWater + ' ml';
         }
     };
     xhr.open('GET', 'profile-data.php', true);
     xhr.send();
 }
 
+// Function to send water intake data to the server
+function sendWaterIntakeData(waterIntake) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "profile-data.php", true);
+    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            fetchIntakes(); // Refetch intakes to update the display
+        }
+    };
+    xhr.send("waterIntake=" + waterIntake);
+}
+
+// Function to validate the water intake input and send data if valid
+function validateAndSendWaterIntake() {
+    var waterIntakeInput = document.getElementById('waterIntakeInput');
+    var waterIntakeValue = waterIntakeInput.value;
+    if (isNaN(waterIntakeValue) || waterIntakeValue < 0 || waterIntakeValue === '') {
+        alert('Please enter a valid number');
+        waterIntakeInput.value = ''; // Clear the textbox
+        waterIntakeInput.focus();
+        return false;
+    }
+    sendWaterIntakeData(waterIntakeValue); // Send data if validation is successful
+}
+
 // Call the function on window load
-window.onload = fetchProteinIntake;
+window.onload = fetchIntakes;
 </script>
 </head>
 <body>
@@ -52,12 +79,14 @@ window.onload = fetchProteinIntake;
         <div class="data-field-container">
           <div class="data-field">
             <span class="data-label">Water Intake</span>
-            <input type="text" placeholder="0">
+            <input type="text" id="waterIntakeInput" placeholder="Enter ml">
+            <button type="button" onclick="validateAndSendWaterIntake()">Enter</button>
+            <span class="data-value" id="waterIntakeDisplay">0 ml</span>
           </div>
           <div class="data-field">
             <span class="data-label">Protein Intake</span>
-            <input type="text" id="proteinIntake" placeholder="0">
-        </div>
+            <span class="data-value" id="proteinIntake">0 g</span>
+          </div>
         </div>
         <div class="data-field-container">
           <div class="data-section">
@@ -80,7 +109,7 @@ window.onload = fetchProteinIntake;
                   <span class="data-value">250 lbs</span>
               </div>
               <div class="data-section">
-                  <span class="data-label">Longest Workout</span>
+                  <span the="data-label">Longest Workout</span>
                   <span class="data-value">2 hrs</span>
               </div>
           </div>
@@ -89,4 +118,3 @@ window.onload = fetchProteinIntake;
 
 </body>
 </html>
-
