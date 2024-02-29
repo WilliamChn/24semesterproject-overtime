@@ -1,0 +1,89 @@
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;  /* Add this line to ensure the navbar starts from the left */
+  width: 100%;
+  background: rgba(0, 0, 0, 1);
+  padding: 15px 0;
+  display: flex;
+  justify-content: flex-start; /* Aligns items to the start (left) */
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.navbar a {
+  color: white;
+  padding: 0 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  color: #777; /* Dark grey color on hover */
+}
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-image: url('login-page.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+.login-container {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  width: 350px;
+}
+
+.login-header, .login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: calc(100% - 22px); /* Adjust width to leave space for padding and borders */
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+.login-form input[type="submit"] {
+  width: calc(100% - 22px); 
+  padding: 10px;
+  margin-bottom: 10px; /* Provide some space between the button and the link below */
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
+
+
+.login-form a {
+  text-decoration: none;
+  color: #000;
+}
+
+.forgot-password {
+  text-align: right; /* Aligns the text to the right */
+}
+.forgot-password a {
+  display: inline-block; /* Allows the use of margin */
+  margin-bottom: 10px; /* Adjust this value as needed for space */
+  /* ... other properties ... */
+}
