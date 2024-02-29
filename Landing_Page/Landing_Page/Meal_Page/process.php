@@ -10,26 +10,21 @@ $username = "ziangche";
 $password = "50415271";
 $dbname = "cse442_2024_spring_team_b_db";
 $port = 3306;
-
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
-
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-
 // Prepare and bind
 $sql = "INSERT INTO message (breakfast_item, lunch_item, dinner_item, snack_item) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
-
 // Check if the statement was prepared correctly
 if (!$stmt) {
     die("Statement preparation failed: " . $conn->error);
 }
 // Bind the parameters and execute
 $stmt->bind_param("iiii", $breakfast_item, $lunch_item, $dinner_item, $snack_item);
-
 if ($stmt->execute()) {
     echo "New records created successfully";
 } else {
@@ -37,8 +32,7 @@ if ($stmt->execute()) {
 }
 if (isset($_POST['delete_all_meals'])) {
     // Create a SQL query to delete all records from the message table
-    $sql = "DELETE FROM message";
-    
+    $sql = "DELETE FROM message";   
     // Execute the query
     if ($conn->query($sql) === TRUE) {
         echo "All records deleted successfully";
