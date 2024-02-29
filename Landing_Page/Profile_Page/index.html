@@ -5,6 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Profile Page</title>
 <link rel="stylesheet" href="style.css">
+<script>
+// This function will fetch the protein intake from the profile-data.php
+function fetchProteinIntake() {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            document.getElementById('proteinIntake').value = response.totalProtein;
+        }
+    };
+    xhr.open('GET', 'profile-data.php', true);
+    xhr.send();
+}
+
+// Call the function on window load
+window.onload = fetchProteinIntake;
+</script>
 </head>
 <body>
 
@@ -39,8 +56,8 @@
           </div>
           <div class="data-field">
             <span class="data-label">Protein Intake</span>
-            <input type="text" placeholder="0">
-          </div>
+            <input type="text" id="proteinIntake" placeholder="0">
+        </div>
         </div>
         <div class="data-field-container">
           <div class="data-section">
