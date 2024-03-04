@@ -155,7 +155,14 @@ input[type="text"], .data-value {
 }
 
 #proteinIntakeCircle {
-  background: conic-gradient(lightgreen 0% 0%, lightgray 0% 100%);
+  background: conic-gradient(brown 0% 0%, lightgray 0% 100%);
+}
+
+.goal-message {
+  display: none;
+  color: green;
+  font-size: 14px;
+  margin-top: 10px;
 }
 
 /* Adjust for mobile responsiveness */

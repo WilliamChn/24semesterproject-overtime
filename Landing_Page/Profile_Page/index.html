@@ -27,6 +27,10 @@ function updateProteinIntakeCircle(value) {
     var percentage = Math.min(value / maxProtein * 100, 100);
     var circle = document.getElementById('proteinIntakeCircle');
     circle.style.background = `conic-gradient(lightgreen 0% ${percentage}%, lightgray ${percentage}% 100%)`;
+
+    // Show goal message if reached
+    var goalMessage = document.getElementById('proteinGoalMessage');
+    goalMessage.style.display = (value >= maxProtein) ? 'block' : 'none';
 }
 
 function updateWaterIntakeCircle(value) {
@@ -34,6 +38,10 @@ function updateWaterIntakeCircle(value) {
     var percentage = Math.min(value / maxWater * 100, 100); // Calculate the fill percentage
     var circle = document.getElementById('waterIntakeCircle');
     circle.style.background = `conic-gradient(lightblue 0% ${percentage}%, lightgray ${percentage}% 100%)`;
+
+    // Show goal message if reached
+    var goalMessage = document.getElementById('waterGoalMessage');
+    goalMessage.style.display = (value >= maxWater) ? 'block' : 'none';
 }
 
 // Function to send water intake data to the server
@@ -61,7 +69,9 @@ function validateAndSendWaterIntake() {
         return false;
     }
     sendWaterIntakeData(waterIntakeValue); // Send data if validation is successful
+    waterIntakeInput.value = ''; // Clear the input box after sending data
 }
+
 
 // Call the function on window load
 window.onload = fetchIntakes;
@@ -100,11 +110,13 @@ window.onload = fetchIntakes;
                 <button type="button" onclick="validateAndSendWaterIntake()">Enter</button>
                 <span class="data-value" id="waterIntakeDisplay">0 ml</span>
                 <div class="circle-progress" id="waterIntakeCircle"></div>
+                <div class="goal-message" id="waterGoalMessage">Daily Goal Reached</div>
             </div>
             <div class="data-field">
                 <span class="data-label">Protein Intake</span>
                 <span class="data-value" id="proteinIntake">0 g</span>
                 <div class="circle-progress" id="proteinIntakeCircle"></div>
+                <div class="goal-message" id="proteinGoalMessage">Daily Goal Reached</div>
             </div>            
         </div>
         <div class="data-field-container">
