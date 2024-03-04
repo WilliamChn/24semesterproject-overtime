@@ -1,88 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meal Tracker</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Overtime Meal Planning</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+       function loadDropdown(dropdownId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'meal_processor.php', true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            document.getElementById(dropdownId).innerHTML = this.responseText;
+            // Enable the submit button associated with the dropdown
+            document.getElementById(dropdownId + '-submit').disabled = false;
+        } else {
+            document.getElementById(dropdownId).innerHTML = '<option value="">Failed to load meals</option>';
+        }
+    };
+    xhr.onerror = function() {
+        document.getElementById(dropdownId).innerHTML = '<option value="">Failed to load meals</option>';
+    };
+    xhr.send();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadDropdown('breakfast-dropdown');
+    loadDropdown('lunch-dropdown');
+    loadDropdown('dinner-dropdown');
+    loadDropdown('snacks-dropdown');
+});
+
+function submitMeal(form, mealType) {
+    // Prevent the default form submission
+    event.preventDefault();
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'add_meal.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function() {
+        if (this.status === 200) {
+            alert("Meal added successfully!");
+        } else {
+            alert("Failed to add meal.");
+        }
+    };
+
+    // Extract the meal data from the dropdown
+    var mealSelect = form.querySelector('select[name="meal"]');
+    if (mealSelect.selectedIndex >= 0) {
+        var selectedOption = mealSelect.options[mealSelect.selectedIndex].text;
+        console.log('Selected Option:', selectedOption);
+
+        // Split the selected option into parts
+        var mealParts = selectedOption.split(' ');
+        if (mealParts.length < 4) {
+            console.error('Unexpected format for selected option:', selectedOption);
+            return false;
+        }
+
+        // Extracting the meal name, calories, and protein from the option's text
+        // Assuming the format is always "Item – Calories: X Protein: Yg"
+        var itemName = mealParts.slice(0, -4).join(' '); // The item name is everything up to the last 4 words
+        var calories = mealParts[mealParts.length - 3]; // The calories are the third-to-last word
+        var protein = mealParts[mealParts.length - 1].slice(0, -1); // The protein is the last word, minus the 'g'
+
+        // Construct the data string
+        var data = 'itemName=' + encodeURIComponent(itemName) +
+                   '&calories=' + encodeURIComponent(calories) +
+                   '&protein=' + encodeURIComponent(protein);
+
+        console.log('Data String:', data); // Log the data string being sent
+
+        xhr.send(data);
+    } else {
+        console.error('No meal selected.');
+        alert('Please select a meal before adding.');
+        return false;
+    }
+}
+
+    </script>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="navbar">
-        <a href="../index.html">OVERTIME</a>
-        <div class="navbar-right">
-          <a href="#">Log Meals</a>
-          <a href="../Workout_Page/index.html">Log Workouts</a>
-          <a href="../Profile_Page/index.html">Profile</a>
-        </div>
-      </div>
-    </header>
+    <div class="container">
+        <header>
+            <div class="navbar">
+                <a href="../index.html">OVERTIME</a>
+                <div class="navbar-right">
+                    <a href="#">Log Meals</a>
+                    <a href="../Workout_Page/index.html">Log Workouts</a>
+                    <a href="../Profile_Page/index.html">Profile</a>
+                </div>
+            </div>
+        </header>
+        <main>
+            <section class="meal-selection">
+                <!-- Breakfast -->
+                <div class="meal">
+                    <h2>Breakfast</h2>
+                    <form onsubmit="return submitMeal(this, 'breakfast');">
+                        <select id="breakfast-dropdown" name="meal" class="meal-dropdown"></select>
+                        <input type="submit" value="ADD FOOD" class="add-food-delete-entry">
+                    </form>
+                    <button class="delete-entry">DELETE</button>
+                </div>
 
-    
-    <form action="breakfast.php" method="POST">
-      <section class="meals">
-        <div class="meal">
-          <h2>Breakfast</h2>
-          <select name="breakfast_item" class="meal-dropdown">
-            <option value="1">Cereal</option>
-            <option value="2">Bacon</option>
-            <option value="3">Eggs</option>
-          </select>
-          <input type="submit" name="add_breakfast" value="Add Food" class="add-food">
-          <input type="submit" name="delete_breakfast" value="Delete" class="delete-entry">
-        </div>
-      </section>
-    </form>
+                <!-- Lunch -->
+                <div class="meal">
+                    <h2>Lunch</h2>
+                    <form onsubmit="return submitMeal(this, 'lunch');">
+                        <select id="lunch-dropdown" name="meal" class="meal-dropdown"></select>
+                        <input type="submit" value="ADD FOOD" class="add-food-delete-entry">
+                    </form>
+                    <button class="delete-entry">DELETE</button>
+                </div>
 
-    <form action="lunch.php" method="POST">
-        <div class="meal">
-          <h2>Lunch</h2>
-          <select name="lunch_item" class="meal-dropdown">
-            <option value="1">Sushi</option>
-            <option value="2">Pizza</option>
-            <option value="3">Rice</option>
-          </select>
-          <input type="submit" name="add_lunch" value="Add Food" class="add-food">
-          <input type="submit" name="delete_lunch" value="Delete" class="delete-entry"> 
-        </div>
-      </section>
-    </form>
+                <!-- Dinner -->
+                <div class="meal">
+                    <h2>Dinner</h2>
+                    <form onsubmit="return submitMeal(this, 'dinner');">
+                        <select id="dinner-dropdown" name="meal" class="meal-dropdown"></select>
+                        <input type="submit" value="ADD FOOD" class="add-food-delete-entry">
+                    </form>
+                    <button class="delete-entry">DELETE</button>
+                </div>
 
-    <form action="dinner.php" method="POST">
-      <div class="meal">
-          <h2>Dinner</h2>
-          <select name="dinner_item" class="meal-dropdown">
-            <option value="1">Steak</option>
-            <option value="2">Chicken</option>
-            <option value="3">Lamb</option>
-          </select>
-          <input type="submit" name="add_dinner" value="Add Food" class="add-food">
-          <input type="submit" name="delete_dinner" value="Delete" class="delete-entry">
-        </div>
-      </section>
-    </form>
+                <!-- Snacks -->
+                <div class="meal">
+                    <h2>Snacks</h2>
+                    <form onsubmit="return submitMeal(this, 'snacks');">
+                        <select id="snacks-dropdown" name="meal" class="meal-dropdown"></select>
+                        <input type="submit" value="ADD FOOD" class="add-food-delete-entry">
+                    </form>
+                    <button class="delete-entry">DELETE</button>
+                </div>
 
-    <form action="snack.php" method="POST">
-        <div class="meal">
-          <h2>Snacks</h2>
-          <select name="snack_item" class="meal-dropdown">
-            <option value="1">Sour Patch Kids</option>
-            <option value="2">Swedish Fish</option>
-            <option value="3">Candy Corn</option>
-          </select>
-          <input type="submit" name="add_snack" value="Add Food" class="add-food">
-          <input type="submit" name="delete_snack" value="Delete" class="delete-entry"> 
-        </div>
-      </section>
-    </form>
- 
- 
-    <!-- Delete All Meals Form -->
-    <form action="process.php" method="POST" style="margin-top: 20px;">
-      <input type="submit" name="delete_all_meals" value="Delete All Meals" class="delete-meals">
-    </form>
-  </div>
-  <script src="script.js"></script>
+                <button class="delete-entry delete-all" onclick="deleteAllMeals()">DELETE ALL MEALS</button>
+            </section>
+        </main>
+    </div>
 </body>
 </html>
