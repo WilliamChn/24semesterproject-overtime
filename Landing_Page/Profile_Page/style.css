@@ -139,6 +139,25 @@ input[type="text"], .data-value {
 
 }
 
+.circle-progress {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: conic-gradient(lightblue 0% 0%, lightgray 0% 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circle-progress span {
+  font-size: 14px;
+  color: black;
+}
+
+#proteinIntakeCircle {
+  background: conic-gradient(lightgreen 0% 0%, lightgray 0% 100%);
+}
+
 /* Adjust for mobile responsiveness */
 @media (max-width: 768px) {
   .sections-container {

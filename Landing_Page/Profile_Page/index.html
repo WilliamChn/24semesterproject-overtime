@@ -14,10 +14,26 @@ function fetchIntakes() {
             var response = JSON.parse(this.responseText);
             document.getElementById('proteinIntake').innerText = response.totalProtein + ' g';
             document.getElementById('waterIntakeDisplay').innerText = response.totalWater + ' ml';
+            updateWaterIntakeCircle(response.totalWater); // Update the circle with the fetched data
+            updateProteinIntakeCircle(response.totalProtein);
         }
     };
     xhr.open('GET', 'profile-data.php', true);
     xhr.send();
+}
+
+function updateProteinIntakeCircle(value) {
+    var maxProtein = 200; // Set a maximum protein intake value for full circle
+    var percentage = Math.min(value / maxProtein * 100, 100);
+    var circle = document.getElementById('proteinIntakeCircle');
+    circle.style.background = `conic-gradient(lightgreen 0% ${percentage}%, lightgray ${percentage}% 100%)`;
+}
+
+function updateWaterIntakeCircle(value) {
+    var maxWater = 200;
+    var percentage = Math.min(value / maxWater * 100, 100); // Calculate the fill percentage
+    var circle = document.getElementById('waterIntakeCircle');
+    circle.style.background = `conic-gradient(lightblue 0% ${percentage}%, lightgray ${percentage}% 100%)`;
 }
 
 // Function to send water intake data to the server
@@ -27,11 +43,12 @@ function sendWaterIntakeData(waterIntake) {
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            fetchIntakes(); // Refetch intakes to update the display
+            fetchIntakes(); // Refetch intakes to update the display and the circle
         }
     };
     xhr.send("waterIntake=" + waterIntake);
 }
+
 
 // Function to validate the water intake input and send data if valid
 function validateAndSendWaterIntake() {
@@ -77,16 +94,18 @@ window.onload = fetchIntakes;
       <div class="section personal">
         <h2 class="section-title">Personal</h2>
         <div class="data-field-container">
-          <div class="data-field">
-            <span class="data-label">Water Intake</span>
-            <input type="text" id="waterIntakeInput" placeholder="Enter ml">
-            <button type="button" onclick="validateAndSendWaterIntake()">Enter</button>
-            <span class="data-value" id="waterIntakeDisplay">0 ml</span>
-          </div>
-          <div class="data-field">
-            <span class="data-label">Protein Intake</span>
-            <span class="data-value" id="proteinIntake">0 g</span>
-          </div>
+            <div class="data-field">
+                <span class="data-label">Water Intake</span>
+                <input type="text" id="waterIntakeInput" placeholder="Enter ml">
+                <button type="button" onclick="validateAndSendWaterIntake()">Enter</button>
+                <span class="data-value" id="waterIntakeDisplay">0 ml</span>
+                <div class="circle-progress" id="waterIntakeCircle"></div>
+            </div>
+            <div class="data-field">
+                <span class="data-label">Protein Intake</span>
+                <span class="data-value" id="proteinIntake">0 g</span>
+                <div class="circle-progress" id="proteinIntakeCircle"></div>
+            </div>            
         </div>
         <div class="data-field-container">
           <div class="data-section">
