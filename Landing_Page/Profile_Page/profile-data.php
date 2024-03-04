@@ -56,6 +56,18 @@ if ($waterResult && $waterResult->num_rows > 0) {
     $response['totalWater'] = 0;
 }
 
+// Add logic for fetching total calorie intake
+// Assuming there is a table or a field in an existing table that stores calorie intake
+$calorieSumQuery = "SELECT SUM(Calories) AS TotalCalories FROM Meals_Info"; // Adjust this query based on your database schema
+$calorieResult = $conn->query($calorieSumQuery);
+
+if ($calorieResult && $calorieResult->num_rows > 0) {
+    $calorieRow = $calorieResult->fetch_assoc();
+    $response['totalCalories'] = $calorieRow['TotalCalories'];
+} else {
+    $response['totalCalories'] = 0;
+}
+
 $conn->close();
 
 // Set header to tell that the response is JSON

@@ -14,7 +14,8 @@ function fetchIntakes() {
             var response = JSON.parse(this.responseText);
             document.getElementById('proteinIntake').innerText = response.totalProtein + ' g';
             document.getElementById('waterIntakeDisplay').innerText = response.totalWater + ' ml';
-            updateWaterIntakeCircle(response.totalWater); // Update the circle with the fetched data
+            document.getElementById('calorieIntake').innerText = response.totalCalories + ' cal'; // Add this line
+            updateWaterIntakeCircle(response.totalWater);
             updateProteinIntakeCircle(response.totalProtein);
         }
     };
@@ -120,10 +121,10 @@ window.onload = fetchIntakes;
             </div>            
         </div>
         <div class="data-field-container">
-          <div class="data-section">
-              <span class="data-label">Calorie Intake</span>
-              <span class="data-value">800 cal</span>
-          </div>
+            <div class="data-section">
+                <span class="data-label">Calorie Intake</span>
+                <span class="data-value" id="calorieIntake">0 cal</span> <!-- Add this line -->
+            </div>
           <div class="data-section">
               <span class="data-label">Weight</span>
               <span class="data-value">150 lbs</span>
