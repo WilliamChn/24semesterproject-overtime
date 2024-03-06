@@ -81,30 +81,39 @@
 <body>
 
     <?php
-include 'check_session.php'; // Include the session check script
+    include 'check_session.php'; // Include the session check script
 
-if (isLoggedIn()) {
-    // If the user is logged in, display the navbar
+    $loggedIn = isLoggedIn(); // Determine if the user is logged in
+
+    // Navbar - Display for both logged in and logged out users
     echo '<div class="navbar">
-            <a href="#home">OVERTIME</a>
-            <div class="navbar-right">
+            <a href="#home">OVERTIME</a>';
+
+    if ($loggedIn) {
+        // Display additional links if logged in
+        echo '<div class="navbar-right">
                 <a href="Meal_Page/index.html">Log Meals</a>
                 <a href="Workout_Page">Log Workouts</a>
                 <a href="Profile_Page">Profile</a>
-            </div>
-        </div>';
-}
-else{
-    echo '<div class="navbar">
-    <a href="#home">OVERTIME</a>
-</div>';   
-}
-?>
+            </div>';
+    }
 
-<div class="welcome-section">
-    <h1>WELCOME TO OVERTIME</h1>
-    <a href="Login_Page/login.html" class="join-button">Join Now</a>
-</div>
+    echo '</div>'; // Close navbar
+
+    ?>
+
+    <div class="welcome-section">
+        <h1>WELCOME TO OVERTIME</h1>
+        <?php
+        if ($loggedIn) {
+            // Display 'Log Out' button if logged in
+            echo '<a href="logout.php" class="join-button">Log Out</a>';
+        } else {
+            // Display 'Join Now' button if logged out
+            echo '<a href="Login_Page/login.html" class="join-button">Join Now</a>';
+        }
+        ?>
+    </div>
 
 </body>
 </html>
