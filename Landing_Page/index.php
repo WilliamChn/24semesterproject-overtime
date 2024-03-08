@@ -95,6 +95,7 @@
                 <a href="Meal_Page/index.html">Log Meals</a>
                 <a href="Workout_Page">Log Workouts</a>
                 <a href="Profile_Page">Profile</a>
+                <a href="logout.php">Logout</a> 
             </div>';
     }
 
@@ -105,13 +106,9 @@
     <div class="welcome-section">
         <h1>WELCOME TO OVERTIME</h1>
         <?php
-        if ($loggedIn) {
-            // Display 'Log Out' button if logged in
-            echo '<a href="logout.php" class="join-button">Log Out</a>';
-        } else {
-            // Display 'Join Now' button if logged out
-            echo '<a href="Login_Page/login.html" class="join-button">Join Now</a>';
-        }
+        if (!$loggedIn) {
+            echo "<a href='Login_Page/login.html' class='join-button'>Let's Go!</a>";
+        } 
         ?>
     </div>
 
