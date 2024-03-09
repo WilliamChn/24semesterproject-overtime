@@ -1,93 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./vars.css" />
-    <link rel="stylesheet" href="./style.css" />
+<head>
+    <meta charset="UTF-8">
+    <title>Overtime Meal Planning</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
 
-    <style>
-      a,
-      button,
-      input,
-      select,
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-        border: none;
-        text-decoration: none;
-        appearance: none;
-        background: none;
+function deleteAllMeals() {
+    if (confirm("Are you sure you want to delete all meals?")) {
+        fetch('clear_meals.php')
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            location.reload(); // Refresh the page
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert("Failed to delete all meals.");
+        });
+    }
+}
 
-        -webkit-font-smoothing: antialiased;
-      }
-    </style>
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="meal-page">
-      <div class="group-1">
-        <div class="rectangle-12"></div>
-        <div class="rectangle-13"></div>
-        <div class="rectangle-14"></div>
-        <div class="rectangle-15"></div>
-        <div class="overtime">OVERTIME</div>
-        <div class="line-3"></div>
-        <div class="rectangle-18"></div>
-        <div class="log-workouts">Log workouts</div>
-        <div class="rectangle-17"></div>
-        <div class="log-meals">Log meals</div>
-      </div>
-      <svg
-        class="rectangle-122"
-        width="907"
-        height="869"
-        viewBox="0 0 907 869"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M0 0H907V869H0V0Z" fill="#D9D9D9" />
-      </svg>
-      <div class="lunch">Lunch</div>
-      <div class="dinner">Dinner</div>
-      <div class="snacks">Snacks</div>
-      <div class="breakfast">Breakfast</div>
-      <div class="meals">MEALS</div>
-      <div class="add-food-delete-entry">Add Food | Delete Entry</div>
-      <div class="add-food-delete-entry2">Add Food | Delete Entry</div>
-      <div class="add-food-delete-entry3">Add Food | Delete Entry</div>
-      <div class="add-food-delete-entry4">Add Food | Delete Entry</div>
-      <svg
-        class="rectangle-142"
-        width="527"
-        height="134"
-        viewBox="0 0 527 134"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M0 0H527V134H0V0Z" fill="#D9D9D9" fill-opacity="0.36" />
-      </svg>
-      <div class="line-10"></div>
-      <div class="line-11"></div>
-      <div class="line-12"></div>
-      <div class="line-13"></div>
-      <div class="line-14"></div>
-      <div class="calories">Calories</div>
-      <div class="carbs">Carbs</div>
-      <div class="fat">Fat</div>
-      <div class="protein">Protein</div>
-      <div class="sodium">Sodium</div>
-      <div class="sugar">Sugar</div>
-      <img class="image-1" src="image-10.png" />
-      <div class="rectangle-16"></div>
-      <div class="line-15"></div>
+        function deleteRecentMeal() {
+    fetch('delete_meal.php')
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        // Refresh the page after showing the alert
+        location.reload();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert("Failed to delete the meal.");
+    });
+}
+
+       function loadDropdown(dropdownId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'meal_processor.php', true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            document.getElementById(dropdownId).innerHTML = this.responseText;
+            // Enable the submit button associated with the dropdown
+            document.getElementById(dropdownId + '-submit').disabled = false;
+        } else {
+            document.getElementById(dropdownId).innerHTML = '<option value="">Failed to load meals</option>';
+        }
+    };
+    xhr.onerror = function() {
+        document.getElementById(dropdownId).innerHTML = '<option value="">Failed to load meals</option>';
+    };
+    xhr.send();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadDropdown('breakfast-dropdown');
+    loadDropdown('lunch-dropdown');
+    loadDropdown('dinner-dropdown');
+    loadDropdown('snacks-dropdown');
+});
+
+function submitMeal(form, mealType) {
+    // Prevent the default form submission
+    event.preventDefault();
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'add_meal.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function() {
+        if (this.status === 200) {
+            alert("Meal added successfully!");
+        } else {
+            alert("Failed to add meal.");
+        }
+    };
+
+    // Extract the meal data from the dropdown
+    var mealSelect = form.querySelector('select[name="meal"]');
+    if (mealSelect.selectedIndex >= 0) {
+        var selectedOption = mealSelect.options[mealSelect.selectedIndex].text;
+        console.log('Selected Option:', selectedOption);
+
+        // Split the selected option into parts
+        var mealParts = selectedOption.split(' ');
+        if (mealParts.length < 4) {
+            console.error('Unexpected format for selected option:', selectedOption);
+            return false;
+        }
+
+        // Extracting the meal name, calories, and protein from the option's text
+        // Assuming the format is always "Item – Calories: X Protein: Yg"
+        var itemName = mealParts.slice(0, -4).join(' '); // The item name is everything up to the last 4 words
+        var calories = mealParts[mealParts.length - 3]; // The calories are the third-to-last word
+        var protein = mealParts[mealParts.length - 1].slice(0, -1); // The protein is the last word, minus the 'g'
+
+        // Construct the data string
+        var data = 'itemName=' + encodeURIComponent(itemName) +
+                   '&calories=' + encodeURIComponent(calories) +
+                   '&protein=' + encodeURIComponent(protein);
+
+        console.log('Data String:', data); // Log the data string being sent
+
+        xhr.send(data);
+    } else {
+        console.error('No meal selected.');
+        alert('Please select a meal before adding.');
+        return false;
+    }
+}
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="navbar">
+                <a href="../index.php">OVERTIME</a>
+                <div class="navbar-right">
+                    <a href="#">Log Meals</a>
+                    <a href="../Workout_Page/index.html">Log Workouts</a>
+                    <a href="../Profile_Page/index.html">Profile</a>
+                    <a href="../logout.php">Logout</a> 
+                </div>
+            </div>
+        </header>
+        <main>
+            <section class="meal-selection">
+                <!-- Breakfast -->
+                <div class="meal">
+                    <h2>Breakfast</h2>
+                    <form onsubmit="return submitMeal(this, 'breakfast');">
+                        <select id="breakfast-dropdown" name="meal" class="meal-dropdown"></select>
+                        <input type="submit" value="ADD FOOD" class="add-food-delete-entry">
+                    </form>
+                    <button class="delete-entry" onclick="deleteRecentMeal()">DELETE</button>
+                </div>
+
+                <!-- Lunch -->
+                <div class="meal">
+                    <h2>Lunch</h2>
+                    <form onsubmit="return submitMeal(this, 'lunch');">
+                        <select id="lunch-dropdown" name="meal" class="meal-dropdown"></select>
+                        <input type="submit" value="ADD FOOD" class="add-food-delete-entry">
+                    </form>
+                    <button class="delete-entry" onclick="deleteRecentMeal()">DELETE</button>
+                </div>
+
+                <!-- Dinner -->
+                <div class="meal">
+                    <h2>Dinner</h2>
+                    <form onsubmit="return submitMeal(this, 'dinner');">
+                        <select id="dinner-dropdown" name="meal" class="meal-dropdown"></select>
+                        <input type="submit" value="ADD FOOD" class="add-food-delete-entry">
+                    </form>
+                    <button class="delete-entry" onclick="deleteRecentMeal()">DELETE</button>
+                </div>
+
+                <!-- Snacks -->
+                <div class="meal">
+                    <h2>Snacks</h2>
+                    <form onsubmit="return submitMeal(this, 'snacks');">
+                        <select id="snacks-dropdown" name="meal" class="meal-dropdown"></select>
+                        <input type="submit" value="ADD FOOD" class="add-food-delete-entry">
+                    </form>
+                    <button class="delete-entry" onclick="deleteRecentMeal()">DELETE</button>
+                </div>
+
+                <button class="delete-entry delete-all" onclick="deleteAllMeals()">DELETE ALL MEALS</button>
+            </section>
+        </main>
     </div>
-  </body>
+</body>
 </html>
