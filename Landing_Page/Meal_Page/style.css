@@ -1,392 +1,174 @@
-.meal-page,
-.meal-page * {
+/* Reset some default styles */
+body, h1, a, button {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: url("Meals.jpg"); /* Path to your image */
+  background-size: cover; /* Cover the entire area */
+  background-position: center; /* Center the image within the body */
+  background-repeat: no-repeat; /* Prevent the image from tiling */
+  background-attachment: scroll; /* Allow the background to scroll with the content */
+  font-family: 'Arial', sans-serif;
+}
+
+/* Styles for the navigation bar */
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0; /* Ensure the navbar starts from the left */
+  width: 100%;
+  background: rgba(0, 0, 0, 1);
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between; /* Aligns items to the start and end */
+  align-items: center;
   box-sizing: border-box;
 }
-.meal-page {
-  background: #ffffff;
-  height: 985px;
-  position: relative;
-  overflow: hidden;
+/* ... existing CSS above ... */
+
+/* Button styles for delete buttons, matching your add-food button style */
+.delete-entry {
+  background-color: #ff4d4d; /* Red background for delete buttons */
+  border: 1px solid black;
+  color: white;
+  padding: 10px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 5px;
 }
-.group-1 {
-  position: absolute;
-  inset: 0;
+
+/* ... existing CSS below ... */
+
+/* New .navbar-right styles */
+.navbar-right {
+  display: flex; /* Align the links in a row */
+  justify-content: flex-end; /* Align the links to the right */
 }
-.rectangle-12 {
-  background: rgba(0, 0, 0, 0.68);
-  width: 1543.87px;
-  height: 79px;
-  position: absolute;
-  left: 6.13px;
-  top: 0px;
+
+/* Update existing .navbar a styles if needed */
+.navbar a {
+  color: white;
+  padding: 0 20px; /* Adjust padding as needed */
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
 }
-.rectangle-13 {
-  background: rgba(0, 0, 0, 0.68);
-  width: 1543.87px;
-  height: 79px;
-  position: absolute;
-  left: 6.13px;
-  top: 0px;
+
+/* Add hover effect for the links */
+.navbar a:hover {
+  color: #777; /* Dark grey color on hover */
 }
-.rectangle-14 {
-  background: rgba(0, 0, 0, 0.68);
-  width: 1543.87px;
-  height: 79px;
-  position: absolute;
-  left: 6.13px;
-  top: 0px;
+
+/* Container for the main content */
+.container {
+  width: 100%;
+  margin: 0 auto; /* Center the container */
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  padding: 20px;
+  box-sizing: border-box;
 }
-.rectangle-15 {
-  background: #000000;
-  width: 293.05px;
-  height: 79px;
-  position: absolute;
-  left: 0px;
-  top: 0px;
+
+/* Header styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: transparent;
+  color: #000;
 }
-.overtime {
-  color: #ffffff;
-  text-align: left;
-  font-family: "Inter-ExtraBold", sans-serif;
-  font-size: 45px;
-  font-weight: 800;
-  position: absolute;
-  left: 19.4px;
-  top: 12px;
-  width: 249.14px;
-  height: 55px;
+
+/* Styles for each meal entry */
+.meal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 10px 0;
+  box-sizing: border-box;
 }
-.line-3 {
-  border-style: solid;
-  border-color: #ffffff;
-  border-width: 1px 0 0 0;
-  width: 44px;
-  height: 0px;
-  position: absolute;
-  left: 510.54px;
-  top: 20px;
-  transform-origin: 0 0;
-  transform: rotate(90deg) scale(1, 1);
+
+.meal button:last-child {
+  margin-right: 50px;
 }
-.rectangle-18 {
-  background: #000000;
-  width: 261.4px;
-  height: 82px;
-  position: absolute;
-  left: 510.54px;
-  top: -3px;
+
+.meal h2 {
+  flex-grow: 1;
 }
-.log-workouts {
-  color: #ffffff;
-  text-align: left;
-  font-family: "JosefinSans-Regular", sans-serif;
-  font-size: 36px;
-  font-weight: 400;
-  position: absolute;
-  left: 536.07px;
-  top: 27px;
-  width: 221.57px;
+
+/* Button styles */
+.add-food,
+.delete-entry,
+.Edit {
+  background-color: transparent;
+  border: 1px solid black;
+  color: black;
+  padding: 10px 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-left: 5px;
 }
-.rectangle-17 {
-  background: #ffffff;
-  width: 218.51px;
-  height: 79px;
-  position: absolute;
-  left: 293.05px;
-  top: 0px;
+
+/* Footer styles, if you have a footer */
+.nutrition-info {
+  background: transparent;
+  color: #000;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-around;
 }
-.log-meals {
-  color: #000000;
-  text-align: left;
-  font-family: "JosefinSans-Regular", sans-serif;
-  font-size: 36px;
-  font-weight: 400;
-  position: absolute;
-  left: 315.51px;
-  top: 27px;
-  width: 172.56px;
+
+.nutrition-info > div {
+  padding: 10px 0;
 }
-.rectangle-122 {
-  width: 907px;
-  height: 869px;
-  position: absolute;
-  left: 19px;
-  top: 98px;
-  overflow: visible;
+.meal-dropdown {
+  background-color: #FFFFFF; /* White background */
+  border: 1px solid #000000; /* Black border */
+  padding: 5px; /* Padding inside the dropdown */
+  font-family: Arial, sans-serif; /* Font style */
+  margin-right: 10px; /* Margin to the right */
 }
-.lunch {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Bold", sans-serif;
-  font-size: 45px;
-  font-weight: 700;
-  position: absolute;
-  left: 86px;
-  top: 392px;
-  width: 216px;
-  height: 61px;
+
+/* Style for the options in the dropdown */
+.meal-dropdown option {
+  padding: 5px; /* Padding for each option */
 }
-.dinner {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Bold", sans-serif;
-  font-size: 45px;
-  font-weight: 700;
-  position: absolute;
-  left: 86px;
-  top: 542px;
-  width: 216px;
-  height: 61px;
+
+/* Additional styles for the meal section */
+.meal {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  box-sizing: border-box;
 }
-.snacks {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Bold", sans-serif;
-  font-size: 45px;
-  font-weight: 700;
-  position: absolute;
-  left: 86px;
-  top: 692px;
-  width: 216px;
-  height: 61px;
+
+.meal-name {
+  margin-right: 10px; /* Spacing before the dropdown */
 }
-.breakfast {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-Bold", sans-serif;
-  font-size: 45px;
-  font-weight: 700;
-  position: absolute;
-  left: 86px;
-  top: 242px;
-  width: 216px;
-  height: 62px;
-}
-.meals {
-  color: #000000;
-  text-align: left;
-  font-family: "Inter-ExtraBold", sans-serif;
-  font-size: 50px;
-  font-weight: 800;
-  position: absolute;
-  left: 117px;
-  top: 146px;
-  width: 197px;
-  height: 54px;
-}
+
 .add-food-delete-entry {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  position: absolute;
-  left: 86px;
-  top: 314px;
-  width: 334px;
-  height: 30px;
+  /* Your styles for these buttons */
 }
-.add-food-delete-entry2 {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  position: absolute;
-  left: 86px;
-  top: 463px;
-  width: 334px;
-  height: 30px;
+
+.meal-list {
+  float: right;
+  width: 200px; /* Or whatever width you prefer */
+  margin: 0;
+  padding: 0;
 }
-.add-food-delete-entry3 {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  position: absolute;
-  left: 86px;
-  top: 614px;
-  width: 334px;
-  height: 30px;
-}
-.add-food-delete-entry4 {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  position: absolute;
-  left: 86px;
-  top: 763px;
-  width: 334px;
-  height: 30px;
-}
-.rectangle-142 {
-  width: 527px;
-  height: 134px;
-  position: absolute;
-  left: 963px;
-  top: 98px;
-  overflow: visible;
-}
-.line-10 {
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 134px;
-  height: 0px;
-  position: absolute;
-  left: 1059px;
-  top: 98px;
-  transform-origin: 0 0;
-  transform: rotate(90deg) scale(1, 1);
-}
-.line-11 {
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 134px;
-  height: 0px;
-  position: absolute;
-  left: 1136px;
-  top: 98px;
-  transform-origin: 0 0;
-  transform: rotate(90.428deg) scale(1, 1);
-}
-.line-12 {
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 134px;
-  height: 0px;
-  position: absolute;
-  left: 1208px;
-  top: 98px;
-  transform-origin: 0 0;
-  transform: rotate(90deg) scale(1, 1);
-}
-.line-13 {
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 134px;
-  height: 0px;
-  position: absolute;
-  left: 1298px;
-  top: 98px;
-  transform-origin: 0 0;
-  transform: rotate(90deg) scale(1, 1);
-}
-.line-14 {
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 134px;
-  height: 0px;
-  position: absolute;
-  left: 1390px;
-  top: 98px;
-  transform-origin: 0 0;
-  transform: rotate(90.428deg) scale(1, 1);
-}
-.calories {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  position: absolute;
-  left: 970px;
-  top: 113px;
-  width: 93px;
-  height: 53px;
-}
-.carbs {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  position: absolute;
-  left: 1076px;
-  top: 113px;
-  width: 93px;
-  height: 53px;
-}
-.fat {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  position: absolute;
-  left: 1154px;
-  top: 113px;
-  width: 93px;
-  height: 53px;
-}
-.protein {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  position: absolute;
-  left: 1217px;
-  top: 113px;
-  width: 93px;
-  height: 53px;
-}
-.sodium {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  position: absolute;
-  left: 1314px;
-  top: 115px;
-  width: 93px;
-  height: 53px;
-}
-.sugar {
-  color: #000000;
-  text-align: left;
-  font-family: "JetBrainsMono-Bold", sans-serif;
-  font-size: 16px;
-  font-weight: 700;
-  position: absolute;
-  left: 1406px;
-  top: 115px;
-  width: 93px;
-  height: 53px;
-}
-.image-1 {
-  width: 61px;
-  height: 60px;
-  position: absolute;
-  left: 1438px;
-  top: 10px;
-  object-fit: cover;
-}
-.rectangle-16 {
-  background: #000000;
-  width: 18px;
-  height: 58px;
-  position: absolute;
-  left: 86px;
-  top: 148px;
-}
-.line-15 {
-  border-style: solid;
-  border-color: #000000;
-  border-width: 1px 0 0 0;
-  width: 505px;
-  height: 0px;
-  position: absolute;
-  left: 963px;
-  top: 140px;
-  transform-origin: 0 0;
-  transform: rotate(0deg) scale(1, 1);
+
+/* Style for each added meal */
+.meal-list div {
+  margin-bottom: 10px;
+  padding: 5px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
 }

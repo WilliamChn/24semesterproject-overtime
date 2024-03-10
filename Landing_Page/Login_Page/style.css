@@ -1,118 +1,89 @@
-.login-page,
-.login-page * {
+
+.navbar {
+  position: absolute;
+  top: 0;
+  left: 0;  /* Add this line to ensure the navbar starts from the left */
+  width: 100%;
+  background: rgba(0, 0, 0, 1);
+  padding: 15px 0;
+  display: flex;
+  justify-content: flex-start; /* Aligns items to the start (left) */
+  align-items: center;
   box-sizing: border-box;
 }
-.login-page {
-  height: 982px;
-  position: relative;
-  overflow: hidden;
+
+.navbar a {
+  color: white;
+  padding: 0 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
 }
-.rectangle-4 {
-  background: rgba(217, 217, 217, 0.36);
-  border-radius: 47px;
-  width: 775px;
-  height: 859px;
-  position: absolute;
-  left: 64px;
-  top: 62px;
-  backdrop-filter: blur(3.2px);
+
+.navbar a:hover {
+  color: #777; /* Dark grey color on hover */
 }
-.over-time {
-  color: #ffffff;
-  text-align: left;
-  font-family: "JosefinSans-Regular", sans-serif;
-  font-size: 114px;
-  font-weight: 400;
-  position: absolute;
-  left: 192px;
-  top: 151px;
-  width: 518px;
-  height: 110px;
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-image: url('login-page.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
-.login {
-  color: #ffffff;
-  text-align: left;
-  font-family: "JosefinSans-Regular", sans-serif;
-  font-size: 51px;
-  font-weight: 400;
-  position: absolute;
-  left: 381px;
-  top: 361px;
-  width: 140px;
-  height: 38px;
+
+.login-container {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 8px;
+  width: 350px;
 }
-.rectangle-5 {
-  background: #d9d9d9;
-  border-radius: 36px;
-  width: 701px;
-  height: 92px;
-  position: absolute;
-  left: 101px;
-  top: 443px;
+
+.login-header, .login-form {
+  display: flex;
+  flex-direction: column;
 }
-.username {
-  color: #463e3e;
-  text-align: left;
-  font-family: "JosefinSans-Regular", sans-serif;
-  font-size: 35px;
-  font-weight: 400;
-  position: absolute;
-  left: 134px;
-  top: 473px;
-  width: 247px;
-  height: 36px;
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: calc(100% - 22px); /* Adjust width to leave space for padding and borders */
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
-.rectangle-6 {
-  background: #d9d9d9;
-  border-radius: 36px;
-  width: 701px;
-  height: 92px;
-  position: absolute;
-  left: 101px;
-  top: 579px;
+
+
+.login-form input[type="submit"] {
+  width: calc(100% - 22px); 
+  padding: 10px;
+  margin-bottom: 10px; /* Provide some space between the button and the link below */
+  border: none;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
 }
-.password {
-  color: #463e3e;
-  text-align: left;
-  font-family: "JosefinSans-Regular", sans-serif;
-  font-size: 35px;
-  font-weight: 400;
-  position: absolute;
-  left: 134px;
-  top: 609px;
-  width: 247px;
-  height: 36px;
+
+
+
+
+.login-form a {
+  text-decoration: none;
+  color: #000;
 }
-.forgot-your-password {
-  color: #ffffff;
-  text-align: left;
-  font-family: "JosefinSans-Regular", sans-serif;
-  font-size: 23px;
-  font-weight: 400;
-  position: absolute;
-  left: 333px;
-  top: 705px;
-  width: 237px;
-  height: 24px;
+
+.forgot-password {
+  text-align: right; /* Aligns the text to the right */
 }
-.rectangle-7 {
-  background: #d9d9d9;
-  border-radius: 37px;
-  width: 181px;
-  height: 82px;
-  position: absolute;
-  left: 361px;
-  top: 760px;
-}
-.login2 {
-  color: #463e3e;
-  text-align: left;
-  font-family: "JosefinSans-Regular", sans-serif;
-  font-size: 35px;
-  font-weight: 400;
-  position: absolute;
-  left: 404px;
-  top: 783px;
-  width: 108px;
-  height: 36px;
+.forgot-password a {
+  display: inline-block; /* Allows the use of margin */
+  margin-bottom: 10px; /* Adjust this value as needed for space */
+  /* ... other properties ... */
 }
