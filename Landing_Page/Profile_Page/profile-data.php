@@ -13,64 +13,82 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Ensure the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    // Redirect to login page, or handle not logged in user
+    die('User not logged in.');
+}
+
+$userId = $_SESSION['user_id']; // The user's ID from the session
+
+$response = array();
+
 // Handle POST request for water intake
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['waterIntake'])) {
     $waterIntake = filter_input(INPUT_POST, 'waterIntake', FILTER_VALIDATE_INT);
 
-    // Prepare and bind
-    $stmt = $conn->prepare("INSERT INTO Water_Intake (Water) VALUES (?)");
-    $stmt->bind_param("i", $waterIntake);
+    if ($waterIntake !== false) {
+        // Prepare and bind
+        $stmt = $conn->prepare("INSERT INTO Water_Intake (user_id, Water) VALUES (?, ?)");
+        $stmt->bind_param("ii", $userId, $waterIntake);
 
-    // Execute and check success
-    if ($stmt->execute()) {
-        // Successfully inserted the water intake
-        $response['waterUpdateStatus'] = 'Success';
+        // Execute and check success
+        if ($stmt->execute()) {
+            $response['waterUpdateStatus'] = 'Success';
+        } else {
+            $response['waterUpdateStatus'] = 'Error';
+        }
+
+        $stmt->close();
     } else {
-        // Handle error
-        $response['waterUpdateStatus'] = 'Error';
+        $response['waterUpdateStatus'] = 'Invalid input';
     }
-
-    $stmt->close();
 }
 
-$proteinSumQuery = "SELECT SUM(Protein) AS TotalProtein FROM Meals_Info";
-$result = $conn->query($proteinSumQuery);
+// Get the total protein from the Meals_Info table
+$stmt = $conn->prepare("SELECT SUM(Protein) AS TotalProtein FROM Meals_Info WHERE user_id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$proteinResult = $stmt->get_result();
 
-$response = array();
-
-if ($result && $result->num_rows > 0) {
-    $row = $result->fetch_assoc();
+if ($proteinResult && $proteinResult->num_rows > 0) {
+    $row = $proteinResult->fetch_assoc();
     $response['totalProtein'] = $row['TotalProtein'];
 } else {
     $response['totalProtein'] = 0;
 }
+$stmt->close();
 
 // Get the total water intake from the Water_Intake table
-$waterSumQuery = "SELECT SUM(Water) AS TotalWater FROM Water_Intake";
-$waterResult = $conn->query($waterSumQuery);
+$stmt = $conn->prepare("SELECT SUM(Water) AS TotalWater FROM Water_Intake WHERE user_id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$waterResult = $stmt->get_result();
 
 if ($waterResult && $waterResult->num_rows > 0) {
-    $waterRow = $waterResult->fetch_assoc();
-    $response['totalWater'] = $waterRow['TotalWater'];
+    $row = $waterResult->fetch_assoc();
+    $response['totalWater'] = $row['TotalWater'];
 } else {
     $response['totalWater'] = 0;
 }
+$stmt->close();
 
-// Add logic for fetching total calorie intake
-// Assuming there is a table or a field in an existing table that stores calorie intake
-$calorieSumQuery = "SELECT SUM(Calories) AS TotalCalories FROM Meals_Info"; // Adjust this query based on your database schema
-$calorieResult = $conn->query($calorieSumQuery);
+// Get the total calorie intake from the Meals_Info table
+$stmt = $conn->prepare("SELECT SUM(Calorie) AS TotalCalories FROM Meals_Info WHERE user_id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$calorieResult = $stmt->get_result();
 
 if ($calorieResult && $calorieResult->num_rows > 0) {
-    $calorieRow = $calorieResult->fetch_assoc();
-    $response['totalCalories'] = $calorieRow['TotalCalories'];
+    $row = $calorieResult->fetch_assoc();
+    $response['totalCalories'] = $row['TotalCalories'];
 } else {
     $response['totalCalories'] = 0;
 }
+$stmt->close();
 
 $conn->close();
 
-// Set header to tell that the response is JSON
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>

@@ -1,4 +1,6 @@
 <?php
+session_start(); // Start a new session or resume the existing one
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database configuration
     $servername = "oceanus.cse.buffalo.edu";
@@ -47,6 +49,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Execute the statement
         if ($stmt->execute()) {
+            $_SESSION['loggedin'] = true; // Set a session variable to indicate the user is logged in
+            $_SESSION['username'] = $userInput; // Store the username in session
+    
+            // Get the last inserted ID to store in the session
+            $_SESSION['user_id'] = $conn->insert_id; // This gets the auto-incremented ID from the last query
+    
             echo json_encode(array('success' => true));
         } else {
             echo json_encode(array('success' => false, 'error' => $stmt->error));
