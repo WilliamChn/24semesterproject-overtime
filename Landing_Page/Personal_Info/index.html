@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Info</title>
+<style>
+  body { font-family: Arial, sans-serif; }
+  .container { width: 500px; margin: auto; padding: 20px; }
+  .form-header { background: #f8e6a0; padding: 10px; text-align: center; }
+  .form-header h2 { margin: 0; }
+  .form-field { margin-bottom: 10px; }
+  .form-field label { display: block; margin-bottom: 5px; }
+  .form-field input[type=text], .form-field input[type=number] { width: 100%; padding: 10px; border: 1px solid #ddd; }
+  .form-field input[type=submit], .form-field button { padding: 10px 20px; background: #0095ff; color: white; border: none; cursor: pointer; }
+  .form-field button { background: #ccc; }
+  .form-field input[type=submit]:hover, .form-field button:hover { opacity: 0.9; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="form-header">
+    <h2>Personal Info</h2>
+  </div>
+  <form id="myForm" method="POST" action="personalinfo.php">
+    <div class="form-field">
+      <label for="name">Name</label>
+      <input type="text" id="name" name="name" required>
+    </div>
+    <div class="form-field">
+      <label for="age">Age</label>
+      <input type="number" id="age" name="age" required>
+    </div>
+    <div class="form-field">
+      <label for="weight">Weight (lbs)</label>
+      <input type="number" id="weight" name="weight" required>
+    </div>
+    <div class="form-field">
+      <label for="height">Height (inches)</label>
+      <input type="number" id="height" name="height" required>
+    </div>
+    <div class="form-field">
+      <input type="submit" value="Submit">
+      <button type="button" onclick="document.getElementById('myForm').reset();">Clear</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
