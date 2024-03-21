@@ -19,25 +19,35 @@
 </head>
 <body>
 <div class="container">
+    <header>
+        <div class="navbar">
+          <a href="../index.html">OVERTIME</a>
+          <div class="navbar-right">
+            <a href="#">Log Meals</a>
+            <a href="../Workout_Page/index.html">Log Workouts</a>
+            <a href="../Profile_Page/index.html">Profile</a>
+          </div>
+        </div>
+      </header>
   <div class="form-header">
     <h2>Personal Info</h2>
   </div>
   <form id="myForm" method="POST" action="personalinfo.php">
     <div class="form-field">
       <label for="name">Name</label>
-      <input type="text" id="name" name="name" required>
+      <input type="text" id="p_name" name="p_name" required>
     </div>
     <div class="form-field">
       <label for="age">Age</label>
-      <input type="number" id="age" name="age" required>
+      <input type="number" id="p_age" name="p_age" required>
     </div>
     <div class="form-field">
       <label for="weight">Weight (lbs)</label>
-      <input type="number" id="weight" name="weight" required>
+      <input type="number" id="p_weight" name="p_weight" required>
     </div>
     <div class="form-field">
       <label for="height">Height (inches)</label>
-      <input type="number" id="height" name="height" required>
+      <input type="number" id="p_height" name="p_height" required>
     </div>
     <div class="form-field">
       <input type="submit" value="Submit">

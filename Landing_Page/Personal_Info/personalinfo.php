@@ -1,9 +1,9 @@
 <?php
 // Retrieve user input safely
-$name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
-$age = filter_input(INPUT_POST, "age", FILTER_SANITIZE_NUMBER_INT); 
-$weight = filter_input(INPUT_POST, "weight", FILTER_SANITIZE_NUMBER_INT);
-$height = filter_input(INPUT_POST, "height", FILTER_SANITIZE_NUMBER_INT);
+$name = filter_input(INPUT_POST, "p_name", FILTER_SANITIZE_STRING);
+$age = filter_input(INPUT_POST, "p_age", FILTER_SANITIZE_NUMBER_INT); 
+$weight = filter_input(INPUT_POST, "p_weight", FILTER_SANITIZE_NUMBER_INT);
+$height = filter_input(INPUT_POST, "p_height", FILTER_SANITIZE_NUMBER_INT);
 
 // Database credentials should be secured
 $servername = "oceanus.cse.buffalo.edu";
@@ -18,7 +18,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 // Prepare the SQL statement with placeholders
-$sql = "INSERT INTO Personal_Info (Name, Age, Weight, Height) VALUES (?, ?, ?, ?)";
+$sql = "INSERT INTO `Personal_Info` (p_name, p_age, p_weight, p_height) VALUES (?, ?, ?, ?)";
 $stmt = $conn->prepare($sql);
 // Check if the statement was prepared correctly
 if (!$stmt) {
