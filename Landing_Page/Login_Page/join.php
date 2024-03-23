@@ -22,28 +22,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $passInput = mysqli_real_escape_string($conn, $_POST['password']);
 
     // Prepare SQL statement to prevent SQL injection
-    $stmt = $conn->prepare("SELECT id, Password FROM Login_Info WHERE Username = ?");
+    $stmt = $conn->prepare("SELECT Password FROM Login_Info WHERE Username = ?");
     $stmt->bind_param("s", $userInput);
 
     // Execute the statement
     $stmt->execute();
     // Bind result variables
-    $stmt->bind_result($userId, $hashedPasswordFromDB);
+    $stmt->bind_result($hashedPasswordFromDB);
 
     // Fetch value
     if ($stmt->fetch() && password_verify($passInput, $hashedPasswordFromDB)) {
         // If the fetch succeeds and the password verifies, start the session
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $userInput;
-        $_SESSION['user_id'] = $userId; // Save the user's ID in the session
         
         // Redirect to user profile page or dashboard
-        header("Location: ../Profile_Page/index.php"); // Changed to .php to handle PHP code
+
+        //TODO
+        
+        header("Location: ../Personal_Info/index.html"); // Make sure this path is correct
         exit();
     } else {
         // If the user does not exist or password does not match
         // Redirect back to the login with an error message
-        header("Location: login.php?error=invalid_credentials"); // Adjust as necessary, changed to .php
+        header("Location: login.html?error=invalid_credentials"); // Adjust as necessary
         exit();
     }
 
