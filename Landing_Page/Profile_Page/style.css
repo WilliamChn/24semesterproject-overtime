@@ -14,9 +14,6 @@
   text-align: left;
   margin-bottom: 20px;
 }
-.data-field {
-  margin-bottom: 10px;
-}
 .data-label {
   font-weight: bold;
 }
@@ -32,69 +29,69 @@ input[type="text"] {
 .navbar {
   position: absolute;
   top: 0;
-  left: 0; /* Ensure the navbar starts from the left */
+  left: 0;
   width: 100%;
   background: rgba(0, 0, 0, 1);
   padding: 15px 0;
   display: flex;
-  justify-content: space-between; /* Aligns items to the start and end */
+  justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
 }
 
-/* New .navbar-right styles */
+/* Navbar right styles */
 .navbar-right {
-  display: flex; /* Align the links in a row */
-  justify-content: flex-end; /* Align the links to the right */
+  display: flex;
+  justify-content: flex-end;
 }
 
-/* Update existing .navbar a styles if needed */
+/* Navbar link styles */
 .navbar a {
   color: white;
-  padding: 0 20px; /* Adjust padding as needed */
+  padding: 0 20px;
   text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
 }
 
-/* Add hover effect for the links */
+/* Navbar link hover effect */
 .navbar a:hover {
-  color: #777; /* Dark grey color on hover */
+  color: #777;
 }
 
 .profile-header {
-  background-image: url('./image-30.png'); /* Replace with your image path */
+  background-image: url('./image-30.png');
   background-size: cover;
   background-position: center;
-  text-align: left; /* Aligns text to the left */
+  text-align: left;
   padding: 20px 0;
-  border-radius: 20px; /* Rounds the edges */
-  margin-top: 60px; /* Creates a gap between the navbar and this section */
-  margin-bottom: 20px; /* Distance between profile header and sections */
+  border-radius: 20px;
+  margin-top: 60px;
+  margin-bottom: 20px;
 }
 
 .header-content {
   width: 100%;
-  text-align: left; /* Align text to the left */
-  padding-left: 20px; /* Spacing from the edge */
+  text-align: left;
+  padding-left: 20px;
 }
 
 .profile-header h1 {
   color: black;
   font-size: 48px;
-  margin-left: 20px; /* Aligns the header text to the left */
+  margin-left: 20px;
 }
 
 /* Sections Container */
 .sections-container {
   display: flex;
   justify-content: center;
-  gap: 50%px; /* Adds space between the sections */
+  gap: 20px; /* Adjusted the gap */
 }
 
 /* Section styles */
 .section {
-  flex-basis: 45%; /* Adjusts the base size of each section */
+  flex-basis: 45%;
   background: white;
   border-radius: 10px;
   padding: 20px;
@@ -102,56 +99,60 @@ input[type="text"] {
   min-height: 650px;
 }
 
-/* Larger font size for data labels and values */
+/* Font size for data labels and values */
 .data-label, .data-value {
-  color:gray;
-  font-size: 18px; /* Updated font size */
+  color: gray;
+  font-size: 18px;
 }
 
 /* Styling for input fields and data values */
 input[type="text"], .data-value {
   width: 100%;
   padding: 10px;
-  box-sizing: border-box; /* Ensures padding does not add to the width */
+  box-sizing: border-box;
 }
 
+/* Data field container layout */
 .data-field-container {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  align-items: start; /* Changed from center to start */
+  margin-bottom: 20px; /* Added margin for spacing */
 }
 
-/* Styles for the Exercise Section specifically */
+/* Exercise Section styles */
 .exercise .data-field-container {
   display: flex;
-  flex-direction: column; /* Stack children vertically */
+  flex-direction: column;
   justify-content: space-evenly;
-  flex-wrap: wrap; /* Allows wrapping for smaller screens */
+  flex-wrap: wrap;
 }
 
 .data-section {
-  background: white; /* Light grey background for the container */
-  border-radius: 8px; /* Slight rounding of corners */
-  padding: 15px; /* Padding inside the container */
-  margin-bottom: 10px; /* Space between containers */
+  background: white;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
   border: 2px solid whitesmoke;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
 }
 
 .circle-progress {
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   background: conic-gradient(lightblue 0% 0%, lightgray 0% 100%);
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 10px; /* Space above the input field */
 }
 
 .circle-progress span {
   font-size: 14px;
   color: black;
+  position: absolute;
 }
 
 #proteinIntakeCircle {
@@ -165,15 +166,25 @@ input[type="text"], .data-value {
   margin-top: 10px;
 }
 
-/* Adjust for mobile responsiveness */
-@media (max-width: 768px) {
-  .sections-container {
-    flex-direction: column;
-  }
-
-  .section {
-    width: 100%;
-    margin: 10px 0;
-  }
+/* Data field styles */
+.data-field {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
+/* Input and button width adjustments */
+input[type="text"], button {
+  width: auto;
+  margin: 10px 0;
+}
+
+/* Circle progress input order */
+.circle-progress + input {
+  order: 2;
+}
+
+.circle-progress + input + button {
+  order: 3; /* Makes button come after the input */
+}

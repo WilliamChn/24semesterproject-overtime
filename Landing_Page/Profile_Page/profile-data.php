@@ -7,8 +7,10 @@ $password = "50408039";
 $dbname = "cse442_2024_spring_team_b_db";
 $port = 3306;
 
+// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname, $port);
 
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -84,6 +86,39 @@ if ($calorieResult && $calorieResult->num_rows > 0) {
     $response['totalCalories'] = $row['TotalCalories'];
 } else {
     $response['totalCalories'] = 0;
+}
+$stmt->close();
+
+// Get the longest workout time from the Workout table
+$stmt = $conn->prepare("SELECT MAX(Duration) AS LongestWorkout FROM Workout WHERE user_id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$workoutResult = $stmt->get_result();
+
+if ($workoutResult && $workoutResult->num_rows > 0) {
+    $row = $workoutResult->fetch_assoc();
+    $response['longestWorkout'] = $row['Duration']; // Assume 'Duration' is stored in a column named 'Duration'
+} else {
+    $response['longestWorkout'] = 0;
+}
+$stmt->close();
+
+
+// Get the most recent workout from the Workout table based on the highest ID
+$stmt = $conn->prepare("SELECT * FROM Workout WHERE user_id = ? ORDER BY Id DESC LIMIT 1");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$recentWorkoutResult = $stmt->get_result();
+
+if ($recentWorkoutResult && $recentWorkoutResult->num_rows > 0) {
+    $row = $recentWorkoutResult->fetch_assoc();
+    $response['recentWorkout'] = array(
+        'style' => $row['Style'], // Replace with your actual column name for the workout style/type
+        'duration' => $row['Duration'], // Replace with your actual column name for the workout duration
+        // Include any other relevant information you want to show
+    );
+} else {
+    $response['recentWorkout'] = null;
 }
 $stmt->close();
 

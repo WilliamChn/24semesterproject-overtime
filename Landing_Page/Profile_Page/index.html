@@ -6,17 +6,27 @@
 <title>Profile Page</title>
 <link rel="stylesheet" href="style.css">
 <script>
-// This function will fetch the protein intake from the profile-data.php
-function fetchIntakes() {
+// This function will fetch user data from profile-data.php including intakes and workouts
+function fetchUserData() {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var response = JSON.parse(this.responseText);
-            document.getElementById('proteinIntake').innerText = response.totalProtein + ' g';
-            document.getElementById('waterIntakeDisplay').innerText = response.totalWater + ' ml';
-            document.getElementById('calorieIntake').innerText = response.totalCalories + ' cal'; // Add this line
+            // Update protein intake
+            document.getElementById('proteinIntakeText').innerText = response.totalProtein + ' g';
+            // Update water intake
+            document.getElementById('waterIntakeText').innerText = response.totalWater + ' ml';
+            // Update calorie intake
+            document.getElementById('calorieIntake').innerText = response.totalCalories + ' cal';
+            // Update circles
             updateWaterIntakeCircle(response.totalWater);
             updateProteinIntakeCircle(response.totalProtein);
+            // Update longest workout
+            document.getElementById('longestWorkoutBox').innerText = response.longestWorkout + ' mins';
+            // Update recent workout
+            document.getElementById('recentWorkout').innerText = 
+                response.recentWorkout ? `Style: ${response.recentWorkout.style}, Duration: ${response.recentWorkout.duration} mins` :
+                'No recent workouts logged';
         }
     };
     xhr.open('GET', 'profile-data.php', true);
@@ -27,7 +37,9 @@ function updateProteinIntakeCircle(value) {
     var maxProtein = 200; // Set a maximum protein intake value for full circle
     var percentage = Math.min(value / maxProtein * 100, 100);
     var circle = document.getElementById('proteinIntakeCircle');
+    var proteinText = document.getElementById('proteinIntakeText'); // Get the protein text element
     circle.style.background = `conic-gradient(lightgreen 0% ${percentage}%, lightgray ${percentage}% 100%)`;
+    proteinText.innerText = value + ' g'; // Update the text
 
     // Show goal message if reached
     var goalMessage = document.getElementById('proteinGoalMessage');
@@ -35,10 +47,12 @@ function updateProteinIntakeCircle(value) {
 }
 
 function updateWaterIntakeCircle(value) {
-    var maxWater = 200;
+    var maxWater = 2000; // Adjust the maximum value based on your goal
     var percentage = Math.min(value / maxWater * 100, 100); // Calculate the fill percentage
     var circle = document.getElementById('waterIntakeCircle');
+    var waterText = document.getElementById('waterIntakeText'); // Get the water text element
     circle.style.background = `conic-gradient(lightblue 0% ${percentage}%, lightgray ${percentage}% 100%)`;
+    waterText.innerText = value + ' ml'; // Update the text
 
     // Show goal message if reached
     var goalMessage = document.getElementById('waterGoalMessage');
@@ -52,12 +66,11 @@ function sendWaterIntakeData(waterIntake) {
     xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xhr.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            fetchIntakes(); // Refetch intakes to update the display and the circle
+            fetchUserData(); // Refetch user data to update the display and the circle
         }
     };
     xhr.send("waterIntake=" + waterIntake);
 }
-
 
 // Function to validate the water intake input and send data if valid
 function validateAndSendWaterIntake() {
@@ -73,9 +86,9 @@ function validateAndSendWaterIntake() {
     waterIntakeInput.value = ''; // Clear the input box after sending data
 }
 
-
 // Call the function on window load
-window.onload = fetchIntakes;
+window.onload = fetchUserData;
+
 </script>
 </head>
 <body>
@@ -103,35 +116,50 @@ window.onload = fetchIntakes;
     <div class="sections-container">
 
     <!-- Personal Section -->
-      <div class="section personal">
+    <div class="section personal">
         <h2 class="section-title">Personal</h2>
         <div class="data-field-container">
-            <div class="data-field">
-                <span class="data-label">Water Intake</span>
-                <input type="text" id="waterIntakeInput" placeholder="Enter ml">
-                <button type="button" onclick="validateAndSendWaterIntake()">Enter</button>
-                <span class="data-value" id="waterIntakeDisplay">0 ml</span>
-                <div class="circle-progress" id="waterIntakeCircle"></div>
-                <div class="goal-message" id="waterGoalMessage">Daily Goal Reached</div>
-            </div>
-            <div class="data-field">
-                <span class="data-label">Protein Intake</span>
-                <span class="data-value" id="proteinIntake">0 g</span>
-                <div class="circle-progress" id="proteinIntakeCircle"></div>
-                <div class="goal-message" id="proteinGoalMessage">Daily Goal Reached</div>
-            </div>            
-        </div>
-        <div class="data-field-container">
-            <div class="data-section">
-                <span class="data-label">Calorie Intake</span>
-                <span class="data-value" id="calorieIntake">0 cal</span> <!-- Add this line -->
-            </div>
+          <!-- Height -->
           <div class="data-section">
-              <span class="data-label">Weight</span>
-              <span class="data-value">150 lbs</span>
+            <span class="data-label">Height</span>
+            <span class="data-value" id="userHeight">6 ft 3 in
+            </span>
           </div>
+          <!-- Weight -->
+          <div class="data-section">
+            <span class="data-label">Weight</span>
+            <span class="data-value" id="userWeight">150 lbs</span>
+          </div>
+          <!-- Age -->
+          <div class="data-section">
+            <span class="data-label">Age</span>
+            <span class="data-value" id="userAge">21 years</span>
+          </div>
+          <!-- Calorie Intake -->
+          <div class="data-section">
+            <span class="data-label">Calorie Intake</span>
+            <span class="data-value" id="calorieIntake">0 cal</span>
+          </div>
+          <!-- Water Intake -->
+          <div class="data-field">
+            <span class="data-label">Water Intake</span>
+            <div class="circle-progress" id="waterIntakeCircle">
+              <span id="waterIntakeText">0 ml</span>
+            </div>
+            <input type="text" id="waterIntakeInput" placeholder="Enter ml">
+            <button type="button" onclick="validateAndSendWaterIntake()">Enter</button>
+            <div class="goal-message" id="waterGoalMessage">Daily Goal Reached</div>
+          </div>
+          <!-- Protein Intake -->
+          <div class="data-field">
+            <span class="data-label">Protein Intake</span>
+            <div class="circle-progress" id="proteinIntakeCircle">
+              <span id="proteinIntakeText">0 g</span>
+            </div>
+          </div>
+        </div>
       </div>
-  </div>
+      
 
         <!-- Exercise Section -->
         <div class="section exercise">
@@ -139,12 +167,16 @@ window.onload = fetchIntakes;
           <div class="data-field-container">
               <div class="data-section">
                   <span class="data-label">Max Weight Lifted</span>
-                  <span class="data-value">250 lbs</span>
+                  <span class="data-value">N/A</span>
               </div>
               <div class="data-section">
-                  <span the="data-label">Longest Workout</span>
-                  <span class="data-value">2 hrs</span>
-              </div>
+                <span class="data-label">Longest Workout</span>
+                <span class="data-value" id="longestWorkoutBox">0 mins</span>
+              </div>              
+              <div class="data-section">
+                <span class="data-label">Recent Workout</span>
+                <div class="data-value" id="recentWorkout">Style: None, Duration: 0 mins</div> <!-- This will be dynamically updated -->
+            </div>
           </div>
       </div>
   </div>
