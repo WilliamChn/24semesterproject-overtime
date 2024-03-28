@@ -38,7 +38,7 @@
         axios.post('signup.php', formData)
             .then(function (response) {
                 if (response.data.success) {
-                    window.location.href = '../Profile_Page/index.html'; // Redirect on success
+                    window.location.href = '../Personal_Info/index.html'; // Redirect on success
                 } else {
                     alert('Signup failed: ' + response.data.error); // Alert or handle error message
                 }

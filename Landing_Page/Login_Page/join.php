@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         //TODO
         
-        header("Location: ../Personal_Info/index.html"); // Make sure this path is correct
+        header("Location: ../Profile_Page/index.html"); // Make sure this path is correct
         exit();
     } else {
         // If the user does not exist or password does not match
