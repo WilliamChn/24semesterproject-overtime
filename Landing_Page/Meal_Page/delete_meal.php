@@ -14,14 +14,26 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL to delete the most recent row
-$sql = "DELETE FROM Meals_Info ORDER BY id DESC LIMIT 1"; // assuming 'id' is your auto-increment column
-
-if ($conn->query($sql) === TRUE) {
-    echo "Record deleted successfully";
-} else {
-    echo "Error deleting record: " . $conn->error;
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    die('User not logged in.');
 }
 
+$userId = $_SESSION['user_id']; // The user's ID from the session
+
+// SQL to delete the most recent row for the logged-in user
+$sql = "DELETE FROM Meals_Info WHERE user_id = ? ORDER BY id DESC LIMIT 1"; // assuming 'id' is your auto-increment column
+
+// Prepare and bind
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $userId);
+
+// Execute and check success
+if ($stmt->execute()) {
+    echo "Most recent meal for user deleted successfully";
+} else {
+    echo "Error deleting meal: " . $stmt->error;
+}
+
+$stmt->close();
 $conn->close();
-?>

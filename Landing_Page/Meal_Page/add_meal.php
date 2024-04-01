@@ -1,4 +1,6 @@
 <?php
+session_start(); // Start the session to access the user ID
+
 // Database configuration
 $servername = "oceanus.cse.buffalo.edu";
 $username = "lanakim";
@@ -14,19 +16,27 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    http_response_code(403); // Forbidden
+    die('User not logged in.');
+}
+
+$userId = $_SESSION['user_id']; // Retrieve the user ID from the session
+
 // Get the data from the POST request
 $itemName = $conn->real_escape_string($_POST['itemName']);
 $calories = intval($_POST['calories']); // Ensure that it is an integer
 $protein = intval($_POST['protein']);    // Ensure that it is an integer
 
 // Prepare and bind
-$stmt = $conn->prepare("INSERT INTO `Meals_Info` (Food, Protein, Calorie) VALUES (?, ?, ?)");
-$stmt->bind_param("sii", $itemName, $protein, $calories);
+$stmt = $conn->prepare("INSERT INTO `Meals_Info` (user_id, Food, Protein, Calorie) VALUES (?, ?, ?, ?)");
+$stmt->bind_param("isii", $userId, $itemName, $protein, $calories);
 
 // Set parameters and execute
 if($stmt->execute()) {
-    http_response_code(200); // Explicitly setting the response code
-    echo "New records created successfully";
+    http_response_code(200); // Success
+    echo "New record created successfully";
 } else {
     http_response_code(500); // Internal Server Error
     echo "Error: " . $stmt->error;
@@ -35,3 +45,4 @@ if($stmt->execute()) {
 $stmt->close();
 $conn->close();
 ?>
+
