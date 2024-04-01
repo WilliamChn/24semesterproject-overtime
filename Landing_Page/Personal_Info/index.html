@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Info</title>
+<style>
+  body { 
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4; /* or the color matching the background of your screenshot */
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff; /* Adjust the color to match the screenshot */
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* subtle shadow */
+  }
+  .navbar a {
+    text-decoration: none;
+    color: #000; /* Adjust the color to match the screenshot */
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  .navbar a:hover {
+    color: #0095ff; /* Hover color */
+  }
+  .navbar-right {
+    display: flex;
+  }
+  .container {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff; /* Adjust if needed */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Add shadow to the form container */
+    border-radius: 4px; /* Optional border-radius */
+  }
+  .form-header {
+    background: #f8e6a0; /* Your color */
+    padding: 10px;
+    text-align: center;
+  }
+  .form-header h2 {
+    margin: 0;
+  }
+  .form-field {
+    margin-bottom: 10px;
+  }
+  .form-field label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .form-field input[type=text],
+  .form-field input[type=number] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px; /* Optional border-radius */
+  }
+  .form-field input[type=submit],
+  .form-field button {
+    padding: 10px 20px;
+    background: #0095ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px; /* Optional border-radius */
+  }
+  .form-field button {
+    background: #ccc;
+  }
+  .form-field input[type=submit]:hover,
+  .form-field button:hover {
+    opacity: 0.9;
+  }
+</style>
+</head>
+<body>
+<header>
+  <nav class="navbar">
+    <a href="../index.php">OVERTIME</a>
+    <div class="navbar-right">
+      <a href="../Meal_Page/index.html">Log Meals</a>
+      <a href="../Workout_Page/index.html">Log Workouts</a>
+      <a href="../Profile_Page/index.html">Profile</a>
+      <a href="../logout.php">Logout</a> 
+    </div>
+  </nav>
+</header>
+
+<div class="container">
+  <div class="form-header">
+    <h2>Personal Info</h2>
+  </div>
+  <form id="myForm" method="POST" action="personalinfo.php">
+    <div class="form-field">
+      <label for="name">Name</label>
+      <input type="text" id="p_name" name="p_name" required>
+    </div>
+    <div class="form-field">
+      <label for="age">Age</label>
+      <input type="number" id="p_age" name="p_age" required>
+    </div>
+    <div class="form-field">
+      <label for="weight">Weight (lbs)</label>
+      <input type="number" id="p_weight" name="p_weight" required>
+    </div>
+    <div class="form-field">
+      <label for="height">Height (inches)</label>
+      <input type="number" id="p_height" name="p_height" required>
+    </div>
+    <div class="form-field">
+      <input type="submit" value="Submit">
+      <button type="button" onclick="document.getElementById('myForm').reset();">Clear</button>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>
