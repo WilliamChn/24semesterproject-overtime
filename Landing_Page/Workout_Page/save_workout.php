@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Database connection variables
 $servername = "oceanus.cse.buffalo.edu";
 $username = "lanakim";
@@ -30,7 +32,8 @@ $caloriesPerMinute = $row['calories'];
 $totalCaloriesBurned = $caloriesPerMinute * $duration;
 
 // Retrieve user_id from the POST request
-$user_id = $_POST['user_id'];
+$user_id = $_SESSION['user_id']; // The user's ID from the session
+
 
 // Update the insert SQL to include user_id
 $insertSql = "INSERT INTO Workout (style, duration, calories, user_id) VALUES (?, ?, ?, ?)";
