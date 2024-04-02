@@ -139,9 +139,15 @@
     <div class="workout-list">
         <!-- Workout items will be dynamically added here -->
     </div>
+    
     <div class="add-entry">
-        <button id="add-entry-button" class="add-entry-button">Add Entry</button>
-    </div>
+      <select id="workout-select" class="workout-select">
+        <!-- Options will be dynamically added here -->
+      </select>
+      <button id="add-entry-button" class="add-entry-button">Add Entry</button>
+  </div>
+  
+    
     <div class="delete-entry">
         <select id="delete-workout-select" class="workout-select"></select>
         <button id="delete-workout-button" class="delete-entry-button">Delete Selected Workout</button>
@@ -150,119 +156,123 @@
 
 <script>
 // Function to create a new workout entry
-function createWorkoutItem(id, workoutTypeValue, workoutDurationValue) {
-    const workoutList = document.querySelector('.workout-list');
-    
-    // Create the workout item div
-    const workoutItem = document.createElement('div');
-    workoutItem.classList.add('workout-item');
-    workoutItem.dataset.id = id; // Assign an ID to each workout item
-    
-    // Create the select dropdown
-    const select = document.createElement('select');
-    select.name = 'workouts';
-    select.classList.add('workout-select');
-    select.innerHTML = `
-        <option value="squats">Squats</option>
-        <option value="pull-ups">Pull-ups</option>
-        <option value="sit-ups">Sit-ups</option>
-        <!-- Add more workout options here -->
-    `;
-    select.value = workoutTypeValue; // Set the default or existing value
-    
-    // Create the duration label and input
-    const durationLabel = document.createElement('span');
-    const durationInput = document.createElement('input');
-    durationLabel.classList.add('workout-duration-label');
-    durationLabel.textContent = 'Duration:';
-    durationInput.type = 'number';
-    durationInput.classList.add('workout-duration');
-    durationInput.value = workoutDurationValue; // Set the default or existing value
-    
-    // Create the delete button
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'x';
-    deleteButton.onclick = function() {
-    if (confirm("Are you sure you want to delete the most recent workout? This cannot be undone!")) {
-        fetch('delete_workout.php', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: 'delete_workout=true'
-        })
-        .then(response => response.text())
-        .then(data => {
-            console.log(data); // Log the server response for debugging
-            console.log(id);
-            // Remove the most recent workout item from the DOM
-            const workoutList = document.querySelector('.workout-list');
-            const lastWorkoutItem = workoutList.lastElementChild;
-            if (lastWorkoutItem) {
-                workoutList.removeChild(lastWorkoutItem);
-            }
-            alert('Most recent workout deleted successfully!');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-};
 
-    
-const saveButton = document.createElement('button2');
-  saveButton.textContent = 'Save';
-  // In your JavaScript function where the Save button is created
-saveButton.classList.add('save-entry-button'); // This is a new class for the save button
-  
-  // Corrected save button click function
-  saveButton.onclick = function() {
-  const workoutStyle = select.value;
-  const workoutDuration = durationInput.value;
-  const data = `style=${encodeURIComponent(workoutStyle)}&duration=${encodeURIComponent(workoutDuration)}`;
-
-  fetch('save_workout.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: data,
-  })
-  .then(response => response.text())
-  .then(responseData => {
-    alert('Workout saved successfully!');
-    // Call populateDeleteDropdown here to refresh the dropdown list.
-    populateDeleteDropdown();
-    // Optionally, clear the input fields or update the UI accordingly
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-};
-
-
-
-    
-    // Append elements to the workout item
-    workoutItem.appendChild(select);
-    workoutItem.appendChild(durationLabel);
-    workoutItem.appendChild(durationInput);
-    workoutItem.appendChild(deleteButton);
-    workoutItem.appendChild(saveButton); // Add the saveButton here
-
-    
-    // Append the workout item to the list
-    workoutList.appendChild(workoutItem);
-}
 
 // Event listener for the Add Entry button
+
+// This function should now accept a select element to populate
 document.getElementById('add-entry-button').addEventListener('click', function() {
-    // This would be where you get the values for the workout type and duration from the user
-    // For now, let's add a static entry (you would replace this with actual data)
-    createWorkoutItem(Date.now(), 'squats', 30); // Using Date.now() for unique ID placeholder
+    createWorkoutItem(); // This will create a new workout item when clicked
 });
 
-// Function to populate the workout delete dropdown
+function createWorkoutItem() {
+    // Assuming you want to insert the new workout item below the 'Add Entry' button
+    const workoutContainer = document.querySelector('.container'); // This should be the container where you want to append the new row
+
+    // Create the workout item elements (dropdown, input for duration, save button, etc.)
+    const workoutItem = document.createElement('div');
+    workoutItem.className = 'workout-item';
+    
+    const select = document.createElement('select');
+    select.className = 'workout-select';
+
+    // Populate select with options
+    // Replace 'get_workout_types.php' with the actual path to your PHP script
+    fetch('get_workout_types.php')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(workout => {
+            let option = document.createElement('option');
+            option.value = workout.num;
+            option.text = workout.type;
+            select.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
+    const durationInput = document.createElement('input');
+    durationInput.type = 'number';
+    durationInput.className = 'workout-duration';
+    durationInput.placeholder = 'Duration';
+
+    const saveButton = document.createElement('button');
+    saveButton.className = 'save-workout-button';
+    saveButton.textContent = 'Save';
+    // Inside the createWorkoutItem function, after you create the saveButton
+saveButton.onclick = function() {
+    const workoutNum = select.value; // Assuming this is the ID related to the workout type
+    const duration = durationInput.value;
+
+    // Validate input (ensure it's a positive integer)
+    if(duration <= 0 || isNaN(duration)) {
+        alert("Please enter a valid duration.");
+        return;
+    }
+
+    // Now send this data to save_workout.php
+    fetch('save_workout.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `num=${encodeURIComponent(workoutNum)}&duration=${encodeURIComponent(duration)}`
+    })
+    .then(response => response.text())
+    .then(responseText => {
+        // Handle the response from save_workout.php here
+        alert(responseText); // Show a message to the user
+        // Consider clearing the input or updating the UI as needed
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+
+
+    // Append the elements to the workoutItem
+    workoutItem.appendChild(select);
+    workoutItem.appendChild(durationInput);
+    workoutItem.appendChild(saveButton);
+
+    // Append the new workoutItem to the workoutContainer
+    workoutContainer.appendChild(workoutItem);
+}
+
+// This is a stub function. You should replace it with the actual server request or static data
+function populateWorkoutSelect(selectElement) {
+    // Here you would populate the dropdown with actual data from your PHP script
+    // The following is just static example data
+    const workoutTypes = [
+        { num: 1, type: 'Hiking' },
+        { num: 2, type: 'Dancing' },
+        {num: 3, type: 'Bicycling'},
+        {num:4, type: 'Walking'},
+        {num:5, type: 'Stretching'},
+        {num:6, type:'Running/jogging'},
+        {num: 7, type: 'Squats'}
+    ];
+    workoutTypes.forEach(workout => {
+        const option = document.createElement('option');
+        option.value = workout.num;
+        option.textContent = workout.type;
+        selectElement.appendChild(option);
+    });
+}
+
+
+
+// Make sure you have a select element with id="workout-select" in your HTML.
+// Example:
+// <select id="workout-select" class="workout-select"></select>
+
+// This is your 'Add Entry' button event listener
+document.getElementById('add-entry-button').addEventListener('click', populateWorkoutSelect);
+
+
+document.addEventListener('DOMContentLoaded', populateWorkoutSelect);
+
 function populateDeleteDropdown() {
     fetch('get_workouts.php')
     .then(response => response.json())
