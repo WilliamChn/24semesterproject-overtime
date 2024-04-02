@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Database connection credentials
 $servername = "oceanus.cse.buffalo.edu";
 $username = "lanakim";
@@ -14,7 +15,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$user_id = // The method to retrieve the user_id should be decided
+$user_id = $_SESSION['user_id']; // The user's ID from the session
 
 $sql = "SELECT Workout.ID, Workout_Stats.type AS Style, Workout.Duration, Workout.Calories, Workout.user_id
         FROM Workout
