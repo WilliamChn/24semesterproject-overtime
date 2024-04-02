@@ -122,7 +122,14 @@ $stmt->close();
 
 
 // Get the most recent workout from the Workout table based on the highest ID
-$stmt = $conn->prepare("SELECT * FROM Workout WHERE user_id = ? ORDER BY Id DESC LIMIT 1");
+$stmt = $conn->prepare("
+    SELECT Workout.*, Workout_Stats.type 
+    FROM Workout 
+    INNER JOIN Workout_Stats ON Workout.Style = Workout_Stats.num 
+    WHERE Workout.user_id = ? 
+    ORDER BY Workout.Id DESC 
+    LIMIT 1
+");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $recentWorkoutResult = $stmt->get_result();
@@ -130,16 +137,14 @@ $recentWorkoutResult = $stmt->get_result();
 if ($recentWorkoutResult && $recentWorkoutResult->num_rows > 0) {
     $row = $recentWorkoutResult->fetch_assoc();
     $response['recentWorkout'] = array(
-        'style' => $row['Style'], // Replace with your actual column name for the workout style/type
-        'duration' => $row['Duration'], // Replace with your actual column name for the workout duration
-        // Include any other relevant information you want to show
+        'type' => $row['type'], // Fetch the name of the workout type
+        'duration' => $row['Duration'],
     );
 } else {
     $response['recentWorkout'] = null;
 }
 $stmt->close();
 
-$conn->close();
 
 header('Content-Type: application/json');
 echo json_encode($response);

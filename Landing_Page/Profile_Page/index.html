@@ -35,18 +35,20 @@ async function fetchUserData() {
         document.getElementById('waterIntakeText').innerText = `${data.totalWater} ml`;
         document.getElementById('calorieIntake').innerText = `${data.totalCalories} cal`;
 
-        updateWaterIntakeCircle(data.totalWater);
-        updateProteinIntakeCircle(data.totalProtein);
-
         if (data.longestWorkout !== null) {
             document.getElementById('longestWorkoutBox').innerText = `${data.longestWorkout} mins`;
         }
 
         if (data.recentWorkout !== null) {
-            document.getElementById('recentWorkout').innerText = `Style: ${data.recentWorkout.style}, Duration: ${data.recentWorkout.duration} mins`;
+            document.getElementById('recentWorkout').innerText = `${data.recentWorkout.type}, Duration: ${data.recentWorkout.duration} mins`;
         } else {
             document.getElementById('recentWorkout').innerText = 'No recent workouts logged';
         }
+
+        updateWaterIntakeCircle(data.totalWater);
+        updateProteinIntakeCircle(data.totalProtein);
+
+
     } catch (error) {
         console.error('There was a problem fetching the user data:', error);
     }
