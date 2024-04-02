@@ -11,10 +11,14 @@ if ($conn->connect_error) {
 }
 
 $workoutId = $_POST['id'] ?? '';
+// Add user_id in the POST request
+$user_id = $_POST['user_id'] ?? '';
 
-if ($workoutId) {
-    $stmt = $conn->prepare("DELETE FROM Workout WHERE ID = ?");
-    $stmt->bind_param("i", $workoutId);
+// Check if both workoutId and user_id are provided
+if ($workoutId && $user_id) {
+    $stmt = $conn->prepare("DELETE FROM Workout WHERE ID = ? AND user_id = ?");
+    // Bind the workoutId and user_id parameters
+    $stmt->bind_param("ii", $workoutId, $user_id);
 
     if ($stmt->execute()) {
         echo "Workout deleted successfully";
