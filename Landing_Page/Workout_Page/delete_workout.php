@@ -1,4 +1,5 @@
 <?php
+session_start();
 $servername = "oceanus.cse.buffalo.edu";
 $username = "lanakim";
 $password = "50408039";
@@ -12,7 +13,7 @@ if ($conn->connect_error) {
 
 $workoutId = $_POST['id'] ?? '';
 // Add user_id in the POST request
-$user_id = $_POST['user_id'] ?? '';
+$user_id = $_SESSION['user_id']; // The user's ID from the session
 
 // Check if both workoutId and user_id are provided
 if ($workoutId && $user_id) {
