@@ -37,7 +37,10 @@ async function fetchUserData() {
 
         if (data.longestWorkout !== null) {
             document.getElementById('longestWorkoutBox').innerText = `${data.longestWorkout} mins`;
+        } else {
+            document.getElementById('longestWorkoutBox').innerText = 'No workouts logged';
         }
+
 
         if (data.recentWorkout !== null) {
             document.getElementById('recentWorkout').innerText = `${data.recentWorkout.type}, Duration: ${data.recentWorkout.duration} mins`;
@@ -267,8 +270,8 @@ window.onclick = function(event) {
               </div>
               <div class="data-section">
                 <span class="data-label">Longest Workout</span>
-                <span class="data-value" id="longestWorkoutBox">0 mins</span>
-              </div>              
+                <span class="data-value" id="longestWorkoutBox">0 mins</span> <!-- This will be dynamically updated -->
+              </div>                          
               <div class="data-section">
                 <span class="data-label">Recent Workout</span>
                 <div class="data-value" id="recentWorkout">Style: None, Duration: 0 mins</div> <!-- This will be dynamically updated -->

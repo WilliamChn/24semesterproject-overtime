@@ -114,11 +114,12 @@ $workoutResult = $stmt->get_result();
 
 if ($workoutResult && $workoutResult->num_rows > 0) {
     $row = $workoutResult->fetch_assoc();
-    $response['longestWorkout'] = $row['Duration']; // Assume 'Duration' is stored in a column named 'Duration'
+    $response['longestWorkout'] = $row['LongestWorkout']; // Assume 'Duration' is stored in a column named 'Duration'
 } else {
-    $response['longestWorkout'] = 0;
+    $response['longestWorkout'] = null;
 }
 $stmt->close();
+
 
 
 // Get the most recent workout from the Workout table based on the highest ID
