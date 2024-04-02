@@ -130,6 +130,7 @@ input[type="text"], .data-value {
 }
 
 .data-section {
+  position: relative;
   background: white;
   border-radius: 8px;
   padding: 10px;
@@ -187,4 +188,55 @@ input[type="text"], button {
 
 .circle-progress + input + button {
   order: 3; /* Makes button come after the input */
+}
+
+/* Style for the edit button */
+.edit-button {
+  position: absolute;
+  bottom: 10px; /* Adjust as needed for your layout */
+  right: 10px; /* Adjust as needed for your layout */
+  cursor: pointer; /* Changes the cursor to indicate it's clickable */
+}
+
+/* Style for the edit button image */
+.edit-button img {
+  width: 20px; /* Adjust as needed for your layout */
+  height: auto; /* Keep the aspect ratio of the image */
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+  padding-top: 60px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
 }

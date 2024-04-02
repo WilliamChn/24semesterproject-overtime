@@ -1,0 +1,43 @@
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+    display: flex; /* Use flexbox to center children */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    min-height: 100vh; /* At least full viewport height */
+  }
+  
+  .navbar {
+    position: absolute; /* Absolute positioning to take it out of the flexbox flow */
+    top: 0; /* Position at the top */
+    left: 0; /* Position on the left */
+    width: 100%; /* Full width */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Other styles... */
+  
+  .container {
+    width: 100%;
+    max-width: 500px;
+    /* Removed margin: auto; */
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    /* Added styles for centering */
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* Rest of the styles... */
+  

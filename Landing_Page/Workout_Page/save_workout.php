@@ -29,10 +29,16 @@ $caloriesPerMinute = $row['calories'];
 // Calculate total calories burned
 $totalCaloriesBurned = $caloriesPerMinute * $duration;
 
-// Now, insert the new workout data into the Workout table
-$insertSql = "INSERT INTO Workout (style, duration, calories) VALUES (?, ?, ?)";
+// Retrieve user_id from the POST request
+$user_id = $_POST['user_id'];
+
+// Update the insert SQL to include user_id
+$insertSql = "INSERT INTO Workout (style, duration, calories, user_id) VALUES (?, ?, ?, ?)";
 $insertStmt = $conn->prepare($insertSql);
-$insertStmt->bind_param("sid", $workoutNum, $duration, $totalCaloriesBurned);
+// Bind the new user_id parameter as well
+$insertStmt->bind_param("sidi", $workoutNum, $duration, $totalCaloriesBurned, $user_id);
+
+
 if($insertStmt->execute()) {
     echo "Workout saved successfully!";
 } else {

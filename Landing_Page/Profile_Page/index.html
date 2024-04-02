@@ -6,32 +6,52 @@
 <title>Profile Page</title>
 <link rel="stylesheet" href="style.css">
 <script>
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    // Moved the fetchUserData function call here to ensure DOM is fully loaded
+    fetchUserData();
+});
+
 // This function will fetch user data from profile-data.php including intakes and workouts
-function fetchUserData() {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            var response = JSON.parse(this.responseText);
-            // Update protein intake
-            document.getElementById('proteinIntakeText').innerText = response.totalProtein + ' g';
-            // Update water intake
-            document.getElementById('waterIntakeText').innerText = response.totalWater + ' ml';
-            // Update calorie intake
-            document.getElementById('calorieIntake').innerText = response.totalCalories + ' cal';
-            // Update circles
-            updateWaterIntakeCircle(response.totalWater);
-            updateProteinIntakeCircle(response.totalProtein);
-            // Update longest workout
-            document.getElementById('longestWorkoutBox').innerText = response.longestWorkout + ' mins';
-            // Update recent workout
-            document.getElementById('recentWorkout').innerText = 
-                response.recentWorkout ? `Style: ${response.recentWorkout.style}, Duration: ${response.recentWorkout.duration} mins` :
-                'No recent workouts logged';
+async function fetchUserData() {
+    try {
+        const response = await fetch('profile-data.php');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    };
-    xhr.open('GET', 'profile-data.php', true);
-    xhr.send();
+        const data = await response.json();
+
+        // Update the frontend with the fetched data
+        // Assuming the server sends back the date of birth in a field named 'dob'
+        document.getElementById('userWeight').innerText = `${data.weight} lbs`;
+        document.getElementById('userHeight').innerText = `${data.height} in`;
+        
+        // Set the 'data-dob' attribute to the user's date of birth
+        const userAgeSpan = document.getElementById('userAge');
+        userAgeSpan.innerText = `${data.age} years`;
+        userAgeSpan.setAttribute('data-dob', data.dob); // This assumes 'dob' is the date of birth in 'YYYY-MM-DD' format
+
+        document.getElementById('proteinIntakeText').innerText = `${data.totalProtein} g`;
+        document.getElementById('waterIntakeText').innerText = `${data.totalWater} ml`;
+        document.getElementById('calorieIntake').innerText = `${data.totalCalories} cal`;
+
+        updateWaterIntakeCircle(data.totalWater);
+        updateProteinIntakeCircle(data.totalProtein);
+
+        if (data.longestWorkout !== null) {
+            document.getElementById('longestWorkoutBox').innerText = `${data.longestWorkout} mins`;
+        }
+
+        if (data.recentWorkout !== null) {
+            document.getElementById('recentWorkout').innerText = `Style: ${data.recentWorkout.style}, Duration: ${data.recentWorkout.duration} mins`;
+        } else {
+            document.getElementById('recentWorkout').innerText = 'No recent workouts logged';
+        }
+    } catch (error) {
+        console.error('There was a problem fetching the user data:', error);
+    }
 }
+
 
 function updateProteinIntakeCircle(value) {
     var maxProtein = 200; // Set a maximum protein intake value for full circle
@@ -86,8 +106,79 @@ function validateAndSendWaterIntake() {
     waterIntakeInput.value = ''; // Clear the input box after sending data
 }
 
-// Call the function on window load
-window.onload = fetchUserData;
+// Function to open the modal based on the field to edit
+function editValue(field) {
+    var currentValue = document.getElementById(`user${capitalizeFirstLetter(field)}`).innerText;
+    if (field === 'age') {
+        // For age, let's assume the server provides the DOB in 'data-dob' attribute
+        var dobValue = document.getElementById('userAge').getAttribute('data-dob');
+        openEditModal('dob', dobValue);
+    } else {
+        var newUserValue = prompt(`Enter new ${field}`, currentValue.split(' ')[0]); // Assuming the format is 'value unit'
+        if (newUserValue) {
+            sendUserData(field, newUserValue);
+        }
+    }
+}
+
+function sendUserData(field, value) {
+    var xhr = new XMLHttpRequest();
+    var postKey = `p_${field}`; // Modify the key to match the expected POST keys
+    var formData = new FormData();
+    formData.append(postKey, value);
+
+    xhr.open("POST", "update-profile-data.php", true);
+    xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+            if(response.status === 'success') {
+                fetchUserData(); // Refetch user data to update the display
+            } else {
+                console.error('Error updating user data:', response.message);
+            }
+        }
+    };
+    xhr.send(formData);
+}
+
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// Add the function to open the modal
+function openEditModal(field, value) {
+    if (field === 'dob') {
+        var modal = document.getElementById('editModal');
+        var editInput = document.getElementById('editInput');
+        editInput.name = 'p_dob';
+        editInput.value = value; // Assuming the value is already in 'YYYY-MM-DD' format
+        modal.style.display = 'block';
+    }
+    // You can extend this for other fields such as height, weight, etc.
+}
+
+// Close the modal
+function closeModal() {
+    document.getElementById('editModal').style.display = 'none';
+}
+
+// Handle the form submission for editing profile data
+document.getElementById('editForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var field = document.getElementById('editInput').name;
+    var value = document.getElementById('editInput').value;
+    sendUserData(field.replace('p_', ''), value);
+    closeModal();
+});
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    var modal = document.getElementById('editModal');
+    if (event.target === modal) {
+        closeModal();
+    }
+};
 
 </script>
 </head>
@@ -124,16 +215,19 @@ window.onload = fetchUserData;
             <span class="data-label">Height</span>
             <span class="data-value" id="userHeight">6 ft 3 in
             </span>
+            <span class="edit-button" onclick="editValue('height')"> <img src="edit_button.png" alt="Edit" /> </span>
           </div>
           <!-- Weight -->
           <div class="data-section">
             <span class="data-label">Weight</span>
             <span class="data-value" id="userWeight">150 lbs</span>
+            <span class="edit-button" onclick="editValue('weight')"> <img src="edit_button.png" alt="Edit" /> </span>
           </div>
           <!-- Age -->
           <div class="data-section">
             <span class="data-label">Age</span>
             <span class="data-value" id="userAge">21 years</span>
+            <span class="edit-button" onclick="editValue('age')"> <img src="edit_button.png" alt="Edit" /> </span>
           </div>
           <!-- Calorie Intake -->
           <div class="data-section">
@@ -180,6 +274,21 @@ window.onload = fetchUserData;
           </div>
       </div>
   </div>
+
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal">
+  <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <form id="editForm">
+          <div class="form-field">
+              <label id="editLabel" for="editInput">Edit:</label>
+              <input type="date" id="editInput" name="p_dob">
+          </div>
+          <button type="submit">Update</button>
+      </form>
+  </div>
+</div>
 
 </body>
 </html>

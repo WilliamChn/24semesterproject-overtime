@@ -25,6 +25,23 @@ $userId = $_SESSION['user_id']; // The user's ID from the session
 
 $response = array();
 
+// Fetch user's personal info
+$stmt = $conn->prepare("SELECT p_dob, p_weight, p_height FROM Personal_Info WHERE user_id = ?");
+$stmt->bind_param("i", $userId);
+$stmt->execute();
+$personalInfoResult = $stmt->get_result();
+if ($personalInfoResult && $personalInfoResult->num_rows > 0) {
+    $personalInfo = $personalInfoResult->fetch_assoc();
+    $dob = new DateTime($personalInfo['p_dob']);
+    $today = new DateTime('today');
+    $response['age'] = $dob->diff($today)->y;
+    $response['weight'] = $personalInfo['p_weight'];
+    $response['height'] = $personalInfo['p_height'];
+} else {
+    $response['personalInfo'] = 'No personal info found for user.';
+}
+$stmt->close();
+
 // Handle POST request for water intake
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['waterIntake'])) {
     $waterIntake = filter_input(INPUT_POST, 'waterIntake', FILTER_VALIDATE_INT);

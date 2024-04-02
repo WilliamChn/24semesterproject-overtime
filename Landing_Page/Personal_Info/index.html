@@ -5,32 +5,97 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Personal Info</title>
 <style>
-  body { font-family: Arial, sans-serif; }
-  .container { width: 500px; margin: auto; padding: 20px; }
-  .form-header { background: #f8e6a0; padding: 10px; text-align: center; }
-  .form-header h2 { margin: 0; }
-  .form-field { margin-bottom: 10px; }
-  .form-field label { display: block; margin-bottom: 5px; }
-  .form-field input[type=text], .form-field input[type=number] { width: 100%; padding: 10px; border: 1px solid #ddd; }
-  .form-field input[type=submit], .form-field button { padding: 10px 20px; background: #0095ff; color: white; border: none; cursor: pointer; }
-  .form-field button { background: #ccc; }
-  .form-field input[type=submit]:hover, .form-field button:hover { opacity: 0.9; }
+  body { 
+    font-family: Arial, sans-serif; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4;
+  }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .navbar a {
+    text-decoration: none;
+    color: #000;
+    margin: 0 10px;
+    font-weight: bold;
+  }
+  .navbar a:hover {
+    color: #0095ff;
+  }
+  .navbar-right {
+    display: flex;
+  }
+  .container {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 4px;
+  }
+  .form-header {
+    background: #f8e6a0;
+    padding: 10px;
+    text-align: center;
+  }
+  .form-header h2 {
+    margin: 0;
+  }
+  .form-field {
+    margin-bottom: 10px;
+  }
+  .form-field label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  .form-field input[type=text],
+  .form-field input[type=date], /* Updated for the date input */
+  .form-field input[type=number] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  .form-field input[type=submit],
+  .form-field button {
+    padding: 10px 20px;
+    background: #0095ff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .form-field button {
+    background: #ccc;
+  }
+  .form-field input[type=submit]:hover,
+  .form-field button:hover {
+    opacity: 0.9;
+  }
 </style>
 </head>
 <body>
-<div class="container">
-  <header>
-    <div class="navbar">
-      <a href="../index.php">OVERTIME</a>
-      <div class="navbar-right">
-        <a href="../Meal_Page/index.html">Log Meals</a>
-        <a href="../Workout_Page/index.html">Log Workouts</a>
-        <a href="../Profile_Page/index.html">Profile</a>
-        <a href="../logout.php">Logout</a> 
-      </div>
+<header>
+  <nav class="navbar">
+    <a href="../index.php">OVERTIME</a>
+    <div class="navbar-right">
+      <a href="../Meal_Page/index.html">Log Meals</a>
+      <a href="../Workout_Page/index.html">Log Workouts</a>
+      <a href="../Profile_Page/index.html">Profile</a>
+      <a href="../logout.php">Logout</a> 
     </div>
-  </header>
-  
+  </nav>
+</header>
+
+<div class="container">
   <div class="form-header">
     <h2>Personal Info</h2>
   </div>
@@ -40,8 +105,8 @@
       <input type="text" id="p_name" name="p_name" required>
     </div>
     <div class="form-field">
-      <label for="age">Age</label>
-      <input type="number" id="p_age" name="p_age" required>
+      <label for="dob">Date of Birth</label> <!-- Updated label -->
+      <input type="date" id="p_dob" name="p_dob" required> <!-- Changed to type="date" -->
     </div>
     <div class="form-field">
       <label for="weight">Weight (lbs)</label>
