@@ -14,8 +14,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// SQL to select the workout data
-$sql = "SELECT ID, Style, Duration FROM Workout";
+// SQL to select the workout data with type from Workout_Stats
+$sql = "SELECT Workout.ID, Workout_Stats.type AS Style, Workout.Duration, Workout.Calories
+        FROM Workout
+        INNER JOIN Workout_Stats ON Workout.Style = Workout_Stats.num";
 $result = $conn->query($sql);
 
 // Array to hold the workouts
