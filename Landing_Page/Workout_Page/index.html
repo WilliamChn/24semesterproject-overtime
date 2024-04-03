@@ -117,6 +117,21 @@
       .workout-duration-label {
         margin-right: 10px;
       }
+      
+      .workout-display-container {
+  margin: 20px;
+}
+
+.workout-display {
+  background-color: #e9e9e9; /* Light grey background */
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.workout-display > span {
+  margin-right: 10px;
+}
+
     </style>
 </head>
 <body>
@@ -136,14 +151,20 @@
 </div>
 
 <div class="container">
+    <!-- Add this new section below your current containers -->
+<div class="workout-display-container">
+    <h2>All Workouts</h2>
+    <div class="workout-list">
+      <!-- The workout display elements will be appended here -->
+    </div>
+  </div>
+  
     <div class="workout-list">
         <!-- Workout items will be dynamically added here -->
     </div>
     
     <div class="add-entry">
-      <select id="workout-select" class="workout-select">
-        <!-- Options will be dynamically added here -->
-      </select>
+
       <button id="add-entry-button" class="add-entry-button">Add Entry</button>
   </div>
   
@@ -155,10 +176,6 @@
 </div>
 
 <script>
-// Function to create a new workout entry
-
-
-// Event listener for the Add Entry button
 
 // This function should now accept a select element to populate
 document.getElementById('add-entry-button').addEventListener('click', function() {
@@ -210,7 +227,6 @@ saveButton.onclick = function() {
         alert("Please enter a valid duration.");
         return;
     }
-
     // Now send this data to save_workout.php
     fetch('save_workout.php', {
         method: 'POST',
@@ -224,6 +240,8 @@ saveButton.onclick = function() {
         // Handle the response from save_workout.php here
         alert(responseText); // Show a message to the user
         // Consider clearing the input or updating the UI as needed
+        populateDeleteDropdown();
+        displayWorkouts();
     })
     .catch(error => {
         console.error('Error:', error);
@@ -232,9 +250,10 @@ saveButton.onclick = function() {
 
 
     // Append the elements to the workoutItem
-    workoutItem.appendChild(select);
-    workoutItem.appendChild(durationInput);
-    workoutItem.appendChild(saveButton);
+    // Append the elements to the workoutItem in the order you want them to display
+workoutItem.appendChild(select);        // This will be first
+workoutItem.appendChild(durationInput); // This will be second
+workoutItem.appendChild(saveButton);    // This will be third
 
     // Append the new workoutItem to the workoutContainer
     workoutContainer.appendChild(workoutItem);
@@ -260,8 +279,6 @@ function populateWorkoutSelect(selectElement) {
         selectElement.appendChild(option);
     });
 }
-
-
 
 // Make sure you have a select element with id="workout-select" in your HTML.
 // Example:
@@ -290,6 +307,47 @@ function populateDeleteDropdown() {
         console.error('Error:', error);
     });
 }
+function displayWorkouts() {
+  fetch('get_workouts.php')
+    .then(response => response.json())
+    .then(workouts => {
+      const displayContainer = document.querySelector('.workout-list');
+      
+      // Clear existing content
+      displayContainer.innerHTML = '';
+      
+      workouts.forEach(workout => {
+        const workoutDiv = document.createElement('div');
+        workoutDiv.className = 'workout-display';
+        
+        const workoutStyle = document.createElement('span');
+        workoutStyle.textContent = workout.Style;
+        workoutDiv.appendChild(workoutStyle);
+        
+        const workoutDuration = document.createElement('span');
+        workoutDuration.textContent = workout.Duration + ' min';
+        workoutDiv.appendChild(workoutDuration);
+        
+        // Assuming 'Calories' is a property returned by your PHP script
+        // If not, you'll need to calculate or otherwise retrieve this information
+        const workoutCalories = document.createElement('span');
+        workoutCalories.textContent = workout.Calories + ' kcal';
+        workoutDiv.appendChild(workoutCalories);
+        
+        displayContainer.appendChild(workoutDiv);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+// Call this function to populate the workout display when the document is ready
+document.addEventListener('DOMContentLoaded', displayWorkouts);
+
+// Call this function to populate the workout display when the document is ready
+document.addEventListener('DOMContentLoaded', displayWorkouts);
+
 
 
 // Event listener for the Delete Selected Workout button
@@ -322,8 +380,10 @@ document.getElementById('delete-workout-button').addEventListener('click', funct
                     }
                 });
                 
+                displayWorkouts();
                 // Display a confirmation message
                 alert('Workout deleted successfully!');
+
             } else {
                 // If the server did not confirm the deletion, alert the user
                 alert(data);
@@ -335,7 +395,6 @@ document.getElementById('delete-workout-button').addEventListener('click', funct
         });
     }
 });
-
 
 document.addEventListener('DOMContentLoaded', populateDeleteDropdown);
 </script>
