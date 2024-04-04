@@ -1,5 +1,6 @@
 <?php
 // Database configuration
+session_start();
 $servername = "oceanus.cse.buffalo.edu";
 $username = "lanakim";
 $password = "50408039";

@@ -21,7 +21,7 @@ $options = "<option value=''>Select a meal</option>";
 if ($result->num_rows > 0) {
     // Output data of each row as a dropdown option
     while($row = $result->fetch_assoc()) {
-        $options .= '<option value="'. htmlspecialchars($row["Item"]) .'">' . htmlspecialchars($row["Item"]) . ' - Calories: ' . htmlspecialchars($row["Calories"]) . ' Protein: ' . htmlspecialchars($row["Protein"]) . 'g</option>';
+        $options .= '<option value="'. htmlspecialchars($row["Item"]) .'">' . htmlspecialchars($row["Location"]) . ' - ' . htmlspecialchars($row["Item"]) . '  Calories: ' . htmlspecialchars($row["Calories"]) . ' Protein: ' . htmlspecialchars($row["Protein"]) . 'g</option>';
     }
 } else {
     $options .= '<option value="">No meals available</option>';
