@@ -19,6 +19,11 @@
             <form action="join.php" method="post">
                 <input type="text" placeholder="Username" name="username" required>
                 <input type="password" placeholder="Password" name="password" required>
+                <!-- Add a "Remember Me" checkbox below the password field -->
+                <div class="remember-me">
+                    <input type="checkbox" id="remember_me" name="remember_me">
+                    <label for="remember_me">Remember Me</label>
+                </div>
                 <input type="submit" value="Login">
             </form>
             <a href="../Sign_Page/sign.html">Don't have an account? Sign up now!</a>
