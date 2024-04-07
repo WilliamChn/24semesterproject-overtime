@@ -1,4 +1,6 @@
 <?php
+// get_user_meals.php
+
 session_start(); // Start the session to access the user ID
 
 // Database configuration
@@ -24,25 +26,23 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = $_SESSION['user_id']; // Retrieve the user ID from the session
 
-// Get the data from the POST request
-$itemName = $conn->real_escape_string($_POST['itemName']);
-$calories = intval($_POST['calories']); // Ensure that it is an integer
-$protein = intval($_POST['protein']);    // Ensure that it is an integer
+// Prepare the SELECT statement
+$stmt = $conn->prepare("SELECT Food FROM `Meals_Info` WHERE user_id = ?");
+$stmt->bind_param("i", $userId);
 
-// Prepare and bind
-$stmt = $conn->prepare("INSERT INTO `Meals_Info` (user_id, Food, Protein, Calorie) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("isii", $userId, $itemName, $protein, $calories);
+// Execute the query
+$stmt->execute();
+$result = $stmt->get_result();
 
-// Set parameters and execute
-if($stmt->execute()) {
-    http_response_code(200); // Success
-    echo "New record created successfully";
-} else {
-    http_response_code(500); // Internal Server Error
-    echo "Error: " . $stmt->error;
+$meals = [];
+while ($row = $result->fetch_assoc()) {
+    $meals[] = $row;
 }
 
 $stmt->close();
 $conn->close();
-?>
 
+// Output the meals as JSON
+header('Content-Type: application/json');
+echo json_encode($meals);
+?>

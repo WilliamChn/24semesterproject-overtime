@@ -5,119 +5,134 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Log</title>
     <style>
-        body {
-          font-family: Arial, sans-serif;
-        }
-        .header {
-          display: flex;
-          justify-content: space-between;
-          padding: 20px;
-          background-color: #333;
-          color: white;
-        }
-        .container {
-          display: flex;
-          justify-content: space-between;
-          margin: 20px;
-        }
-        .workout-list, .add-entry {
-          flex: 1;
-          margin: 10px;
-        }
-        .workout-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 10px;
-          padding: 10px;
-          background-color: #f2f2f2;
-        }
-        .workout-item > span {
-          flex: 1;
-      
-        }
-        .workout-item > button {
-          background-color: red;
-          color: white;
-          border: none;
-          padding: 5px 10px;
-          cursor: pointer;
-          
-        }
-        .workout-item > button2 {
-          padding: 10px 15px; /* Adjust padding to make the button smaller */
-        font-size: 14px; /* Adjust font size if needed */
-        background-color: #000; /* Set background color to black */
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .header {
+        display: flex;
+        justify-content: space-between;
+        padding: 20px;
+        background-color: #333;
+        color: white;
+      }
+      .container {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px;
+      }
+      .workout-list, .add-entry {
+        flex: 1;
+        margin: 10px;
+      }
+      .workout-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #f2f2f2;
+      }
+      .workout-item > span {
+        flex: 1;
+    
+      }
+      .workout-item > button {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        
+      }
+      .workout-item > button2 {
+        padding: 10px 15px; /* Adjust padding to make the button smaller */
+      font-size: 14px; /* Adjust font size if needed */
+      background-color: #000; /* Set background color to black */
+      color: white;
+      border: none;
+      cursor: pointer;
+      /* Add any additional styling as needed */
+      }
+      .add-entry-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #4CAF50;
         color: white;
         border: none;
         cursor: pointer;
-        /* Add any additional styling as needed */
-        }
-        .add-entry-button {
-          display: block;
-          width: 100%;
-          padding: 10px;
-          margin-top: 10px;
-          background-color: #4CAF50;
-          color: white;
-          border: none;
-          cursor: pointer;
-        
-        }
-        .navbar {
-          background-color: #ffffff; /* White background */
-          overflow: hidden;
-          padding: 10px 20px;
+      
+      }
+      .navbar {
+        background-color: #ffffff; /* White background */
+        overflow: hidden;
+        padding: 10px 20px;
+    }
+    
+    .navbar a {
+        float: left;
+        display: block;
+        color: black; /* Black text color */
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px; /* Larger font size */
+    }
+    
+    .navbar a:hover {
+        color: #777; /* Dark grey color on hover */
+    }
+    
+    .navbar a:not(:first-child) {
+        margin-left: 10px;
+    }
+    
+    .navbar-right {
+        float: right;
+    }
+    .header-image {
+        background-image: url('workout.png'); /* Replace with your image path */
+        background-size: cover;
+        background-position: center;
+        height: 150px; /* Adjust the height as needed */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #000; /* black text color */
+      }
+      .workout-select, .workout-duration {
+        flex: 1;
+        margin-right: 10px;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+      }
+    
+      .workout-duration {
+        flex: 0 0 100px; /* Adjust the width as necessary */
+      }
+    
+      .workout-duration-label {
+        margin-right: 10px;
       }
       
-      .navbar a {
-          float: left;
-          display: block;
-          color: black; /* Black text color */
-          text-align: center;
-          padding: 12px;
-          text-decoration: none;
-          font-size: 18px; /* Larger font size */
-      }
-      
-      .navbar a:hover {
-          color: #777; /* Dark grey color on hover */
-      }
-      
-      .navbar a:not(:first-child) {
-          margin-left: 10px;
-      }
-      
-      .navbar-right {
-          float: right;
-      }
-      .header-image {
-          background-image: url('workout.png'); /* Replace with your image path */
-          background-size: cover;
-          background-position: center;
-          height: 150px; /* Adjust the height as needed */
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #000; /* black text color */
-        }
-        .workout-select, .workout-duration {
-          flex: 1;
-          margin-right: 10px;
-          padding: 5px 10px;
-          border: 1px solid #ccc;
-          border-radius: 4px;
-          background-color: white;
-        }
-      
-        .workout-duration {
-          flex: 0 0 100px; /* Adjust the width as necessary */
-        }
-      
-        .workout-duration-label {
-          margin-right: 10px;
-        }
-      </style>
+      .workout-display-container {
+  margin: 20px;
+}
+
+.workout-display {
+  background-color: #e9e9e9; /* Light grey background */
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.workout-display > span {
+  margin-right: 10px;
+}
+
+    </style>
 </head>
 <body>
 
@@ -136,128 +151,252 @@
 </div>
 
 <div class="container">
+    <!-- Add this new section below your current containers -->
+<div class="workout-display-container">
+    <h2>All Workouts</h2>
+    <div class="workout-list">
+      <!-- The workout display elements will be appended here -->
+    </div>
+  </div>
+  
     <div class="workout-list">
         <!-- Workout items will be dynamically added here -->
     </div>
+    
     <div class="add-entry">
-        <button id="add-entry-button" class="add-entry-button">Add Entry</button>
+
+      <button id="add-entry-button" class="add-entry-button">Add Entry</button>
+  </div>
+  
+    
+    <div class="delete-entry">
+        <select id="delete-workout-select" class="workout-select"></select>
+        <button id="delete-workout-button" class="delete-entry-button">Delete Selected Workout</button>
     </div>
 </div>
 
 <script>
-// Function to create a new workout entry
-function createWorkoutItem(id, workoutTypeValue, workoutDurationValue) {
-    const workoutList = document.querySelector('.workout-list');
-    
-    // Create the workout item div
+
+// This function should now accept a select element to populate
+document.getElementById('add-entry-button').addEventListener('click', function() {
+    createWorkoutItem(); // This will create a new workout item when clicked
+});
+
+function createWorkoutItem() {
+    // Assuming you want to insert the new workout item below the 'Add Entry' button
+    const workoutContainer = document.querySelector('.container'); // This should be the container where you want to append the new row
+
+    // Create the workout item elements (dropdown, input for duration, save button, etc.)
     const workoutItem = document.createElement('div');
-    workoutItem.classList.add('workout-item');
-    workoutItem.dataset.id = id; // Assign an ID to each workout item
+    workoutItem.className = 'workout-item';
     
-    // Create the select dropdown
     const select = document.createElement('select');
-    select.name = 'workouts';
-    select.classList.add('workout-select');
-    select.innerHTML = `
-        <option value="squats">Squats</option>
-        <option value="pull-ups">Pull-ups</option>
-        <option value="sit-ups">Sit-ups</option>
-        <!-- Add more workout options here -->
-    `;
-    select.value = workoutTypeValue; // Set the default or existing value
-    
-    // Create the duration label and input
-    const durationLabel = document.createElement('span');
+    select.className = 'workout-select';
+
+    // Populate select with options
+    // Replace 'get_workout_types.php' with the actual path to your PHP script
+    fetch('get_workout_types.php')
+    .then(response => response.json())
+    .then(data => {
+        data.forEach(workout => {
+            let option = document.createElement('option');
+            option.value = workout.num;
+            option.text = workout.type;
+            select.appendChild(option);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+
     const durationInput = document.createElement('input');
-    durationLabel.classList.add('workout-duration-label');
-    durationLabel.textContent = 'Duration:';
     durationInput.type = 'number';
-    durationInput.classList.add('workout-duration');
-    durationInput.value = workoutDurationValue; // Set the default or existing value
+    durationInput.className = 'workout-duration';
+    durationInput.placeholder = 'Duration';
+
+    const saveButton = document.createElement('button');
+    saveButton.className = 'save-workout-button';
+    saveButton.textContent = 'Save';
+    // Inside the createWorkoutItem function, after you create the saveButton
+saveButton.onclick = function() {
+    const workoutNum = select.value; // Assuming this is the ID related to the workout type
+    const duration = durationInput.value;
+
+    // Validate input (ensure it's a positive integer)
+    if(duration <= 0 || isNaN(duration)) {
+        alert("Please enter a valid duration.");
+        return;
+    }
+    // Now send this data to save_workout.php
+    fetch('save_workout.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `num=${encodeURIComponent(workoutNum)}&duration=${encodeURIComponent(duration)}`
+    })
+    .then(response => response.text())
+    .then(responseText => {
+        // Handle the response from save_workout.php here
+        alert(responseText); // Show a message to the user
+        // Consider clearing the input or updating the UI as needed
+        populateDeleteDropdown();
+        displayWorkouts();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+};
+
+
+    // Append the elements to the workoutItem
+    // Append the elements to the workoutItem in the order you want them to display
+workoutItem.appendChild(select);        // This will be first
+workoutItem.appendChild(durationInput); // This will be second
+workoutItem.appendChild(saveButton);    // This will be third
+
+    // Append the new workoutItem to the workoutContainer
+    workoutContainer.appendChild(workoutItem);
+}
+
+// This is a stub function. You should replace it with the actual server request or static data
+function populateWorkoutSelect(selectElement) {
+    // Here you would populate the dropdown with actual data from your PHP script
+    // The following is just static example data
+    const workoutTypes = [
+        { num: 1, type: 'Hiking' },
+        { num: 2, type: 'Dancing' },
+        {num: 3, type: 'Bicycling'},
+        {num:4, type: 'Walking'},
+        {num:5, type: 'Stretching'},
+        {num:6, type:'Running/jogging'},
+        {num: 7, type: 'Squats'}
+    ];
+    workoutTypes.forEach(workout => {
+        const option = document.createElement('option');
+        option.value = workout.num;
+        option.textContent = workout.type;
+        selectElement.appendChild(option);
+    });
+}
+
+// Make sure you have a select element with id="workout-select" in your HTML.
+// Example:
+// <select id="workout-select" class="workout-select"></select>
+
+// This is your 'Add Entry' button event listener
+document.getElementById('add-entry-button').addEventListener('click', populateWorkoutSelect);
+
+
+document.addEventListener('DOMContentLoaded', populateWorkoutSelect);
+
+function populateDeleteDropdown() {
+    fetch('get_workouts.php')
+    .then(response => response.json())
+    .then(workouts => {
+        const deleteDropdown = document.getElementById('delete-workout-select');
+        deleteDropdown.innerHTML = ''; // Clear existing options
+        workouts.forEach(workout => {
+            // Include both Style and Duration in the dropdown display
+            const optionText = `${workout.Style} - ${workout.Duration} min`;
+            const option = new Option(optionText, workout.ID);
+            deleteDropdown.add(option);
+        });
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+function displayWorkouts() {
+  fetch('get_workouts.php')
+    .then(response => response.json())
+    .then(workouts => {
+      const displayContainer = document.querySelector('.workout-list');
+      
+      // Clear existing content
+      displayContainer.innerHTML = '';
+      
+      workouts.forEach(workout => {
+        const workoutDiv = document.createElement('div');
+        workoutDiv.className = 'workout-display';
+        
+        const workoutStyle = document.createElement('span');
+        workoutStyle.textContent = workout.Style;
+        workoutDiv.appendChild(workoutStyle);
+        
+        const workoutDuration = document.createElement('span');
+        workoutDuration.textContent = workout.Duration + ' min';
+        workoutDiv.appendChild(workoutDuration);
+        
+        // Assuming 'Calories' is a property returned by your PHP script
+        // If not, you'll need to calculate or otherwise retrieve this information
+        const workoutCalories = document.createElement('span');
+        workoutCalories.textContent = workout.Calories + ' kcal';
+        workoutDiv.appendChild(workoutCalories);
+        
+        displayContainer.appendChild(workoutDiv);
+      });
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+
+// Call this function to populate the workout display when the document is ready
+document.addEventListener('DOMContentLoaded', displayWorkouts);
+
+// Call this function to populate the workout display when the document is ready
+document.addEventListener('DOMContentLoaded', displayWorkouts);
+
+
+
+// Event listener for the Delete Selected Workout button
+document.getElementById('delete-workout-button').addEventListener('click', function() {
+    const deleteDropdown = document.getElementById('delete-workout-select');
+    const selectedWorkoutId = deleteDropdown.value;
+    const selectedWorkoutText = deleteDropdown.options[deleteDropdown.selectedIndex].text;
     
-    // Create the delete button
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'x';
-    deleteButton.onclick = function() {
-    if (confirm("Are you sure you want to delete the most recent workout? This cannot be undone!")) {
+    if (selectedWorkoutId && confirm(`Are you sure you want to delete this workout: ${selectedWorkoutText}? This cannot be undone!`)) {
         fetch('delete_workout.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: 'delete_workout=true'
+            body: `id=${encodeURIComponent(selectedWorkoutId)}`
         })
         .then(response => response.text())
         .then(data => {
-            console.log(data); // Log the server response for debugging
-            console.log(id);
-            // Remove the most recent workout item from the DOM
-            const workoutList = document.querySelector('.workout-list');
-            const lastWorkoutItem = workoutList.lastElementChild;
-            if (lastWorkoutItem) {
-                workoutList.removeChild(lastWorkoutItem);
+            // Assuming the server sends back a success message
+            if (data === "Workout deleted successfully") {
+                // Remove the workout from the dropdown
+                deleteDropdown.remove(deleteDropdown.selectedIndex);
+
+                // Remove the workout from the workout list in the UI
+                const workoutList = document.querySelector('.workout-list');
+                const workoutItems = workoutList.querySelectorAll('.workout-item');
+                workoutItems.forEach((item) => {
+                    if (item.dataset.id === selectedWorkoutId) {
+                        workoutList.removeChild(item);
+                    }
+                });
+                
+                displayWorkouts();
+                // Display a confirmation message
+                alert('Workout deleted successfully!');
+
+            } else {
+                // If the server did not confirm the deletion, alert the user
+                alert(data);
             }
-            alert('Most recent workout deleted successfully!');
         })
         .catch(error => {
             console.error('Error:', error);
+            alert("There was a problem deleting the workout.");
         });
     }
-};
-
-    
-const saveButton = document.createElement('button2');
-  saveButton.textContent = 'Save';
-  // In your JavaScript function where the Save button is created
-saveButton.classList.add('save-entry-button'); // This is a new class for the save button
-  
-  // Corrected save button click function
-saveButton.onclick = function() {
-  // Collect workout data
-  const workoutStyle = select.value;
-  const workoutDuration = durationInput.value;
-
-  // Prepare data to be sent
-  const data = `style=${encodeURIComponent(workoutStyle)}&duration=${encodeURIComponent(workoutDuration)}`;
-
-  // Use Fetch API to send data to the server
-  fetch('save_workout.php', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: data,
-  })
-  .then(response => response.text())
-  .then(responseData => {
-    alert('Workout saved successfully!');
-    // Optionally, clear the input fields or update the UI accordingly
-  })
-  .catch((error) => {
-    console.error('Error:', error);
-  });
-};
-
-
-    
-    // Append elements to the workout item
-    workoutItem.appendChild(select);
-    workoutItem.appendChild(durationLabel);
-    workoutItem.appendChild(durationInput);
-    workoutItem.appendChild(deleteButton);
-    workoutItem.appendChild(saveButton); // Add the saveButton here
-
-    
-    // Append the workout item to the list
-    workoutList.appendChild(workoutItem);
-}
-
-// Event listener for the Add Entry button
-document.getElementById('add-entry-button').addEventListener('click', function() {
-    // This would be where you get the values for the workout type and duration from the user
-    // For now, let's add a static entry (you would replace this with actual data)
-    createWorkoutItem(Date.now(), 'squats', 30); // Using Date.now() for unique ID placeholder
 });
+
+document.addEventListener('DOMContentLoaded', populateDeleteDropdown);
 </script>
 
 </body>

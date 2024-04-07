@@ -1,4 +1,5 @@
 <?php
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Database configuration
     $servername = "oceanus.cse.buffalo.edu";
@@ -21,6 +22,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $passInput = mysqli_real_escape_string($conn, $_POST['password']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
+
+ if (strlen($passInput) < 8) {
+        echo json_encode(array('success' => false, 'error' => 'Password must be at least 8 characters long.'));
+        exit();
+    }
+
+ if (!preg_match('/[A-Z]/', $passInput)) {
+        echo json_encode(array('success' => false, 'error' => 'Password must contain at least one uppercase letter.'));
+        exit();
+    }
+
+    if (!preg_match('/\d/', $passInput)) {
+        echo json_encode(array('success' => false, 'error' => 'Password must contain at least one number.'));
+        exit();
+    }
+
+    if (!preg_match('/[^a-zA-Z0-9]/', $passInput)) {
+        echo json_encode(array('success' => false, 'error' => 'Password must contain at least one special character.'));
+        exit();
+    }
+
 
     // Check if passwords match
     if ($passInput !== $confirm_password) {
@@ -47,6 +69,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Execute the statement
         if ($stmt->execute()) {
+            $_SESSION['loggedin'] = true; // Set a session variable to indicate the user is logged in
+            $_SESSION['username'] = $userInput; // Store the username in session
+    
+            // Get the last inserted ID to store in the session
+            $_SESSION['user_id'] = $conn->insert_id; // This gets the auto-incremented ID from the last query
+    
             echo json_encode(array('success' => true));
         } else {
             echo json_encode(array('success' => false, 'error' => $stmt->error));
@@ -59,4 +87,3 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close connection
     $conn->close();
 }
-?>
