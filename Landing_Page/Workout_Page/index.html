@@ -65,38 +65,37 @@
       
       }
       .navbar {
-    background-color: black; /* Change to the target navbar's background color */
-    overflow: hidden;
-    padding: 10px 20px;
-    height: 40px;
+        background-color: #ffffff; /* White background */
+        overflow: hidden;
+        padding: 10px 20px;
+    }
     
-}
-
-.navbar a {
-    float: left;
-    display: block;
-    color: white; /* Change to the target navbar's text color */
-    text-align: center;
-    padding: 12px;
-    text-decoration: none;
-    font-size: 18px; /* Adjust to match the target navbar's font size */
-    font-weight: bold; /* If the target navbar has bold text */
-}
-
-.navbar a:hover {
-    background-color: #ddd; /* Light grey background on hover */
-    color: black; /* Change to the target navbar's hover text color */
-}
-
-.navbar-right {
-    float: right;
-}
+    .navbar a {
+        float: left;
+        display: block;
+        color: black; /* Black text color */
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        font-size: 18px; /* Larger font size */
+    }
     
+    .navbar a:hover {
+        color: #777; /* Dark grey color on hover */
+    }
+    
+    .navbar a:not(:first-child) {
+        margin-left: 10px;
+    }
+    
+    .navbar-right {
+        float: right;
+    }
     .header-image {
         background-image: url('workout.png'); /* Replace with your image path */
         background-size: cover;
         background-position: center;
-        height:120px; /* Adjust the height as needed */
+        height: 150px; /* Adjust the height as needed */
         display: flex;
         align-items: center;
         justify-content: center;
@@ -146,6 +145,7 @@
         <a href="../logout.php">Logout</a> 
     </div>
 </div>
+
 <div class="header-image">
     <h1>WORKOUTS</h1>
 </div>
@@ -251,6 +251,12 @@ saveButton.onclick = function() {
 
     // Append the elements to the workoutItem
     // Append the elements to the workoutItem in the order you want them to display
+    const dateInput = document.createElement('input');
+    dateInput.type = 'date'; // Set the type to 'date' to get a built-in calendar
+    dateInput.className = 'workout-date'; // Assign a class for styling if needed
+    dateInput.placeholder = 'Choose date'; // A placeholder text
+    workoutItem.appendChild(dateInput); // Add the calendar input before duration
+
 workoutItem.appendChild(select);        // This will be first
 workoutItem.appendChild(durationInput); // This will be second
 workoutItem.appendChild(saveButton);    // This will be third
