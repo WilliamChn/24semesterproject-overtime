@@ -41,10 +41,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Check if date of birth is being updated
     if (isset($_POST['p_dob'])) {
+        $newDOB = filter_input(INPUT_POST, 'p_dob', FILTER_SANITIZE_STRING);
         $updates[] = "p_dob = ?";
         $types .= 's'; // Type string
-        $params[] = filter_input(INPUT_POST, 'p_dob', FILTER_SANITIZE_STRING);
+        $params[] = $newDOB;
+
+        // Calculate the age from the new DOB
+        $dobDateTime = new DateTime($newDOB);
+        $currentDate = new DateTime('now');
+        $age = $currentDate->diff($dobDateTime)->y;
+
+        // Include the new age in the response
+        $response['new_age'] = $age;
     }
+
 
     // Check if weight is being updated
     if (isset($_POST['p_weight'])) {

@@ -10,6 +10,28 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Moved the fetchUserData function call here to ensure DOM is fully loaded
     fetchUserData();
+  
+    // Attach the submit event listener to the editForm
+    var editForm = document.getElementById('editForm');
+    if (editForm) {
+        editForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var field = document.getElementById('editInput').name;
+            var value = document.getElementById('editInput').value;
+            sendUserData(field.replace('p_', ''), value);
+            closeModal();
+        });
+    } else {
+        console.error('editForm does not exist!');
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        var modal = document.getElementById('editModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
 });
 
 // This function will fetch user data from profile-data.php including intakes and workouts
@@ -126,6 +148,7 @@ function editValue(field) {
     }
 }
 
+// Ensure sendUserData function handles the updated response properly
 function sendUserData(field, value) {
     var xhr = new XMLHttpRequest();
     var postKey = `p_${field}`; // Modify the key to match the expected POST keys
@@ -134,9 +157,12 @@ function sendUserData(field, value) {
 
     xhr.open("POST", "update-profile-data.php", true);
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             var response = JSON.parse(this.responseText);
             if(response.status === 'success') {
+                // Update the user's age on the front-end
+                var userAgeSpan = document.getElementById('userAge');
+                userAgeSpan.innerText = `${response.new_age} years`;
                 fetchUserData(); // Refetch user data to update the display
             } else {
                 console.error('Error updating user data:', response.message);
