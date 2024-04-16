@@ -182,7 +182,7 @@ document.getElementById('add-entry-button').addEventListener('click', function()
     createWorkoutItem(); // This will create a new workout item when clicked
 });
 
-function createWorkoutItem() {
+function zzcreateWorkoutItem() {
     // Assuming you want to insert the new workout item below the 'Add Entry' button
     const workoutContainer = document.querySelector('.container'); // This should be the container where you want to append the new row
 
@@ -218,30 +218,43 @@ function createWorkoutItem() {
     saveButton.className = 'save-workout-button';
     saveButton.textContent = 'Save';
     // Inside the createWorkoutItem function, after you create the saveButton
-saveButton.onclick = function() {
-    const workoutNum = select.value; // Assuming this is the ID related to the workout type
+    saveButton.onclick = function() {
+    const workoutNum = select.value;
     const duration = durationInput.value;
+    const workoutDate = dateInput.value; // Get the date from the date input
 
-    // Validate input (ensure it's a positive integer)
-    if(duration <= 0 || isNaN(duration)) {
+    // Validate duration input (ensure duration is a positive integer)
+    if (duration <= 0 || isNaN(duration)) {
         alert("Please enter a valid duration.");
         return;
     }
-    // Now send this data to save_workout.php
+
+    // Validate the workout date against the current date
+    const currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0); // Reset time part to midnight
+    const inputDate = new Date(workoutDate + "T00:00:00"); // Set input date to midnight for comparison
+
+    if (inputDate > currentDate) {
+        alert("Please select a valid date. Future dates are not allowed.");
+        return;
+    }
+
+    // If validation passes, continue with the fetch to save workout
     fetch('save_workout.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: `num=${encodeURIComponent(workoutNum)}&duration=${encodeURIComponent(duration)}`
+        body: `num=${encodeURIComponent(workoutNum)}&duration=${encodeURIComponent(duration)}&date=${encodeURIComponent(workoutDate)}`
     })
     .then(response => response.text())
     .then(responseText => {
         // Handle the response from save_workout.php here
         alert(responseText); // Show a message to the user
-        // Consider clearing the input or updating the UI as needed
-        populateDeleteDropdown();
+        // Update UI as needed
         displayWorkouts();
+        populateDeleteDropdown();
+        
     })
     .catch(error => {
         console.error('Error:', error);
@@ -249,12 +262,15 @@ saveButton.onclick = function() {
 };
 
 
-    // Append the elements to the workoutItem
-    // Append the elements to the workoutItem in the order you want them to display
-    const dateInput = document.createElement('input');
+
+
+const dateInput = document.createElement('input');
     dateInput.type = 'date'; // Set the type to 'date' to get a built-in calendar
     dateInput.className = 'workout-date'; // Assign a class for styling if needed
     dateInput.placeholder = 'Choose date'; // A placeholder text
+
+    // Append the elements to the workoutItem
+    // Append the elements to the workoutItem in the order you want them to display
     workoutItem.appendChild(dateInput); // Add the calendar input before duration
 
 workoutItem.appendChild(select);        // This will be first
@@ -307,6 +323,7 @@ function populateDeleteDropdown() {
             const optionText = `${workout.Style} - ${workout.Duration} min`;
             const option = new Option(optionText, workout.ID);
             deleteDropdown.add(option);
+            displayWorkouts();
         });
     })
     .catch(error => {
@@ -318,29 +335,54 @@ function displayWorkouts() {
     .then(response => response.json())
     .then(workouts => {
       const displayContainer = document.querySelector('.workout-list');
-      
-      // Clear existing content
-      displayContainer.innerHTML = '';
-      
-      workouts.forEach(workout => {
-        const workoutDiv = document.createElement('div');
-        workoutDiv.className = 'workout-display';
-        
-        const workoutStyle = document.createElement('span');
-        workoutStyle.textContent = workout.Style;
-        workoutDiv.appendChild(workoutStyle);
-        
-        const workoutDuration = document.createElement('span');
-        workoutDuration.textContent = workout.Duration + ' min';
-        workoutDiv.appendChild(workoutDuration);
-        
-        // Assuming 'Calories' is a property returned by your PHP script
-        // If not, you'll need to calculate or otherwise retrieve this information
-        const workoutCalories = document.createElement('span');
-        workoutCalories.textContent = workout.Calories + ' kcal';
-        workoutDiv.appendChild(workoutCalories);
-        
-        displayContainer.appendChild(workoutDiv);
+      displayContainer.innerHTML = ''; // Clear existing content
+
+      // Group workouts by date
+      const groupedWorkouts = workouts.reduce((acc, workout) => {
+        // If the date isn't already a key in the accumulator, add it
+        if (!acc[workout.Date]) {
+          acc[workout.Date] = [];
+        }
+        // Push the current workout into the array for this date
+        acc[workout.Date].push(workout);
+        return acc;
+      }, {});
+
+      // Sort the dates and create a section for each date
+      Object.keys(groupedWorkouts).sort().forEach(date => {
+        // Create a header for the date
+        const dateHeader = document.createElement('h3');
+        dateHeader.textContent = `Date: ${date}`;
+        displayContainer.appendChild(dateHeader);
+
+        // Create a div to hold the workouts for this date
+        const workoutsForDate = document.createElement('div');
+
+        // Add each workout to the div
+        groupedWorkouts[date].forEach(workout => {
+          const workoutDiv = document.createElement('div');
+          workoutDiv.className = 'workout-display';
+
+          const workoutStyle = document.createElement('span');
+          workoutStyle.textContent = `${workout.Style}: `;
+
+          const workoutDuration = document.createElement('span');
+          workoutDuration.textContent = `${workout.Duration} min, `;
+
+          const workoutCalories = document.createElement('span');
+          workoutCalories.textContent = `${workout.Calories} cal`;
+
+          // Append the workout details to the workout div
+          workoutDiv.appendChild(workoutStyle);
+          workoutDiv.appendChild(workoutDuration);
+          workoutDiv.appendChild(workoutCalories);
+
+          // Append the workout div to the workouts for this date
+          workoutsForDate.appendChild(workoutDiv);
+        });
+
+        // Append the workouts for this date to the main container
+        displayContainer.appendChild(workoutsForDate);
       });
     })
     .catch(error => {
@@ -348,11 +390,18 @@ function displayWorkouts() {
     });
 }
 
+// Initial call to populate workouts on page load
+document.addEventListener('DOMContentLoaded', displayWorkouts);
+
+
+
 // Call this function to populate the workout display when the document is ready
 document.addEventListener('DOMContentLoaded', displayWorkouts);
 
 // Call this function to populate the workout display when the document is ready
 document.addEventListener('DOMContentLoaded', displayWorkouts);
+
+
 
 
 
