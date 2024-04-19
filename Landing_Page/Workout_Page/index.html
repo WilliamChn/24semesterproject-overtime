@@ -64,13 +64,25 @@
         cursor: pointer;
       
       }
+      html, body {
+        margin: 0;
+        padding: 0;
+        /* This ensures that there is no space around the outer edge of the browser window */
+    }
       .navbar {
-    background-color: black; /* Change to the target navbar's background color */
-    overflow: hidden;
-    padding: 10px 20px;
-    height: 40px;
-    
-}
+        position: absolute;
+        top: 0;
+        left: 0; /* Ensure the navbar starts from the left */
+        width: 100%;
+        background: rgba(0, 0, 0, 1);
+        padding: 1px 0;
+        display: flex;
+        justify-content: space-between; /* Aligns items to the start and end */
+        align-items: center;
+        box-sizing: border-box;
+        z-index: 10; /* ensures navbar stays on top */
+
+      }
 
 .navbar a {
     float: left;
@@ -99,6 +111,7 @@
         height:120px; /* Adjust the height as needed */
         display: flex;
         align-items: center;
+        margin-top: 40px; /* Adjust this value to the height of your navbar */
         justify-content: center;
         color: #000; /* black text color */
       }
