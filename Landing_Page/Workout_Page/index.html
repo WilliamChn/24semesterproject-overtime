@@ -64,33 +64,46 @@
         cursor: pointer;
       
       }
+      html, body {
+        margin: 0;
+        padding: 0;
+        /* This ensures that there is no space around the outer edge of the browser window */
+    }
       .navbar {
-        background-color: #ffffff; /* White background */
-        overflow: hidden;
-        padding: 10px 20px;
-    }
+        position: absolute;
+        top: 0;
+        left: 0; /* Ensure the navbar starts from the left */
+        width: 100%;
+        background: rgba(0, 0, 0, 1);
+        padding: 1px 0;
+        display: flex;
+        justify-content: space-between; /* Aligns items to the start and end */
+        align-items: center;
+        box-sizing: border-box;
+        z-index: 10; /* ensures navbar stays on top */
+
+      }
+
+.navbar a {
+    float: left;
+    display: block;
+    color: white; /* Change to the target navbar's text color */
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px; /* Adjust to match the target navbar's font size */
+    font-weight: bold; /* If the target navbar has bold text */
+}
+
+.navbar a:hover {
+    background-color: #ddd; /* Light grey background on hover */
+    color: black; /* Change to the target navbar's hover text color */
+}
+
+.navbar-right {
+    float: right;
+}
     
-    .navbar a {
-        float: left;
-        display: block;
-        color: black; /* Black text color */
-        text-align: center;
-        padding: 12px;
-        text-decoration: none;
-        font-size: 18px; /* Larger font size */
-    }
-    
-    .navbar a:hover {
-        color: #777; /* Dark grey color on hover */
-    }
-    
-    .navbar a:not(:first-child) {
-        margin-left: 10px;
-    }
-    
-    .navbar-right {
-        float: right;
-    }
     .header-image {
         background-image: url('workout.png'); /* Replace with your image path */
         background-size: cover;
@@ -98,6 +111,7 @@
         height: 150px; /* Adjust the height as needed */
         display: flex;
         align-items: center;
+        margin-top: 40px; /* Adjust this value to the height of your navbar */
         justify-content: center;
         color: #000; /* black text color */
       }
