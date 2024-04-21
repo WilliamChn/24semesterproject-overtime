@@ -110,8 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../Profile_Page/index.html"); // Redirect to profile page
             exit();
         } else {
-            $stmt->close(); // Close the statement if no results are fetched before redirecting
-            header("Location: login.php?error=invalid_credentials");
+            $stmt->close(); // Close the statement if no results are fetched
+            echo "<script>alert('Wrong username or password.'); window.location.href='login.html';</script>";
             exit();
         }
     } else {

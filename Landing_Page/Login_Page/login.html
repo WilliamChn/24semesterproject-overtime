@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OverTime - Login</title>
-    <link rel="stylesheet" href="style.css"> <!-- Make sure this path is correct -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="navbar">
@@ -15,11 +15,9 @@
             <h1>Welcome to your fitness journey!</h1>
         </div>
         <div class="login-form">
-            <!-- The form points to join.php for processing -->
-            <form action="join.php" method="post">
+            <form id="loginForm">
                 <input type="text" placeholder="Username" name="username" required>
                 <input type="password" placeholder="Password" name="password" required>
-                <!-- Add a "Remember Me" checkbox below the password field -->
                 <div class="remember-me">
                     <input type="checkbox" id="remember_me" name="remember_me">
                     <label for="remember_me">Remember Me</label>
@@ -29,5 +27,23 @@
             <a href="../Sign_Page/sign.html">Don't have an account? Sign up now!</a>
         </div>
     </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('join.php', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.text())
+            .then(html => {
+                if (html.includes('Wrong username or password')) {
+                    alert('Wrong username or password.');
+                } else {
+                    window.location.href = '../Profile_Page/index.html';
+                }
+            }).catch(error => console.error('Error:', error));
+        });
+    </script>
 </body>
 </html>
