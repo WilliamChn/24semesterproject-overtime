@@ -23,6 +23,8 @@
 input[type="text"] {
   width: 100%;
   padding: 5px;
+color: grey;
+
 }
 
 /* Styles for the navigation bar */
@@ -240,3 +242,65 @@ input[type="text"], button {
   text-decoration: none;
   cursor: pointer;
 }
+
+
+.dark-mode {
+    background-color: #000;
+    color: #fff;
+    / Add other styles as needed /
+}
+
+.dark-mode input[type="text"],
+.dark-mode textarea {
+  background-color: #333; /* Dark background for input fields /
+  color: grey; / Light text for input fields /
+  border: 1px solid #555; / Optional: adds a subtle border */
+}
+.dark-mode button {
+  background-color: #999; /* Darker background for buttons /
+  color: #fff; / Light text for buttons /
+  border: none; / Remove borders or style them as needed */
+}
+.dark-mode .circle-progress span {
+  color: rgb(0,0,0); /* White text inside the circle progress */
+}
+.dark-mode .data-section,
+.dark-mode .data-field {
+  background-color: #333; /* Dark background for data sections/fields /
+  / Other styles as needed */
+}
+.dark-mode .form, 
+.dark-mode .card {
+  background-color: #424242; /* Dark background for forms/cards /
+  color: rgb(0,0,0); / Light text for forms/cards */
+}
+.dark-mode table {
+  background-color: #333;
+  color: rgb(0,0,0);
+}
+.dark-mode th, 
+.dark-mode td {
+  border: 1px solid #555;
+}
+
+.dark-mode .profile-header h1 {
+  color: #fff;
+  }
+
+.dark-mode .section {
+  background-color: #333;
+
+}
+
+.dark-mode .data-label, .dark-mode .data-value {
+  color: #fff;
+  font-size: 18px;
+}
+
+.dark-mode .waterIntakeInput{
+color: #fff;
+}
+
+
+
+

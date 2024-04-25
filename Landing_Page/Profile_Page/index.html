@@ -7,6 +7,51 @@
 <link rel="stylesheet" href="style.css">
 <script>
 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded and parsed");
+
+    var themeToggle = document.getElementById('themeToggle');
+    console.log('themeToggle element:', themeToggle);
+
+    // Check for saved dark mode in localStorage
+    var darkMode = localStorage.getItem('darkMode');
+
+    // If darkMode is saved and the value is 'true', add the dark-mode class
+    if (darkMode === 'true') {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = "Light Mode";
+    }
+
+    if (themeToggle) {
+        console.log("Adding event listener to themeToggle");
+
+        themeToggle.addEventListener('click', function(event) {
+            console.log("themeToggle button was clicked");
+
+            document.body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.textContent = "Light Mode";
+                console.log("Changed button text to: Light Mode");
+                localStorage.setItem('darkMode', 'true'); // Save dark mode as enabled
+            } else {
+                themeToggle.textContent = "Dark Mode";
+                console.log("Changed button text to: Dark Mode");
+                localStorage.setItem('darkMode', 'false'); // Save dark mode as disabled
+            }
+        });
+    } else {
+        console.error("themeToggle button is not found in the DOM");
+    }
+});
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', (event) => {
     // Moved the fetchUserData function call here to ensure DOM is fully loaded
     fetchUserData();
@@ -211,28 +256,36 @@ window.onclick = function(event) {
     }
 };
 
+
+
+
 </script>
 </head>
 <body>
 
     <header>
       <div class="navbar">
-        <a href="../index.php">OVERTIME</a>
+        <a href="#">OVERTIME</a>
         <div class="navbar-right">
           <a href="../Meal_Page/index.html">Log Meals</a>
           <a href="../Workout_Page/index.html">Log Workouts</a>
           <a href="../Profile_Page/index.html">Profile</a>
           <a href="../logout.php">Logout</a> 
+
         </div>
       </div>
     </header>
     
+
     <!-- Profile Header -->
     <div class="profile-header">
         <div class="header-content">
             <h1>MY PROFILE</h1>
         </div>
     </div>
+
+<button id="themeToggle">Dark Mode</button>
+
 
     <!-- Profile Sections Container -->
     <div class="sections-container">

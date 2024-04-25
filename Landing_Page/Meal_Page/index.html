@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Overtime Meal Planning</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+
+function deleteAllMeals() {
+    if (confirm("Are you sure you want to delete all meals?")) {
+        fetch('clear_meals.php')
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            location.reload(); // Refresh the page
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert("Failed to delete all meals.");
+        });
+    }
+}
+
+        function deleteRecentMeal() {
+    fetch('delete_meal.php')
+    .then(response => response.text())
+    .then(data => {
+        alert(data);
+        // Refresh the page after showing the alert
+        location.reload();
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert("Failed to delete the meal.");
+    });
+}
+
+       function loadDropdown(dropdownId) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'meal_processor.php', true);
+    xhr.onload = function() {
+        if (this.status === 200) {
+            document.getElementById(dropdownId).innerHTML = this.responseText;
+            // Enable the submit button associated with the dropdown
+            document.getElementById(dropdownId + '-submit').disabled = false;
+        } else {
+            document.getElementById(dropdownId).innerHTML = '<option value="">Failed to load meals</option>';
+        }
+    };
+    xhr.onerror = function() {
+        document.getElementById(dropdownId).innerHTML = '<option value="">Failed to load meals</option>';
+    };
+    xhr.send();
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadDropdown('breakfast-dropdown');
+    loadDropdown('lunch-dropdown');
+    loadDropdown('dinner-dropdown');
+    loadDropdown('snacks-dropdown');
+	fetchUserMeals();
+});
+
+function submitMeal(form, mealType) {
+    // Prevent the default form submission
+    event.preventDefault();
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', 'add_meal.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onload = function() {
+        if (this.status === 200) {
+
+location.reload();
+            alert("Meal added successfully!");
+		
+        } else {
+            alert("Failed to add meal.");
+        }
+    };
+
+    // Extract the meal data from the dropdown
+    var mealSelect = form.querySelector('select[name="meal"]');
+    if (mealSelect.selectedIndex >= 0) {
+        var selectedOption = mealSelect.options[mealSelect.selectedIndex].text;
+        console.log('Selected Option:', selectedOption);
+
+        // Split the selected option into parts
+        var mealParts = selectedOption.split(' ');
+        if (mealParts.length < 4) {
+            console.error('Unexpected format for selected option:', selectedOption);
+            return false;
+        }
+
+        // Extracting the meal name, calories, and protein from the option's text
+        // Assuming the format is always "Item – Calories: X Protein: Yg"
+        var itemName = mealParts.slice(0, -4).join(' '); // The item name is everything up to the last 4 words
+        var calories = mealParts[mealParts.length - 3]; // The calories are the third-to-last word
+        var protein = mealParts[mealParts.length - 1].slice(0, -1); // The protein is the last word, minus the 'g'
+
+        // Construct the data string
+        var data = 'itemName=' + encodeURIComponent(itemName) +
+                   '&calories=' + encodeURIComponent(calories) +
+                   '&protein=' + encodeURIComponent(protein);
+
+        console.log('Data String:', data); // Log the data string being sent
+
+        xhr.send(data);
+    } else {
+        console.error('No meal selected.');
+        alert('Please select a meal before adding.');
+        return false;
+    }
+}
+
+
+
+
+
+
+// This is a new function to display the added meal
+function displayAddedMeal(itemName, calories, protein, mealType) {
+    var mealList = document.querySelector('.added-meals');
+    var entry = document.createElement('div');
+    entry.classList.add('meal-entry');
+    
+    // Create the meal entry content
+    entry.textContent = '~ ' +itemName ;
+    
+    mealList.appendChild(entry); // Append the new entry to the meal list
+}
+
+
+
+
+
+
+
+function fetchUserMeals() {
+    fetch('get_user_meals.php')
+        .then(response => response.json())
+        .then(meals => {
+            const mealList = document.querySelector('.added-meals');
+            mealList.innerHTML = ''; // Clear out current list
+            meals.forEach(meal => {
+                displayAddedMeal(meal.Food);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching meals:', error);
+        });
+}
+
+function searchMeal(searchId, dropdownId) {
+    var input, filter, dropdown, options, i, txtValue;
+    input = document.getElementById(searchId);
+    filter = input.value.toUpperCase();
+    dropdown = document.getElementById(dropdownId);
+    options = dropdown.options;
+    for (i = 0; i < options.length; i++) {
+        txtValue = options[i].text || options[i].innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            options[i].style.display = "";
+        } else {
+            options[i].style.display = "none";
+        }
+    }
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadDropdown('breakfast-dropdown');
+    loadDropdown('lunch-dropdown');
+    loadDropdown('dinner-dropdown');
+    loadDropdown('snacks-dropdown');
+    fetchUserMeals();
+
+    // Toggle dark mode
+    var themeToggle = document.getElementById('theme-toggle');
+    var currentTheme = localStorage.getItem('theme'); // Get the current theme from localStorage
+
+    // Apply the dark mode based on user preference
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = 'Change to Light Mode'; // Set button text for light mode
+    } else {
+        themeToggle.textContent = 'Change to Dark Mode'; // Set button text for dark mode
+    }
+
+    themeToggle.addEventListener('click', function() {
+        var isDarkMode = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        themeToggle.textContent = isDarkMode ? 'Change to Light Mode' : 'Change to Dark Mode'; // Change the button text based on the theme
+    });
+});
+
+
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="navbar">
+                <a href="#">OVERTIME</a>
+                <div class="navbar-right">
+                    <a href="#">Log Meals</a>
+                    <a href="../Workout_Page/index.html">Log Workouts</a>
+                    <a href="../Profile_Page/index.html">Profile</a>
+                    <a href="../logout.php">Logout</a> 
+                </div>
+            </div>
+        </header>
+        <main>
+		<h1 style=font-size:60px>MEALS</h1>
+
+	<button id="theme-toggle">Light Mode:Dark Mode</button> 
+
+            <section class="meal-selection">
+
+
+<!-- Breakfast -->
+<div class="meal">
+    <h2>Breakfast</h2>
+    <input type="text" id="search-breakfast" onkeyup="searchMeal('search-breakfast', 'breakfast-dropdown')" placeholder="Search for meals...">
+    <form onsubmit="return submitMeal(this, 'breakfast');">
+        <select id="breakfast-dropdown" name="meal" class="meal-dropdown">
+            <!-- Options will be loaded here -->
+        </select>
+        <input type="submit" value="ADD FOOD" class="delete-entry">
+    </form>
+    <button class="delete-entry" onclick="deleteRecentMeal()">DELETE</button>
+</div>
+
+
+<!-- Lunch -->
+<div class="meal">
+    <h2>Lunch</h2>
+    <input type="text" id="search-lunch" onkeyup="searchMeal('search-lunch', 'lunch-dropdown')" placeholder="Search for meals...">
+    <form onsubmit="return submitMeal(this, 'lunch');">
+        <select id="lunch-dropdown" name="meal" class="meal-dropdown">
+            <!-- Options will be loaded here -->
+        </select>
+        <input type="submit" value="ADD FOOD" class="delete-entry">
+    </form>
+    <button class="delete-entry" onclick="deleteRecentMeal()">DELETE</button>
+</div>
+
+
+<!-- Dinner -->
+<div class="meal">
+    <h2>Dinner</h2>
+    <input type="text" id="search-dinner" onkeyup="searchMeal('search-dinner', 'dinner-dropdown')" placeholder="Search for meals...">
+    <form onsubmit="return submitMeal(this, 'dinner');">
+        <select id="dinner-dropdown" name="meal" class="meal-dropdown">
+            <!-- Options will be loaded here -->
+        </select>
+        <input type="submit" value="ADD FOOD" class="delete-entry">
+    </form>
+    <button class="delete-entry" onclick="deleteRecentMeal()">DELETE</button>
+</div>
+
+
+<!-- Snacks -->
+<div class="meal">
+    <h2>Snacks</h2>
+    <input type="text" id="search-snacks" onkeyup="searchMeal('search-snacks', 'snacks-dropdown')" placeholder="Search for meals...">
+    <form onsubmit="return submitMeal(this, 'snacks');">
+        <select id="snacks-dropdown" name="meal" class="meal-dropdown">
+            <!-- Options will be loaded here -->
+        </select>
+        <input type="submit" value="ADD FOOD" class="delete-entry">
+    </form>
+    <button class="delete-entry" onclick="deleteRecentMeal()">DELETE</button>
+</div>
+
+                <button class="delete-entry delete-all" onclick="deleteAllMeals()">DELETE ALL MEALS</button>
+
+
+            </section>
+<h3>Added Foods: </h3>
+<section class="added-meals">
+    <!-- Added meals will appear here -->
+</section>
+
+
+        </main>
+    </div>
+</body>
+</html>

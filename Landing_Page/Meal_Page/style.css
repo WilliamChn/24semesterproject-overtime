@@ -69,7 +69,8 @@ body {
 .container {
   width: 100%;
   margin: 0 auto; /* Center the container */
-  background: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+  background: rgba(255, 255, 255, 0.65); /* Semi-transparent background */
+
   padding: 20px;
   box-sizing: border-box;
 }
@@ -89,7 +90,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #e0e0e0;
+  border-bottom: 1px solid rgba(0, 0, 0, 1);
   padding: 10px 0;
   box-sizing: border-box;
 }
@@ -172,3 +173,48 @@ header {
   background-color: #f0f0f0;
   border: 1px solid #ddd;
 }
+
+
+
+/* Dark Mode Styles */
+/* Dark Mode Styles */
+.dark-mode {
+  /* Explicitly define the background image again for dark mode */
+  background: url("Meals.jpg") no-repeat center center fixed;
+  background-size: cover; /* Cover the entire area */
+  color: #ffffff; /* Light text for better readability in dark mode */
+}
+
+/* Ensure navbar and container have proper background in dark mode */
+
+.dark-mode .container {
+  background: rgba(0, 0, 0, 0.6); /* Darker background for navbar and container */
+  color: #ffffff; /* Light text */
+}
+/* Other elements that need to be styled for dark mode */
+.dark-mode a {
+    color: #ffffff;
+}
+
+.dark-mode .meal-dropdown {
+    background-color: #333333; /* Darker background for dropdowns */
+    color: #ffffff; /* Light text for dropdowns */
+}
+
+.dark-mode .meal{
+border-bottom: 1px solid #ffffff;
+
+}
+
+.dark-mode button {
+    background-color: #424242; /* Darker background for buttons */
+    color: #ffffff; /* Light text for buttons */
+}
+
+.dark-mode .delete-entry {
+    background-color: #ff6666; /* Lighter red for delete buttons */
+}
+
+/* Add more styles as needed */
+
+
