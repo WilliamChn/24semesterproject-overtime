@@ -170,13 +170,42 @@ function searchMeal(searchId, dropdownId) {
 
 
 
+
+document.addEventListener('DOMContentLoaded', function() {
+    loadDropdown('breakfast-dropdown');
+    loadDropdown('lunch-dropdown');
+    loadDropdown('dinner-dropdown');
+    loadDropdown('snacks-dropdown');
+    fetchUserMeals();
+
+    // Toggle dark mode
+    var themeToggle = document.getElementById('theme-toggle');
+    var currentTheme = localStorage.getItem('theme'); // Get the current theme from localStorage
+
+    // Apply the dark mode based on user preference
+    if (currentTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = 'Light Mode'; // Set button text for light mode
+    } else {
+        themeToggle.textContent = 'Dark Mode'; // Set button text for dark mode
+    }
+
+    themeToggle.addEventListener('click', function() {
+        var isDarkMode = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        themeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode'; // Change the button text based on the theme
+    });
+});
+
+
+
     </script>
 </head>
 <body>
     <div class="container">
         <header>
             <div class="navbar">
-                <a href="../index.php">OVERTIME</a>
+                <a href="#">OVERTIME</a>
                 <div class="navbar-right">
                     <a href="#">Log Meals</a>
                     <a href="../Workout_Page/index.html">Log Workouts</a>
@@ -188,7 +217,7 @@ function searchMeal(searchId, dropdownId) {
         <main>
 		<h1 style=font-size:60px>MEALS</h1>
 
-
+	<button id="theme-toggle">Light Mode:Dark Mode</button> 
 
             <section class="meal-selection">
 

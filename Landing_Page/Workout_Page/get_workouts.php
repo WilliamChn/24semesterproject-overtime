@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 // Database connection credentials
@@ -17,12 +18,19 @@ if ($conn->connect_error) {
 
 $user_id = $_SESSION['user_id']; // The user's ID from the session
 
-$sql = "SELECT Workout.ID, Workout_Stats.type AS Style, Workout.Duration, Workout.Calories, Workout.user_id
+// Add Date to the selected fields in your SQL query
+$sql = "SELECT Workout.ID, Workout_Stats.type AS Style, Workout.Duration, Workout.Calories, Workout.Date, Workout.user_id
         FROM Workout
         INNER JOIN Workout_Stats ON Workout.Style = Workout_Stats.num
-        WHERE Workout.user_id = $user_id"; // Add a where clause to select workouts for a specific user
+        WHERE Workout.user_id = ?"; // Use prepared statement for security
 
-$result = $conn->query($sql);
+// Prepare the SQL statement to prevent SQL injection
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+
+// Execute the statement and get the result
+$stmt->execute();
+$result = $stmt->get_result();
 
 // Array to hold the workouts
 $workouts = [];
@@ -41,6 +49,7 @@ header('Content-Type: application/json');
 // Convert the $workouts array to JSON and print it out
 echo json_encode($workouts);
 
-// Close the database connection
+// Close the statement and database connection
+$stmt->close();
 $conn->close();
 ?>

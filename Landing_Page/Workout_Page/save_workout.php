@@ -15,9 +15,10 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get the workout number and duration from the POST request
+// Get the workout number, duration, and date from the POST request
 $workoutNum = $_POST['num'];
 $duration = $_POST['duration'];
+$date = $_POST['date']; // Retrieve the date from the POST request
 
 // Fetch the calories burned per minute for this workout type from Workout_Stats
 $sql = "SELECT calories FROM Workout_Stats WHERE num = ?";
@@ -31,16 +32,14 @@ $caloriesPerMinute = $row['calories'];
 // Calculate total calories burned
 $totalCaloriesBurned = $caloriesPerMinute * $duration;
 
-// Retrieve user_id from the POST request
+// Retrieve user_id from the session
 $user_id = $_SESSION['user_id']; // The user's ID from the session
 
-
-// Update the insert SQL to include user_id
-$insertSql = "INSERT INTO Workout (style, duration, calories, user_id) VALUES (?, ?, ?, ?)";
+// Update the insert SQL to include the Date column
+$insertSql = "INSERT INTO Workout (style, duration, calories, user_id, Date) VALUES (?, ?, ?, ?, ?)";
 $insertStmt = $conn->prepare($insertSql);
-// Bind the new user_id parameter as well
-$insertStmt->bind_param("sidi", $workoutNum, $duration, $totalCaloriesBurned, $user_id);
-
+// Bind the parameters including the date
+$insertStmt->bind_param("sidis", $workoutNum, $duration, $totalCaloriesBurned, $user_id, $date);
 
 if($insertStmt->execute()) {
     echo "Workout saved successfully!";

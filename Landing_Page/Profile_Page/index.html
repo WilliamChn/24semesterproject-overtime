@@ -7,9 +7,76 @@
 <link rel="stylesheet" href="style.css">
 <script>
 
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("DOM fully loaded and parsed");
+
+    var themeToggle = document.getElementById('themeToggle');
+    console.log('themeToggle element:', themeToggle);
+
+    // Check for saved dark mode in localStorage
+    var darkMode = localStorage.getItem('darkMode');
+
+    // If darkMode is saved and the value is 'true', add the dark-mode class
+    if (darkMode === 'true') {
+        document.body.classList.add('dark-mode');
+        themeToggle.textContent = "Light Mode";
+    }
+
+    if (themeToggle) {
+        console.log("Adding event listener to themeToggle");
+
+        themeToggle.addEventListener('click', function(event) {
+            console.log("themeToggle button was clicked");
+
+            document.body.classList.toggle('dark-mode');
+
+            if (document.body.classList.contains('dark-mode')) {
+                themeToggle.textContent = "Light Mode";
+                console.log("Changed button text to: Light Mode");
+                localStorage.setItem('darkMode', 'true'); // Save dark mode as enabled
+            } else {
+                themeToggle.textContent = "Dark Mode";
+                console.log("Changed button text to: Dark Mode");
+                localStorage.setItem('darkMode', 'false'); // Save dark mode as disabled
+            }
+        });
+    } else {
+        console.error("themeToggle button is not found in the DOM");
+    }
+});
+
+
+
+
+
 document.addEventListener('DOMContentLoaded', (event) => {
     // Moved the fetchUserData function call here to ensure DOM is fully loaded
     fetchUserData();
+  
+    // Attach the submit event listener to the editForm
+    var editForm = document.getElementById('editForm');
+    if (editForm) {
+        editForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var field = document.getElementById('editInput').name;
+            var value = document.getElementById('editInput').value;
+            sendUserData(field.replace('p_', ''), value);
+            closeModal();
+        });
+    } else {
+        console.error('editForm does not exist!');
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        var modal = document.getElementById('editModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+    };
 });
 
 // This function will fetch user data from profile-data.php including intakes and workouts
@@ -36,7 +103,7 @@ async function fetchUserData() {
         document.getElementById('calorieIntake').innerText = `${data.totalCalories} cal`;
 
         if (data.longestWorkout !== null) {
-            document.getElementById('longestWorkoutBox').innerText = `${data.longestWorkout} mins`;
+            document.getElementById('longestWorkoutBox').innerText = `${data.longestWorkout.type}, Duration: ${data.longestWorkout.duration} mins`;
         } else {
             document.getElementById('longestWorkoutBox').innerText = 'No workouts logged';
         }
@@ -126,7 +193,20 @@ function editValue(field) {
     }
 }
 
+// Modify sendUserData to include date validation for 'dob'
 function sendUserData(field, value) {
+    if (field === 'dob') {
+        var inputDate = new Date(value);
+        var currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); // Remove time part of the current date
+
+        // Check if the entered date is in the future
+        if (inputDate > currentDate) {
+            alert("Date of birth cannot be in the future. Please enter a valid date.");
+            return; // Stop the function if the date is not valid
+        }
+    }
+
     var xhr = new XMLHttpRequest();
     var postKey = `p_${field}`; // Modify the key to match the expected POST keys
     var formData = new FormData();
@@ -134,9 +214,12 @@ function sendUserData(field, value) {
 
     xhr.open("POST", "update-profile-data.php", true);
     xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
+        if (this.readyState === 4 && this.status === 200) {
             var response = JSON.parse(this.responseText);
             if(response.status === 'success') {
+                // Update the user's age on the front-end
+                var userAgeSpan = document.getElementById('userAge');
+                userAgeSpan.innerText = `${response.new_age} years`;
                 fetchUserData(); // Refetch user data to update the display
             } else {
                 console.error('Error updating user data:', response.message);
@@ -145,6 +228,7 @@ function sendUserData(field, value) {
     };
     xhr.send(formData);
 }
+
 
 
 function capitalizeFirstLetter(string) {
@@ -185,28 +269,36 @@ window.onclick = function(event) {
     }
 };
 
+
+
+
 </script>
 </head>
 <body>
 
     <header>
       <div class="navbar">
-        <a href="../index.php">OVERTIME</a>
+        <a href="#">OVERTIME</a>
         <div class="navbar-right">
           <a href="../Meal_Page/index.html">Log Meals</a>
           <a href="../Workout_Page/index.html">Log Workouts</a>
           <a href="../Profile_Page/index.html">Profile</a>
           <a href="../logout.php">Logout</a> 
+
         </div>
       </div>
     </header>
     
+
     <!-- Profile Header -->
     <div class="profile-header">
         <div class="header-content">
             <h1>MY PROFILE</h1>
         </div>
     </div>
+
+<button id="themeToggle">Dark Mode</button>
+
 
     <!-- Profile Sections Container -->
     <div class="sections-container">
@@ -264,10 +356,6 @@ window.onclick = function(event) {
         <div class="section exercise">
           <h2 class="section-title">Exercise</h2>
           <div class="data-field-container">
-              <div class="data-section">
-                  <span class="data-label">Max Weight Lifted</span>
-                  <span class="data-value">N/A</span>
-              </div>
               <div class="data-section">
                 <span class="data-label">Longest Workout</span>
                 <span class="data-value" id="longestWorkoutBox">0 mins</span> <!-- This will be dynamically updated -->
