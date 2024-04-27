@@ -106,19 +106,30 @@ if ($calorieResult && $calorieResult->num_rows > 0) {
 }
 $stmt->close();
 
-// Get the longest workout time from the Workout table
-$stmt = $conn->prepare("SELECT MAX(Duration) AS LongestWorkout FROM Workout WHERE user_id = ?");
+// Existing code to get the longest workout time, adjust to fetch the type as well
+$stmt = $conn->prepare("
+    SELECT Workout.Duration, Workout_Stats.type
+    FROM Workout
+    INNER JOIN Workout_Stats ON Workout.Style = Workout_Stats.num
+    WHERE Workout.user_id = ? 
+    ORDER BY Workout.Duration DESC 
+    LIMIT 1
+");
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $workoutResult = $stmt->get_result();
 
 if ($workoutResult && $workoutResult->num_rows > 0) {
     $row = $workoutResult->fetch_assoc();
-    $response['longestWorkout'] = $row['LongestWorkout']; // Assume 'Duration' is stored in a column named 'Duration'
+    $response['longestWorkout'] = array(
+        'type' => $row['type'],
+        'duration' => $row['Duration']
+    );
 } else {
     $response['longestWorkout'] = null;
 }
 $stmt->close();
+
 
 
 

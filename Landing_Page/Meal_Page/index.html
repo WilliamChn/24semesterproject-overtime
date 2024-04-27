@@ -185,15 +185,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Apply the dark mode based on user preference
     if (currentTheme === 'dark') {
         document.body.classList.add('dark-mode');
-        themeToggle.textContent = 'Change to Light Mode'; // Set button text for light mode
+        themeToggle.textContent = 'Light Mode'; // Set button text for light mode
     } else {
-        themeToggle.textContent = 'Change to Dark Mode'; // Set button text for dark mode
+        themeToggle.textContent = 'Dark Mode'; // Set button text for dark mode
     }
 
     themeToggle.addEventListener('click', function() {
         var isDarkMode = document.body.classList.toggle('dark-mode');
         localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-        themeToggle.textContent = isDarkMode ? 'Change to Light Mode' : 'Change to Dark Mode'; // Change the button text based on the theme
+        themeToggle.textContent = isDarkMode ? 'Light Mode' : 'Dark Mode'; // Change the button text based on the theme
     });
 });
 

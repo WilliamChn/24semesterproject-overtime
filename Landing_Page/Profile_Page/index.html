@@ -103,7 +103,7 @@ async function fetchUserData() {
         document.getElementById('calorieIntake').innerText = `${data.totalCalories} cal`;
 
         if (data.longestWorkout !== null) {
-            document.getElementById('longestWorkoutBox').innerText = `${data.longestWorkout} mins`;
+            document.getElementById('longestWorkoutBox').innerText = `${data.longestWorkout.type}, Duration: ${data.longestWorkout.duration} mins`;
         } else {
             document.getElementById('longestWorkoutBox').innerText = 'No workouts logged';
         }
@@ -193,8 +193,20 @@ function editValue(field) {
     }
 }
 
-// Ensure sendUserData function handles the updated response properly
+// Modify sendUserData to include date validation for 'dob'
 function sendUserData(field, value) {
+    if (field === 'dob') {
+        var inputDate = new Date(value);
+        var currentDate = new Date();
+        currentDate.setHours(0, 0, 0, 0); // Remove time part of the current date
+
+        // Check if the entered date is in the future
+        if (inputDate > currentDate) {
+            alert("Date of birth cannot be in the future. Please enter a valid date.");
+            return; // Stop the function if the date is not valid
+        }
+    }
+
     var xhr = new XMLHttpRequest();
     var postKey = `p_${field}`; // Modify the key to match the expected POST keys
     var formData = new FormData();
@@ -216,6 +228,7 @@ function sendUserData(field, value) {
     };
     xhr.send(formData);
 }
+
 
 
 function capitalizeFirstLetter(string) {
@@ -343,10 +356,6 @@ window.onclick = function(event) {
         <div class="section exercise">
           <h2 class="section-title">Exercise</h2>
           <div class="data-field-container">
-              <div class="data-section">
-                  <span class="data-label">Max Weight Lifted</span>
-                  <span class="data-value">N/A</span>
-              </div>
               <div class="data-section">
                 <span class="data-label">Longest Workout</span>
                 <span class="data-value" id="longestWorkoutBox">0 mins</span> <!-- This will be dynamically updated -->
